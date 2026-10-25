@@ -68,7 +68,7 @@ function initPillarTabs() {
   // Klick auf Übersichtskarten leitet direkt zum jeweiligen Tab und scrollt dorthin
   document.querySelectorAll('.pillar-link, .pillar-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      const target = card.getAttribute('data-target-pillar');
+      const target = card.getAttribute('data-target-pillar') || card.closest('.pillar-card')?.getAttribute('data-target-pillar');
       if (target) {
         e.preventDefault();
         switchTab(target);
@@ -126,6 +126,7 @@ function initBreathingTool() {
         "Mein Becken darf weich, warm und entspannt sein.",
         "Ich begegne meinem Körper mit Liebe statt mit Kampf.",
         "Jeder sanfte Atemzug schenkt meinem Nervensystem Sicherheit.",
+        "Ich verbinde mich voller Vertrauen mit meinem gesunden Zukunfts-Ich.",
         "Ich ehre das Bedürfnis meines Körpers nach echter Ruhe.",
         "Heilung ist mein natürlicher Zustand.",
         "Ich bin voller Kraft, Sanftheit und Vertrauen."
