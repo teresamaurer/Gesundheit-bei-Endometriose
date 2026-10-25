@@ -79,10 +79,11 @@ body::before {
   background-image: url('../assets/mandala-gold.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.12;
+  opacity: 0.28;
   pointer-events: none;
   z-index: -1;
   animation: slowRotate 180s linear infinite;
+  filter: drop-shadow(0 0 24px rgba(194, 155, 99, 0.25));
 }
 
 body::after {
@@ -95,10 +96,11 @@ body::after {
   background-image: url('../assets/mandala-gold.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.10;
+  opacity: 0.25;
   pointer-events: none;
   z-index: -1;
   animation: slowRotateReverse 220s linear infinite;
+  filter: drop-shadow(0 0 24px rgba(194, 155, 99, 0.20));
 }
 
 @keyframes slowRotate {
@@ -571,9 +573,9 @@ a:hover {
   pointer-events: none;
   user-select: none;
   z-index: 0;
-  opacity: 0.20; /* Erhöhte Deckkraft für deutliche Sichtbarkeit in Gold */
+  opacity: 0.44; /* Deutlich sichtbare Deckkraft in edlem Gold */
   transition: opacity 0.4s ease;
-  filter: drop-shadow(0 0 16px rgba(194, 155, 99, 0.20));
+  filter: drop-shadow(0 0 24px rgba(194, 155, 99, 0.35)) drop-shadow(0 4px 14px rgba(184, 139, 74, 0.22));
 }
 
 .mandala-watermark img {
@@ -589,72 +591,72 @@ a:hover {
   animation: slowRotateReverse 260s linear infinite;
 }
 
-/* Platzierungsvarianten: Leicht angeschnitten aus dem Bildschirmrand ragend */
+/* Platzierungsvarianten: Elegant angeschnitten aus dem Bildschirmrand ragend */
 
 /* 1. Hero: Links oben angeschnitten */
 .mandala-watermark--hero-left {
-  top: -140px;
-  left: -190px;
-  width: clamp(380px, 46vw, 680px);
-  height: clamp(380px, 46vw, 680px);
-  opacity: 0.20;
+  top: -120px;
+  left: -150px;
+  width: clamp(400px, 48vw, 720px);
+  height: clamp(400px, 48vw, 720px);
+  opacity: 0.45;
 }
 
 /* 2. Über mich: Rechts vertikal zentriert hinter dem Text */
 .mandala-watermark--about-right {
   top: 50%;
   transform: translateY(-50%);
-  right: -210px;
-  width: clamp(400px, 48vw, 720px);
-  height: clamp(400px, 48vw, 720px);
-  opacity: 0.22;
+  right: -160px;
+  width: clamp(420px, 50vw, 760px);
+  height: clamp(420px, 50vw, 760px);
+  opacity: 0.48;
 }
 
 /* 3. Die 6 Säulen: Links oben angeschnitten */
 .mandala-watermark--pillars-left {
-  top: 40px;
-  left: -220px;
-  width: clamp(420px, 50vw, 760px);
-  height: clamp(420px, 50vw, 760px);
-  opacity: 0.18;
+  top: 30px;
+  left: -170px;
+  width: clamp(440px, 52vw, 800px);
+  height: clamp(440px, 52vw, 800px);
+  opacity: 0.42;
 }
 
 /* 4. Die 6 Säulen Details: Rechts unten angeschnitten */
 .mandala-watermark--pillars-right {
-  bottom: -120px;
-  right: -200px;
-  width: clamp(380px, 46vw, 680px);
-  height: clamp(380px, 46vw, 680px);
-  opacity: 0.18;
+  bottom: -100px;
+  right: -160px;
+  width: clamp(400px, 48vw, 720px);
+  height: clamp(400px, 48vw, 720px);
+  opacity: 0.42;
 }
 
 /* 5. SOS Schmerz-Kompass: Rechts zentriert angeschnitten */
 .mandala-watermark--sos-right {
   top: 50%;
   transform: translateY(-50%);
-  right: -190px;
-  width: clamp(360px, 44vw, 650px);
-  height: clamp(360px, 44vw, 650px);
-  opacity: 0.20;
+  right: -150px;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.45;
 }
 
 /* 6. FAQ: Links zentriert angeschnitten */
 .mandala-watermark--faq-left {
   top: 50%;
   transform: translateY(-50%);
-  left: -190px;
-  width: clamp(360px, 44vw, 640px);
-  height: clamp(360px, 44vw, 640px);
-  opacity: 0.18;
+  left: -150px;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.42;
 }
 
 /* 7. Kontakt: Links unten angeschnitten */
 .mandala-watermark--contact-left {
-  bottom: -140px;
-  left: -170px;
-  width: clamp(380px, 46vw, 680px);
-  height: clamp(380px, 46vw, 680px);
-  opacity: 0.20;
+  bottom: -120px;
+  left: -140px;
+  width: clamp(400px, 48vw, 720px);
+  height: clamp(400px, 48vw, 720px);
+  opacity: 0.45;
 }
 
 /* Zentriertes Wasserzeichen (z. B. hinter Cards oder Textblöcken) */
@@ -662,9 +664,9 @@ a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(360px, 45vw, 650px);
-  height: clamp(360px, 45vw, 650px);
-  opacity: 0.16;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.38;
 }
 
 /* ==========================================================================
@@ -704,10 +706,10 @@ a:hover {
   position: absolute;
   width: 140%;
   height: 140%;
-  opacity: 0.22;
+  opacity: 0.48;
   top: -20%;
   left: -20%;
-  filter: drop-shadow(0 0 12px rgba(194, 155, 99, 0.25));
+  filter: drop-shadow(0 0 16px rgba(194, 155, 99, 0.35));
 }
 
 .portrait-avatar-placeholder {
@@ -1666,31 +1668,31 @@ textarea.form-control {
     height: 320px;
   }
 
-  /* Mandala-Wasserzeichen auf mobilen Bildschirmen dezent anpassen */
+  /* Mandala-Wasserzeichen auf mobilen Bildschirmen harmonisch anpassen */
   .mandala-watermark {
-    opacity: 0.15;
+    opacity: 0.32;
   }
   .mandala-watermark--hero-left {
-    top: -100px;
-    left: -140px;
+    top: -80px;
+    left: -110px;
   }
   .mandala-watermark--about-right {
-    right: -150px;
+    right: -120px;
   }
   .mandala-watermark--pillars-left {
-    left: -150px;
+    left: -120px;
   }
   .mandala-watermark--pillars-right {
-    right: -140px;
+    right: -110px;
   }
   .mandala-watermark--sos-right {
-    right: -130px;
+    right: -100px;
   }
   .mandala-watermark--faq-left {
-    left: -130px;
+    left: -100px;
   }
   .mandala-watermark--contact-left {
-    left: -120px;
+    left: -90px;
   }
 }
 
