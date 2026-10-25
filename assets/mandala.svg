@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none" stroke="currentColor" stroke-width="1.2">
+  <defs>
+    <radialGradient id="mandalaGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C29B63" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#D48B7B" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#FAF7F2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Central Glow -->
+  <circle cx="400" cy="400" r="380" fill="url(#mandalaGlow)" stroke="none" />
+
+  <!-- Concentric Rings -->
+  <circle cx="400" cy="400" r="30" stroke="#C29B63" stroke-width="1.5" opacity="0.8" />
+  <circle cx="400" cy="400" r="60" stroke="#D48B7B" stroke-dasharray="2 6" opacity="0.7" />
+  <circle cx="400" cy="400" r="100" stroke="#7A8F76" stroke-width="1" opacity="0.6" />
+  <circle cx="400" cy="400" r="150" stroke="#C29B63" stroke-dasharray="4 8" opacity="0.7" />
+  <circle cx="400" cy="400" r="210" stroke="#D48B7B" stroke-width="1.2" opacity="0.6" />
+  <circle cx="400" cy="400" r="280" stroke="#7A8F76" stroke-dasharray="3 7" opacity="0.5" />
+  <circle cx="400" cy="400" r="350" stroke="#C29B63" stroke-width="1" opacity="0.4" />
+  <circle cx="400" cy="400" r="375" stroke="#D48B7B" stroke-width="0.8" opacity="0.3" />
+
+  <!-- Core Petals 8-fold -->
+  <g transform="translate(400, 400)">
+    <!-- 8 Inner Petals -->
+    <g id="petal8">
+      <path d="M 0 0 C 15 -25 15 -55 0 -80 C -15 -55 -15 -25 0 0 Z" fill="#D48B7B" fill-opacity="0.08" stroke="#D48B7B" />
+      <path d="M 0 -20 Q 8 -45 0 -70 Q -8 -45 0 -20" stroke="#C29B63" stroke-width="0.8" opacity="0.7"/>
+      <circle cx="0" cy="-80" r="3" fill="#C29B63" stroke="none"/>
+    </g>
+    <use href="#petal8" transform="rotate(45)" />
+    <use href="#petal8" transform="rotate(90)" />
+    <use href="#petal8" transform="rotate(135)" />
+    <use href="#petal8" transform="rotate(180)" />
+    <use href="#petal8" transform="rotate(225)" />
+    <use href="#petal8" transform="rotate(270)" />
+    <use href="#petal8" transform="rotate(315)" />
+
+    <!-- 16 Mid Tier Petals -->
+    <g id="petal16">
+      <path d="M 0 -70 C 25 -100 35 -140 0 -170 C -35 -140 -25 -100 0 -70 Z" fill="#7A8F76" fill-opacity="0.05" stroke="#7A8F76" />
+      <circle cx="0" cy="-170" r="4" fill="#D48B7B" stroke="none" opacity="0.8"/>
+      <path d="M -15 -115 Q 0 -135 15 -115" stroke="#C29B63" stroke-width="0.8"/>
+    </g>
+    <use href="#petal16" transform="rotate(22.5)" />
+    <use href="#petal16" transform="rotate(45)" />
+    <use href="#petal16" transform="rotate(67.5)" />
+    <use href="#petal16" transform="rotate(90)" />
+    <use href="#petal16" transform="rotate(112.5)" />
+    <use href="#petal16" transform="rotate(135)" />
+    <use href="#petal16" transform="rotate(157.5)" />
+    <use href="#petal16" transform="rotate(180)" />
+    <use href="#petal16" transform="rotate(202.5)" />
+    <use href="#petal16" transform="rotate(225)" />
+    <use href="#petal16" transform="rotate(247.5)" />
+    <use href="#petal16" transform="rotate(270)" />
+    <use href="#petal16" transform="rotate(292.5)" />
+    <use href="#petal16" transform="rotate(315)" />
+    <use href="#petal16" transform="rotate(337.5)" />
+    <use href="#petal16" transform="rotate(0)" />
+
+    <!-- Outer Crown 16-fold Floral Arcs -->
+    <g id="crown16">
+      <path d="M 0 -170 C 40 -210 50 -260 0 -300 C -50 -260 -40 -210 0 -170 Z" fill="#FAF7F2" fill-opacity="0.2" stroke="#C29B63" stroke-width="1"/>
+      <path d="M 0 -190 C 20 -230 25 -270 0 -290 C -25 -270 -20 -230 0 -190" stroke="#D48B7B" stroke-width="0.8" opacity="0.6"/>
+      <circle cx="0" cy="-300" r="5" fill="#7A8F76" opacity="0.8"/>
+      <circle cx="0" cy="-315" r="2.5" fill="#C29B63" opacity="0.9"/>
+      <!-- Side flourishes -->
+      <path d="M -18 -230 C -35 -245 -45 -225 -30 -210" stroke="#7A8F76" stroke-width="0.8" opacity="0.6"/>
+      <path d="M 18 -230 C 35 -245 45 -225 30 -210" stroke="#7A8F76" stroke-width="0.8" opacity="0.6"/>
+    </g>
+    <use href="#crown16" transform="rotate(0)" />
+    <use href="#crown16" transform="rotate(22.5)" />
+    <use href="#crown16" transform="rotate(45)" />
+    <use href="#crown16" transform="rotate(67.5)" />
+    <use href="#crown16" transform="rotate(90)" />
+    <use href="#crown16" transform="rotate(112.5)" />
+    <use href="#crown16" transform="rotate(135)" />
+    <use href="#crown16" transform="rotate(157.5)" />
+    <use href="#crown16" transform="rotate(180)" />
+    <use href="#crown16" transform="rotate(202.5)" />
+    <use href="#crown16" transform="rotate(225)" />
+    <use href="#crown16" transform="rotate(247.5)" />
+    <use href="#crown16" transform="rotate(270)" />
+    <use href="#crown16" transform="rotate(292.5)" />
+    <use href="#crown16" transform="rotate(315)" />
+    <use href="#crown16" transform="rotate(337.5)" />
+
+    <!-- Delicate Outer Perimeter Ornaments -->
+    <g id="outerTip">
+      <path d="M -8 -350 Q 0 -365 8 -350" stroke="#D48B7B" stroke-width="1.2"/>
+      <circle cx="0" cy="-368" r="3" fill="#C29B63"/>
+    </g>
+    <use href="#outerTip" transform="rotate(11.25)" />
+    <use href="#outerTip" transform="rotate(33.75)" />
+    <use href="#outerTip" transform="rotate(56.25)" />
+    <use href="#outerTip" transform="rotate(78.75)" />
+    <use href="#outerTip" transform="rotate(101.25)" />
+    <use href="#outerTip" transform="rotate(123.75)" />
+    <use href="#outerTip" transform="rotate(146.25)" />
+    <use href="#outerTip" transform="rotate(168.75)" />
+    <use href="#outerTip" transform="rotate(191.25)" />
+    <use href="#outerTip" transform="rotate(213.75)" />
+    <use href="#outerTip" transform="rotate(236.25)" />
+    <use href="#outerTip" transform="rotate(258.75)" />
+    <use href="#outerTip" transform="rotate(281.25)" />
+    <use href="#outerTip" transform="rotate(303.75)" />
+    <use href="#outerTip" transform="rotate(326.25)" />
+    <use href="#outerTip" transform="rotate(348.75)" />
+  </g>
+</svg>

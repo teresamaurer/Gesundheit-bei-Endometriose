@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" fill="none">
+  <!-- Lotus Flower Ornament -->
+  <g stroke="#C29B63" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Center Petal -->
+    <path d="M 100 20 C 92 45 92 80 100 95 C 108 80 108 45 100 20 Z" fill="#D48B7B" fill-opacity="0.12"/>
+    <path d="M 100 35 L 100 85" stroke="#D48B7B" stroke-width="1" opacity="0.6"/>
+
+    <!-- Inner Side Petals -->
+    <path d="M 100 95 C 80 75 75 45 82 32 C 92 50 96 75 100 95 Z" fill="#7A8F76" fill-opacity="0.1"/>
+    <path d="M 100 95 C 120 75 125 45 118 32 C 108 50 104 75 100 95 Z" fill="#7A8F76" fill-opacity="0.1"/>
+
+    <!-- Mid Petals -->
+    <path d="M 100 95 C 65 85 55 60 62 48 C 76 64 88 84 100 95 Z" fill="#D48B7B" fill-opacity="0.08"/>
+    <path d="M 100 95 C 135 85 145 60 138 48 C 124 64 112 84 100 95 Z" fill="#D48B7B" fill-opacity="0.08"/>
+
+    <!-- Outer Low Petals -->
+    <path d="M 100 95 C 50 95 38 78 46 70 C 62 82 82 92 100 95 Z" fill="#FAF7F2" fill-opacity="0.5"/>
+    <path d="M 100 95 C 150 95 162 78 154 70 C 138 82 118 92 100 95 Z" fill="#FAF7F2" fill-opacity="0.5"/>
+
+    <!-- Base Pod & Waves -->
+    <path d="M 80 102 C 93 99 107 99 120 102" stroke="#7A8F76" stroke-width="1.6"/>
+    <circle cx="100" cy="18" r="2.5" fill="#C29B63"/>
+    <circle cx="82" cy="30" r="1.8" fill="#D48B7B"/>
+    <circle cx="118" cy="30" r="1.8" fill="#D48B7B"/>
+    <circle cx="62" cy="46" r="1.5" fill="#7A8F76"/>
+    <circle cx="138" cy="46" r="1.5" fill="#7A8F76"/>
+  </g>
+</svg>
