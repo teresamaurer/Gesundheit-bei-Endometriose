@@ -478,10 +478,11 @@ a:hover {
 }
 
 .hero-center-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: var(--rose-primary);
-  margin-bottom: 6px;
+  margin: 0;
   font-weight: 600;
+  line-height: 1.35;
 }
 
 .hero-center-card p {
