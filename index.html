@@ -37,21 +37,17 @@
           <li class="nav-item"><a href="#saeulen">Die 6 Säulen</a></li>
           <li class="nav-item"><a href="#atem-oase">Atem-Oase</a></li>
           <li class="nav-item"><a href="#sos-hilfe">SOS-Kompass</a></li>
-          <li class="nav-item"><a href="#kontakt">Begleitung</a></li>
         </ul>
       </nav>
 
-      <!-- CTA Button & Mobile Toggle -->
-      <div class="nav-btn-wrapper">
-        <a href="#kontakt" class="btn btn-primary btn-sm">Erstgespräch vereinbaren</a>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menü öffnen" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </div>
+      <!-- Mobile Toggle -->
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menü öffnen" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -758,84 +754,6 @@
     </div>
   </section>
 
-  <!-- ========================================================================
-       KONTAKT & PERSÖNLICHE BEGLEITUNG
-       ======================================================================== -->
-  <section class="section section-alt" id="kontakt">
-    <!-- Mandala-Wasserzeichen: Angeschnitten am linken unteren Rand -->
-    <div class="mandala-watermark mandala-watermark--contact-left" aria-hidden="true">
-      <img src="assets/mandala-gold.svg" alt="" loading="lazy">
-    </div>
-    <div class="container contact-grid">
-      <div class="contact-card-info">
-        <span class="section-tag">Du musst diesen Weg nicht alleine gehen</span>
-        <h3>Bereit für deine Schmerzbefreiung?</h3>
-        <p>
-          Ich lade dich herzlich zu einem unverbindlichen 20-minütigen Kennenlerngespräch ein. Lass uns gemeinsam hinschauen, wo du gerade stehst und wie wir deine 6 Säulen stärken können.
-        </p>
-
-        <ul class="contact-perks">
-          <li class="contact-perk-item">
-            <div class="contact-perk-icon">✓</div>
-            <span>Persönliche Analyse deiner Schmerz- & Zyklusmuster</span>
-          </li>
-          <li class="contact-perk-item">
-            <div class="contact-perk-icon">✓</div>
-            <span>Erste sofort umsetzbare Impulse für deinen Alltag</span>
-          </li>
-          <li class="contact-perk-item">
-            <div class="contact-perk-icon">✓</div>
-            <span>Ganzheitlicher Blick auf Nährstoffe & Nervensystem</span>
-          </li>
-        </ul>
-
-        <div style="background: rgba(255, 255, 255, 0.7); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light); font-size: 0.9rem;">
-          💬 <em>„Der wichtigste Schritt zur Besserung ist der Mut, sich selbst und den eigenen Körper wieder ernst zu nehmen.“</em>
-        </div>
-      </div>
-
-      <!-- Kontaktformular -->
-      <div class="contact-form-wrapper">
-        <h4 style="font-size: 1.5rem; margin-bottom: 8px;">Schreib mir eine Nachricht</h4>
-        <p style="font-size: 0.92rem; margin-bottom: 24px;">Ich antworte dir persönlich und mit viel Achtsamkeit.</p>
-
-        <form id="contactForm">
-          <div class="form-group">
-            <label class="form-label" for="contactName">Dein Name</label>
-            <input type="text" id="contactName" class="form-control" placeholder="z. B. Sophie Meier" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contactEmail">Deine E-Mail-Adresse</label>
-            <input type="email" id="contactEmail" class="form-control" placeholder="sophie@beispiel.de" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contactTopic">Dein wichtigstes Anliegen</label>
-            <select id="contactTopic" class="form-control">
-              <option value="erstgespraech">Kostenfreies Kennenlerngespräch (20 Min.)</option>
-              <option value="ernaehrung">Ernährungs- & Nährstoffberatung</option>
-              <option value="nervensystem">Nervensystem & Schmerzbegleitung</option>
-              <option value="allgemein">Allgemeine Frage zur Begleitung</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contactMessage">Deine Nachricht oder Situation (optional)</label>
-            <textarea id="contactMessage" class="form-control" placeholder="Erzähle mir kurz, was dich im Moment am meisten herausfordert..."></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%;">
-            Nachricht absenden
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
 
   <!-- ========================================================================
        FOOTER
@@ -870,7 +788,6 @@
             <li><a href="#ueber-mich">Über die Meisterin</a></li>
             <li><a href="#atem-oase">Interaktive Atem-Oase</a></li>
             <li><a href="#sos-hilfe">SOS-Schmerz-Kompass</a></li>
-            <li><a href="#kontakt">Begleitung anfragen</a></li>
           </ul>
         </div>
 
