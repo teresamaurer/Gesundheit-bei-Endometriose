@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   initContactForm();
   initSmoothScroll();
-  initAffirmationGenerator();
 });
 
 /* ==========================================================================
@@ -530,33 +529,5 @@ function initSmoothScroll() {
         });
       }
     });
-  });
-}
-
-/* ==========================================================================
-   7. DAILY AFFIRMATION GENERATOR
-   ========================================================================== */
-function initAffirmationGenerator() {
-  const refreshBtn = document.getElementById('refreshAffirmationBtn');
-  const quoteEl = document.getElementById('dailyAffirmationText');
-
-  if (!refreshBtn || !quoteEl) return;
-
-  const affirmations = [
-    "„Mein Körper kämpft nicht gegen mich. Er versucht mich zu schützen. Ich schenke ihm sanfte Geborgenheit.“",
-    "„Ich habe die Macht, mein Nervensystem in jeden Moment in die Ruhe zurückzuholen.“",
-    "„Meine Schmerzen definieren nicht meinen Wert oder meine Weiblichkeit.“",
-    "„Schonung ist kein Versagen, sondern weise Medizin für meine Zellen.“",
-    "„Ich bin Meisterin meines eigenen Körpers und kenne meine Bedürfnisse am besten.“",
-    "„Tag für Tag gewinnt mein Körper an Balance, Leichtigkeit und neuer Kraft zurück.“"
-  ];
-
-  refreshBtn.addEventListener('click', () => {
-    quoteEl.style.opacity = 0;
-    setTimeout(() => {
-      const randomAff = affirmations[Math.floor(Math.random() * affirmations.length)];
-      quoteEl.textContent = randomAff;
-      quoteEl.style.opacity = 1;
-    }, 250);
   });
 }
