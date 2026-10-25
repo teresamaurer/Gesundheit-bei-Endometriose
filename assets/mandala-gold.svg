@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none" stroke="currentColor">
+  <defs>
+    <!-- Weicher, warmer Gold-Schimmer -->
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4A359" stop-opacity="0.35"/>
+      <stop offset="40%" stop-color="#C29B63" stop-opacity="0.20"/>
+      <stop offset="80%" stop-color="#B88B4A" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#FAF7F2" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Zarter Gold-Verlauf fuer Bluetenblaetter -->
+    <linearGradient id="goldPetalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4A359" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#C29B63" stop-opacity="0.08"/>
+    </linearGradient>
+
+    <linearGradient id="goldCrownGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#C29B63" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#D4A359" stop-opacity="0.30"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Zentraler Gold-Glow -->
+  <circle cx="400" cy="400" r="380" fill="url(#goldGlow)" stroke="none" />
+
+  <!-- Konzentrische Gold-Ringe mit klarer Kontur -->
+  <circle cx="400" cy="400" r="30" stroke="#C29B63" stroke-width="2.2" opacity="0.95" />
+  <circle cx="400" cy="400" r="60" stroke="#D4A359" stroke-width="1.6" stroke-dasharray="3 6" opacity="0.9" />
+  <circle cx="400" cy="400" r="100" stroke="#B88B4A" stroke-width="1.8" opacity="0.85" />
+  <circle cx="400" cy="400" r="150" stroke="#C29B63" stroke-width="1.6" stroke-dasharray="5 7" opacity="0.85" />
+  <circle cx="400" cy="400" r="210" stroke="#D4A359" stroke-width="1.8" opacity="0.8" />
+  <circle cx="400" cy="400" r="280" stroke="#B88B4A" stroke-width="1.6" stroke-dasharray="4 8" opacity="0.75" />
+  <circle cx="400" cy="400" r="350" stroke="#C29B63" stroke-width="1.8" opacity="0.7" />
+  <circle cx="400" cy="400" r="375" stroke="#D4A359" stroke-width="1.4" opacity="0.65" />
+
+  <!-- 8-facher Kern & Lotusblaetter -->
+  <g transform="translate(400, 400)">
+    <!-- 8 Innere Bluetenblaetter -->
+    <g id="petal8Gold">
+      <path d="M 0 0 C 16 -25 16 -55 0 -80 C -16 -55 -16 -25 0 0 Z" fill="url(#goldPetalGrad)" stroke="#C29B63" stroke-width="1.8" />
+      <path d="M 0 -18 Q 9 -45 0 -70 Q -9 -45 0 -18" stroke="#D4A359" stroke-width="1.4" opacity="0.9"/>
+      <circle cx="0" cy="-80" r="3.5" fill="#B88B4A" stroke="#C29B63" stroke-width="0.8"/>
+    </g>
+    <use href="#petal8Gold" transform="rotate(45)" />
+    <use href="#petal8Gold" transform="rotate(90)" />
+    <use href="#petal8Gold" transform="rotate(135)" />
+    <use href="#petal8Gold" transform="rotate(180)" />
+    <use href="#petal8Gold" transform="rotate(225)" />
+    <use href="#petal8Gold" transform="rotate(270)" />
+    <use href="#petal8Gold" transform="rotate(315)" />
+
+    <!-- 16 Mittlere Bluetenkrone -->
+    <g id="petal16Gold">
+      <path d="M 0 -70 C 26 -100 36 -140 0 -170 C -36 -140 -26 -100 0 -70 Z" fill="#D4A359" fill-opacity="0.1" stroke="#B88B4A" stroke-width="1.6" />
+      <circle cx="0" cy="-170" r="4.5" fill="#C29B63" stroke="#9E7944" stroke-width="0.8"/>
+      <path d="M -16 -115 Q 0 -138 16 -115" stroke="#D4A359" stroke-width="1.4"/>
+      <circle cx="0" cy="-125" r="2" fill="#B88B4A" stroke="none"/>
+    </g>
+    <use href="#petal16Gold" transform="rotate(0)" />
+    <use href="#petal16Gold" transform="rotate(22.5)" />
+    <use href="#petal16Gold" transform="rotate(45)" />
+    <use href="#petal16Gold" transform="rotate(67.5)" />
+    <use href="#petal16Gold" transform="rotate(90)" />
+    <use href="#petal16Gold" transform="rotate(112.5)" />
+    <use href="#petal16Gold" transform="rotate(135)" />
+    <use href="#petal16Gold" transform="rotate(157.5)" />
+    <use href="#petal16Gold" transform="rotate(180)" />
+    <use href="#petal16Gold" transform="rotate(202.5)" />
+    <use href="#petal16Gold" transform="rotate(225)" />
+    <use href="#petal16Gold" transform="rotate(247.5)" />
+    <use href="#petal16Gold" transform="rotate(270)" />
+    <use href="#petal16Gold" transform="rotate(292.5)" />
+    <use href="#petal16Gold" transform="rotate(315)" />
+    <use href="#petal16Gold" transform="rotate(337.5)" />
+
+    <!-- 16 Aeussere Krone mit Gold-Ornamenten -->
+    <g id="crown16Gold">
+      <path d="M 0 -170 C 42 -210 52 -260 0 -300 C -52 -260 -42 -210 0 -170 Z" fill="url(#goldCrownGrad)" stroke="#C29B63" stroke-width="1.8"/>
+      <path d="M 0 -190 C 22 -230 27 -270 0 -290 C -27 -270 -22 -230 0 -190" stroke="#D4A359" stroke-width="1.4" opacity="0.85"/>
+      <circle cx="0" cy="-300" r="5.5" fill="#D4A359" stroke="#9E7944" stroke-width="1"/>
+      <circle cx="0" cy="-316" r="3" fill="#C29B63" stroke="none"/>
+      <!-- Seitliche Gold-Ranken -->
+      <path d="M -18 -230 C -36 -246 -46 -226 -30 -210" stroke="#B88B4A" stroke-width="1.4" opacity="0.85"/>
+      <path d="M 18 -230 C 36 -246 46 -226 30 -210" stroke="#B88B4A" stroke-width="1.4" opacity="0.85"/>
+    </g>
+    <use href="#crown16Gold" transform="rotate(0)" />
+    <use href="#crown16Gold" transform="rotate(22.5)" />
+    <use href="#crown16Gold" transform="rotate(45)" />
+    <use href="#crown16Gold" transform="rotate(67.5)" />
+    <use href="#crown16Gold" transform="rotate(90)" />
+    <use href="#crown16Gold" transform="rotate(112.5)" />
+    <use href="#crown16Gold" transform="rotate(135)" />
+    <use href="#crown16Gold" transform="rotate(157.5)" />
+    <use href="#crown16Gold" transform="rotate(180)" />
+    <use href="#crown16Gold" transform="rotate(202.5)" />
+    <use href="#crown16Gold" transform="rotate(225)" />
+    <use href="#crown16Gold" transform="rotate(247.5)" />
+    <use href="#crown16Gold" transform="rotate(270)" />
+    <use href="#crown16Gold" transform="rotate(292.5)" />
+    <use href="#crown16Gold" transform="rotate(315)" />
+    <use href="#crown16Gold" transform="rotate(337.5)" />
+
+    <!-- Aeussere Zierspitzen mit Gold-Perlen -->
+    <g id="outerTipGold">
+      <path d="M -9 -350 Q 0 -366 9 -350" stroke="#C29B63" stroke-width="1.8"/>
+      <circle cx="0" cy="-370" r="3.5" fill="#D4A359" stroke="#9E7944" stroke-width="0.8"/>
+    </g>
+    <use href="#outerTipGold" transform="rotate(11.25)" />
+    <use href="#outerTipGold" transform="rotate(33.75)" />
+    <use href="#outerTipGold" transform="rotate(56.25)" />
+    <use href="#outerTipGold" transform="rotate(78.75)" />
+    <use href="#outerTipGold" transform="rotate(101.25)" />
+    <use href="#outerTipGold" transform="rotate(123.75)" />
+    <use href="#outerTipGold" transform="rotate(146.25)" />
+    <use href="#outerTipGold" transform="rotate(168.75)" />
+    <use href="#outerTipGold" transform="rotate(191.25)" />
+    <use href="#outerTipGold" transform="rotate(213.75)" />
+    <use href="#outerTipGold" transform="rotate(236.25)" />
+    <use href="#outerTipGold" transform="rotate(258.75)" />
+    <use href="#outerTipGold" transform="rotate(281.25)" />
+    <use href="#outerTipGold" transform="rotate(303.75)" />
+    <use href="#outerTipGold" transform="rotate(326.25)" />
+    <use href="#outerTipGold" transform="rotate(348.75)" />
+  </g>
+</svg>
