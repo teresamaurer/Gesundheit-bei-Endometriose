@@ -1061,6 +1061,66 @@ a:hover {
   overflow: hidden;
 }
 
+/* Atemtechnik-Umschalter */
+.breathing-mode-selector {
+  display: inline-flex;
+  gap: 8px;
+  background: var(--bg-primary);
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light);
+  margin-bottom: 20px;
+  box-shadow: inset 0 2px 4px rgba(74, 53, 58, 0.04);
+  max-width: 100%;
+}
+
+.breathing-mode-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.breathing-mode-btn:hover {
+  color: var(--rose-primary);
+  background: rgba(212, 139, 123, 0.1);
+}
+
+.breathing-mode-btn.active {
+  background: var(--rose-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(212, 139, 123, 0.35);
+}
+
+.breathing-mode-btn:focus-visible {
+  outline: 2px solid var(--rose-dark);
+  outline-offset: 2px;
+}
+
+.breathing-mode-btn .mode-icon {
+  font-size: 1.15rem;
+}
+
+.breathing-mode-description {
+  max-width: 620px;
+  margin: 0 auto 24px auto;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  min-height: 52px;
+  transition: opacity 0.3s ease;
+}
+
 .breathing-mandala-wrapper {
   position: relative;
   width: 320px;
@@ -1102,6 +1162,24 @@ a:hover {
   z-index: 5;
   box-shadow: var(--shadow-glow);
   transition: transform 4s ease-in-out, background 4s ease;
+}
+
+/* Summ-Vibrationseffekt für Bienenatmung */
+.breathing-circle-inner.is-humming {
+  box-shadow: 0 0 32px rgba(194, 155, 99, 0.65), 0 0 18px rgba(212, 139, 123, 0.45);
+  animation: humVibration 1.4s ease-in-out infinite;
+}
+
+@keyframes humVibration {
+  0% {
+    box-shadow: 0 0 20px rgba(194, 155, 99, 0.35), 0 0 12px rgba(212, 139, 123, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(194, 155, 99, 0.75), 0 0 24px rgba(212, 139, 123, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(194, 155, 99, 0.35), 0 0 12px rgba(212, 139, 123, 0.3);
+  }
 }
 
 .breathing-instruction {
@@ -1551,6 +1629,21 @@ textarea.form-control {
 
   .about-features {
     grid-template-columns: 1fr;
+  }
+
+  .breathing-mode-selector {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: var(--radius-md);
+    gap: 6px;
+  }
+
+  .breathing-mode-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 0.9rem;
   }
 
   .breathing-mandala-wrapper {

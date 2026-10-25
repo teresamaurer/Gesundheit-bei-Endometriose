@@ -601,11 +601,27 @@
         <h2>Deine persönliche Atem-Oase</h2>
         <img src="assets/divider.svg" alt="Trenner" class="section-divider">
         <p>
-          Der heilsame 4-4-6 Rhythmus signalisiert deinem Beckenboden und deinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.
+          Wähle deine heilsame Atemtechnik, um das Nervensystem in die Ruhe zu führen, die Schmerzwahrnehmung im Gehirn zu dämpfen und den Beckenboden sanft zu entlasten.
         </p>
       </div>
 
       <div class="breathing-tool-container">
+        <!-- Atemtechnik-Auswahl -->
+        <div class="breathing-mode-selector" role="tablist" aria-label="Atemtechnik auswählen">
+          <button type="button" class="breathing-mode-btn active" data-mode="446" role="tab" aria-selected="true" id="tabMode446">
+            <span class="mode-icon">🌬️</span>
+            <span>4-4-6 Vagus-Atmung</span>
+          </button>
+          <button type="button" class="breathing-mode-btn" data-mode="bee" role="tab" aria-selected="false" id="tabModeBee">
+            <span class="mode-icon">🐝</span>
+            <span>Bienenatmung (Bhramari)</span>
+          </button>
+        </div>
+
+        <p class="breathing-mode-description" id="breathingModeDesc">
+          Der heilsame 4-4-6 Rhythmus signalisiert deinem Beckenboden und deinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.
+        </p>
+
         <!-- Zart animiertes pulsierendes Mandala -->
         <div class="breathing-mandala-wrapper">
           <div class="breathing-circle-outer"></div>

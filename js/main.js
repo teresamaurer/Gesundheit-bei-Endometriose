@@ -83,7 +83,7 @@ function initPillarTabs() {
 }
 
 /* ==========================================================================
-   3. ATEM-OASE: VAGUSNERV-ATMUNG (4 - 4 - 6)
+   3. ATEM-OASE: VAGUSNERV-ATMUNG (4-4-6 & BIENENATMUNG)
    ========================================================================== */
 function initBreathingTool() {
   const startBtn = document.getElementById('startBreathingBtn');
@@ -94,6 +94,8 @@ function initBreathingTool() {
   const mandalaBg = document.getElementById('breathingMandala');
   const innerCircle = document.getElementById('breathingInner');
   const affirmationEl = document.getElementById('breathingAffirmation');
+  const modeBtns = document.querySelectorAll('.breathing-mode-btn');
+  const modeDescEl = document.getElementById('breathingModeDesc');
 
   if (!startBtn || !instructionEl) return;
 
@@ -102,16 +104,54 @@ function initBreathingTool() {
   let timerInterval = null;
   let phaseTimeout = null;
   let audioCtx = null;
-
-  const affirmations = [
-    "Mein Becken darf weich, warm und entspannt sein.",
-    "Ich begegne meinem Körper mit Liebe statt mit Kampf.",
-    "Jeder sanfte Atemzug schenkt meinem Nervensystem Sicherheit.",
-    "Ich ehre das Bedürfnis meines Körpers nach echter Ruhe.",
-    "Heilung ist mein natürlicher Zustand.",
-    "Ich bin voller Kraft, Sanftheit und Vertrauen."
-  ];
+  let activeHumNode = null;
+  let activeMode = '446';
+  let currentPhaseIdx = 0;
+  let remainingSeconds = 0;
   let affirmationIdx = 0;
+
+  // Konfiguration der Atemtechniken
+  const breathingModes = {
+    '446': {
+      id: '446',
+      name: '4-4-6 Vagus-Atmung',
+      initialTimer: '4-4-6',
+      initialStatus: 'Klicke auf Start für sanfte 4-4-6 Atmung',
+      description: 'Der heilsame 4-4-6 Rhythmus signalisiert deinem Beckenboden und deinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.',
+      phases: [
+        { name: 'Einatmen', duration: 4, action: 'Sanft durch die Nase füllen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)', isHumming: false },
+        { name: 'Halten', duration: 4, action: 'In der Stille verweilen', scale: 1.35, freq: 528, color: 'rgba(194, 155, 99, 0.4)', isHumming: false },
+        { name: 'Ausatmen', duration: 6, action: 'Lippenbremse & Becken entspannen', scale: 1.0, freq: 396, color: 'rgba(118, 141, 114, 0.35)', isHumming: false }
+      ],
+      affirmations: [
+        "Mein Becken darf weich, warm und entspannt sein.",
+        "Ich begegne meinem Körper mit Liebe statt mit Kampf.",
+        "Jeder sanfte Atemzug schenkt meinem Nervensystem Sicherheit.",
+        "Ich ehre das Bedürfnis meines Körpers nach echter Ruhe.",
+        "Heilung ist mein natürlicher Zustand.",
+        "Ich bin voller Kraft, Sanftheit und Vertrauen."
+      ]
+    },
+    'bee': {
+      id: 'bee',
+      name: 'Bienenatmung (Bhramari)',
+      initialTimer: '4 - 8',
+      initialStatus: 'Klicke auf Start & summe beim Ausatmen',
+      description: 'Die Bienenatmung (Bhramari) beruhigt durch das sanfte Summen („Mmm“) direkt den Vagusnerv. Durch die doppelt so lange Ausatmung sinkt der Muskeltonus im Becken und innere Schmerzanspannung löst sich.',
+      phases: [
+        { name: 'Einatmen', duration: 4, action: 'Ruhig durch die Nase einatmen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)', isHumming: false },
+        { name: 'Ausatmen & Summen', duration: 8, action: 'Mit geschlossenem Mund summen („Mmm“)', scale: 1.0, freq: 216, color: 'rgba(194, 155, 99, 0.45)', isHumming: true }
+      ],
+      affirmations: [
+        "Die sanfte Vibration löst alle Anspannung in meinem Becken.",
+        "Mein Vagusnerv bringt tiefe Ruhe und Geborgenheit in jede Zelle.",
+        "Mit jedem Summen fließt krampfartige Enge sanft aus meinem Körper.",
+        "Ich erlaube meinem Unterleib, weich, warm und gelöst zu sein.",
+        "Mein Atem wiegt mich sanft in Sicherheit.",
+        "Tiefer Frieden und Leichtigkeit breiten sich in mir aus."
+      ]
+    }
+  };
 
   // Sound mit Web Audio API erzeugen (sanfter obertonreicher Klangschalen-Ton)
   function playBowlSound(freq = 432) {
@@ -144,19 +184,87 @@ function initBreathingTool() {
     }
   }
 
-  // Phasen: Einatmen (4s) -> Halten (4s) -> Ausatmen (6s)
-  const phases = [
-    { name: 'Einatmen', duration: 4, action: 'Sanft durch die Nase füllen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)' },
-    { name: 'Halten', duration: 4, action: 'In der Stille verweilen', scale: 1.35, freq: 528, color: 'rgba(194, 155, 99, 0.4)' },
-    { name: 'Ausatmen', duration: 6, action: 'Lippenbremse & Becken entspannen', scale: 1.0, freq: 396, color: 'rgba(118, 141, 114, 0.35)' }
-  ];
+  // Sanfter Summton für die Bienenatmung (Solfeggio 174 Hz mit weichen Obertönen)
+  function playHumDrone(duration = 8) {
+    if (!isSoundEnabled) return;
+    stopHumSound();
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
 
-  let currentPhaseIdx = 0;
-  let remainingSeconds = 0;
+      const now = audioCtx.currentTime;
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+
+      // 174 Hz (Solfeggio-Frequenz für Schmerzlinderung & Entspannung)
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(174, now);
+
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(174 * 2, now);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(400, now);
+
+      gainNode.gain.setValueAtTime(0.001, now);
+      // Sanftes Einblenden (0.5s)
+      gainNode.gain.linearRampToValueAtTime(0.08, now + 0.5);
+      // Gleichmäßig halten bis kurz vor Phasenende
+      const sustainTime = Math.max(0.6, duration - 0.8);
+      gainNode.gain.setValueAtTime(0.08, now + sustainTime);
+      // Sanftes Ausblenden
+      gainNode.gain.linearRampToValueAtTime(0.0001, now + duration);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + duration + 0.1);
+      osc2.stop(now + duration + 0.1);
+
+      activeHumNode = { osc1, osc2, gainNode };
+    } catch (e) {
+      console.log('Hum sound prevented:', e);
+    }
+  }
+
+  function stopHumSound() {
+    if (activeHumNode) {
+      try {
+        const { osc1, osc2, gainNode } = activeHumNode;
+        if (audioCtx && gainNode) {
+          gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+          gainNode.gain.setValueAtTime(gainNode.gain.value, audioCtx.currentTime);
+          gainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+        }
+        setTimeout(() => {
+          try {
+            osc1.stop();
+            osc2.stop();
+            osc1.disconnect();
+            osc2.disconnect();
+            gainNode.disconnect();
+          } catch (e) {}
+        }, 150);
+      } catch (e) {}
+      activeHumNode = null;
+    }
+  }
 
   function runNextPhase() {
     if (!isRunning) return;
 
+    const currentMode = breathingModes[activeMode];
+    const phases = currentMode.phases;
     const phase = phases[currentPhaseIdx];
     remainingSeconds = phase.duration;
 
@@ -164,16 +272,30 @@ function initBreathingTool() {
     statusEl.textContent = phase.action;
     timerEl.textContent = `${remainingSeconds}s`;
 
-    // Visuelle Transformation
+    // Visuelle Transformation synchron zur Phasenlänge (z.B. 4s vs. 8s)
     if (mandalaBg && innerCircle) {
+      mandalaBg.style.transition = `transform ${phase.duration}s ease-in-out`;
+      innerCircle.style.transition = `transform ${phase.duration}s ease-in-out, background ${phase.duration}s ease`;
+
       mandalaBg.style.transform = `scale(${phase.scale}) rotate(${currentPhaseIdx * 45}deg)`;
       innerCircle.style.transform = `scale(${phase.scale})`;
       innerCircle.style.backgroundColor = phase.color;
+
+      if (phase.isHumming) {
+        innerCircle.classList.add('is-humming');
+      } else {
+        innerCircle.classList.remove('is-humming');
+      }
     }
 
+    stopHumSound();
     playBowlSound(phase.freq);
+    if (phase.isHumming) {
+      playHumDrone(phase.duration);
+    }
 
     // Affirmation bei jedem neuen Zyklus wechseln
+    const affirmations = currentMode.affirmations;
     if (currentPhaseIdx === 0 && affirmationEl) {
       affirmationEl.style.opacity = 0;
       setTimeout(() => {
@@ -209,17 +331,80 @@ function initBreathingTool() {
     isRunning = false;
     clearInterval(timerInterval);
     clearTimeout(phaseTimeout);
+    stopHumSound();
+
     startBtn.textContent = 'Atem-Oase starten';
     startBtn.classList.replace('btn-outline', 'btn-primary');
     instructionEl.textContent = 'Bereit';
-    statusEl.textContent = 'Klicke auf Start für sanfte Vagusnerv-Atmung';
-    timerEl.textContent = '4-4-6';
+
+    const currentMode = breathingModes[activeMode];
+    statusEl.textContent = currentMode.initialStatus;
+    timerEl.textContent = currentMode.initialTimer;
 
     if (mandalaBg && innerCircle) {
+      mandalaBg.style.transition = 'transform 0.5s ease-in-out';
+      innerCircle.style.transition = 'transform 0.5s ease-in-out, background 0.5s ease';
       mandalaBg.style.transform = 'scale(1) rotate(0deg)';
       innerCircle.style.transform = 'scale(1)';
+      innerCircle.style.backgroundColor = '';
+      innerCircle.classList.remove('is-humming');
     }
   }
+
+  function switchMode(newModeId) {
+    if (!breathingModes[newModeId] || activeMode === newModeId) return;
+
+    if (isRunning) {
+      stopBreathing();
+    }
+
+    activeMode = newModeId;
+    const mode = breathingModes[activeMode];
+
+    // Buttons aktualisieren
+    modeBtns.forEach(btn => {
+      const isActive = btn.dataset.mode === activeMode;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Beschreibung aktualisieren
+    if (modeDescEl) {
+      modeDescEl.style.opacity = '0';
+      setTimeout(() => {
+        modeDescEl.textContent = mode.description;
+        modeDescEl.style.opacity = '1';
+      }, 200);
+    }
+
+    // Anzeige auf Anfangszustand des neuen Modus setzen
+    instructionEl.textContent = 'Bereit';
+    statusEl.textContent = mode.initialStatus;
+    timerEl.textContent = mode.initialTimer;
+
+    if (mandalaBg && innerCircle) {
+      mandalaBg.style.transition = 'transform 0.4s ease-in-out';
+      innerCircle.style.transition = 'transform 0.4s ease-in-out, background 0.4s ease';
+      mandalaBg.style.transform = 'scale(1) rotate(0deg)';
+      innerCircle.style.transform = 'scale(1)';
+      innerCircle.style.backgroundColor = '';
+      innerCircle.classList.remove('is-humming');
+    }
+
+    // Passende erste Affirmation anzeigen
+    affirmationIdx = 0;
+    if (affirmationEl) {
+      affirmationEl.textContent = `„${mode.affirmations[0]}“`;
+    }
+  }
+
+  // Modus-Umschalter Event Listener
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      if (mode) switchMode(mode);
+    });
+  });
 
   startBtn.addEventListener('click', () => {
     if (isRunning) {
@@ -238,6 +423,13 @@ function initBreathingTool() {
         : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg> Ton aus';
       if (isSoundEnabled) {
         playBowlSound(528);
+        const currentMode = breathingModes[activeMode];
+        const currentPhase = currentMode.phases[currentPhaseIdx];
+        if (isRunning && currentPhase && currentPhase.isHumming) {
+          playHumDrone(remainingSeconds);
+        }
+      } else {
+        stopHumSound();
       }
     });
   }
