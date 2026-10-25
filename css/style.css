@@ -68,7 +68,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtile Hintergrund-Textur / Zartes Mandala-Wasserzeichen im Body */
+/* Subtile Hintergrund-Textur / Zartes Mandala-Wasserzeichen im Body (5–15 % Deckkraft) */
 body::before {
   content: '';
   position: fixed;
@@ -79,7 +79,7 @@ body::before {
   background-image: url('../assets/mandala.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.045;
+  opacity: 0.06;
   pointer-events: none;
   z-index: -1;
   animation: slowRotate 180s linear infinite;
@@ -95,7 +95,7 @@ body::after {
   background-image: url('../assets/mandala.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.035;
+  opacity: 0.055;
   pointer-events: none;
   z-index: -1;
   animation: slowRotateReverse 220s linear infinite;
@@ -117,6 +117,8 @@ body::after {
   max-width: 1220px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Typografie Defaults */
@@ -528,6 +530,7 @@ a:hover {
 .section {
   padding: 90px 0;
   position: relative;
+  overflow: hidden;
 }
 
 .section-alt {
@@ -556,6 +559,110 @@ a:hover {
   margin: 12px auto 16px;
   display: block;
   opacity: 0.7;
+}
+
+/* ==========================================================================
+   MANDALA WASSERZEICHEN (TON-IN-TON, 5–15 % TRANSPARENZ)
+   Zartes SVG-Muster, angeschnitten aus dem Rand ragend hinter Abschnitten
+   ========================================================================== */
+.mandala-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0.085; /* Im Sweet Spot 5–15% */
+  transition: opacity 0.4s ease;
+}
+
+.mandala-watermark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: slowRotate 240s linear infinite;
+  will-change: transform;
+}
+
+.mandala-watermark--reverse img {
+  animation: slowRotateReverse 260s linear infinite;
+}
+
+/* Platzierungsvarianten: Leicht angeschnitten aus dem Bildschirmrand ragend */
+
+/* 1. Hero: Links oben angeschnitten */
+.mandala-watermark--hero-left {
+  top: -140px;
+  left: -200px;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.08;
+}
+
+/* 2. Über mich: Rechts vertikal zentriert hinter dem Text */
+.mandala-watermark--about-right {
+  top: 50%;
+  transform: translateY(-50%);
+  right: -220px;
+  width: clamp(400px, 48vw, 720px);
+  height: clamp(400px, 48vw, 720px);
+  opacity: 0.09;
+}
+
+/* 3. Die 6 Säulen: Links oben angeschnitten */
+.mandala-watermark--pillars-left {
+  top: 40px;
+  left: -230px;
+  width: clamp(420px, 50vw, 760px);
+  height: clamp(420px, 50vw, 760px);
+  opacity: 0.075;
+}
+
+/* 4. Die 6 Säulen Details: Rechts unten angeschnitten */
+.mandala-watermark--pillars-right {
+  bottom: -120px;
+  right: -210px;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.07;
+}
+
+/* 5. SOS Schmerz-Kompass: Rechts zentriert angeschnitten */
+.mandala-watermark--sos-right {
+  top: 50%;
+  transform: translateY(-50%);
+  right: -200px;
+  width: clamp(360px, 44vw, 650px);
+  height: clamp(360px, 44vw, 650px);
+  opacity: 0.08;
+}
+
+/* 6. FAQ: Links zentriert angeschnitten */
+.mandala-watermark--faq-left {
+  top: 50%;
+  transform: translateY(-50%);
+  left: -200px;
+  width: clamp(360px, 44vw, 640px);
+  height: clamp(360px, 44vw, 640px);
+  opacity: 0.075;
+}
+
+/* 7. Kontakt: Links unten angeschnitten */
+.mandala-watermark--contact-left {
+  bottom: -140px;
+  left: -180px;
+  width: clamp(380px, 46vw, 680px);
+  height: clamp(380px, 46vw, 680px);
+  opacity: 0.085;
+}
+
+/* Zentriertes Wasserzeichen (z. B. hinter Cards oder Textblöcken) */
+.mandala-watermark--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(360px, 45vw, 650px);
+  height: clamp(360px, 45vw, 650px);
+  opacity: 0.06;
 }
 
 /* ==========================================================================
@@ -1461,5 +1568,41 @@ textarea.form-control {
   .hero-mandala-container {
     width: 320px;
     height: 320px;
+  }
+
+  /* Mandala-Wasserzeichen auf mobilen Bildschirmen dezent anpassen */
+  .mandala-watermark {
+    opacity: 0.065;
+  }
+  .mandala-watermark--hero-left {
+    top: -100px;
+    left: -140px;
+  }
+  .mandala-watermark--about-right {
+    right: -150px;
+  }
+  .mandala-watermark--pillars-left {
+    left: -150px;
+  }
+  .mandala-watermark--pillars-right {
+    right: -140px;
+  }
+  .mandala-watermark--sos-right {
+    right: -130px;
+  }
+  .mandala-watermark--faq-left {
+    left: -130px;
+  }
+  .mandala-watermark--contact-left {
+    left: -120px;
+  }
+}
+
+/* Barrierefreiheit: Animationen anhalten bei prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .mandala-watermark img {
+    animation: none !important;
   }
 }
