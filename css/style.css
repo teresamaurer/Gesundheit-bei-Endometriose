@@ -630,7 +630,7 @@ a:hover {
   opacity: 0.42;
 }
 
-/* 5. SOS Schmerz-Kompass: Rechts zentriert angeschnitten */
+/* 5. SOS-Kompass: Rechts zentriert angeschnitten */
 .mandala-watermark--sos-right {
   top: 50%;
   transform: translateY(-50%);
@@ -1224,7 +1224,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   SOS SCHMERZ-KOMPASS
+   SOS-KOMPASS
    ========================================================================== */
 .sos-container {
   display: grid;
