@@ -1051,6 +1051,428 @@ a:hover {
 }
 
 /* ==========================================================================
+   NÄHRSTOFF-EINNAHME-GUIDE (SYNERGIEN, ANTAGONISMEN & TIMING)
+   ========================================================================== */
+.nutrient-guide-section {
+  margin-top: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+}
+
+.nutrient-guide-intro {
+  margin-bottom: 28px;
+}
+
+.nutrient-guide-intro h4 {
+  font-size: 1.45rem;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nutrient-guide-intro p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Synergien vs Antagonismen Grid */
+.synergy-antagonist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.synergy-card {
+  background: rgba(118, 141, 114, 0.08);
+  border: 1px solid rgba(118, 141, 114, 0.35);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.antagonist-card {
+  background: rgba(212, 139, 123, 0.08);
+  border: 1px solid rgba(212, 139, 123, 0.35);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.synergy-card h5 {
+  color: var(--sage-dark);
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.antagonist-card h5 {
+  color: var(--rose-dark);
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.interaction-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 0.9rem;
+}
+
+.interaction-item {
+  position: relative;
+  padding-left: 26px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.interaction-item::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+}
+
+.synergy-card .interaction-item::before {
+  content: "✓";
+  color: var(--sage-primary);
+  font-size: 1.1rem;
+}
+
+.antagonist-card .interaction-item::before {
+  content: "✕";
+  color: var(--rose-primary);
+  font-size: 1.05rem;
+}
+
+.interaction-item strong {
+  color: var(--text-main);
+  display: inline;
+}
+
+/* Timing-Plan (Morgen, Mittag, Nachmittag, Abend) */
+.timing-timeline-header {
+  margin-bottom: 18px;
+}
+
+.timing-timeline-header h5 {
+  font-size: 1.25rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.timing-timeline-header p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.timing-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.timing-card {
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.timing-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.timing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
+.timing-badge.morning {
+  background: var(--gold-light);
+  color: var(--gold-dark);
+}
+
+.timing-badge.noon {
+  background: var(--rose-light);
+  color: var(--rose-dark);
+}
+
+.timing-badge.afternoon {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+}
+
+.timing-badge.evening {
+  background: rgba(74, 53, 58, 0.1);
+  color: var(--text-main);
+}
+
+.timing-card h5 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.timing-card ul {
+  list-style: none;
+  font-size: 0.86rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.timing-card li {
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.45;
+}
+
+.timing-card li::before {
+  content: "•";
+  position: absolute;
+  left: 2px;
+  color: var(--gold-primary);
+  font-size: 1rem;
+}
+
+.timing-note {
+  margin-top: auto;
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+/* Caution Card für Kreatin */
+.caution-card {
+  background: rgba(212, 139, 123, 0.12);
+  border: 1px solid var(--rose-primary);
+  border-left: 4px solid var(--rose-primary);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.caution-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.caution-body h5 {
+  color: var(--rose-dark);
+  font-size: 1.08rem;
+  margin-bottom: 6px;
+}
+
+.caution-body p {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Tees & Heilkräuter Cards */
+.tea-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.tea-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  transition: var(--transition-smooth);
+}
+
+.tea-card:hover {
+  border-color: var(--sage-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.tea-card strong {
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.92rem;
+}
+
+.tea-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Info Callout Boxen */
+.info-callout {
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--sage-primary);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin-top: 18px;
+}
+
+.info-callout.rose-accent {
+  border-left-color: var(--rose-primary);
+  background: rgba(212, 139, 123, 0.05);
+}
+
+.info-callout.gold-accent {
+  border-left-color: var(--gold-primary);
+  background: rgba(194, 155, 99, 0.05);
+}
+
+.info-callout h5 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-callout p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Sektion: Alternative Ansätze */
+.alternative-section {
+  position: relative;
+}
+
+.alternative-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.alternative-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 32px 26px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.alternative-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.alternative-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.alternative-badge.gold {
+  background: var(--gold-light);
+}
+
+.alternative-badge.sage {
+  background: var(--sage-light);
+}
+
+.alternative-badge.rose {
+  background: var(--rose-light);
+}
+
+.alternative-card h3 {
+  font-size: 1.35rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.alternative-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.alternative-features {
+  list-style: none;
+  font-size: 0.88rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-muted);
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.alternative-features li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.alternative-features li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--gold-primary);
+  font-size: 0.8rem;
+}
+
+
+/* ==========================================================================
    ATEM-OASE: INTERAKTIVES VAGUSNERV-TOOL
    ========================================================================== */
 .breathing-tool-container {
@@ -1562,6 +1984,15 @@ textarea.form-control {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .timing-timeline-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .alternative-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1628,6 +2059,24 @@ textarea.form-control {
 
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .synergy-antagonist-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .timing-timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tea-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nutrient-guide-section {
+    padding: 24px 18px;
   }
 
   .about-features {
