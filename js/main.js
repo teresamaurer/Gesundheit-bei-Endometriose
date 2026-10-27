@@ -116,7 +116,7 @@ function initBreathingTool() {
       name: '4-4-6 Vagus-Atmung',
       initialTimer: '4-4-6',
       initialStatus: 'Klicke auf Start für sanfte 4-4-6 Atmung',
-      description: 'Der heilsame 4-4-6 Rhythmus signalisiert meinem Beckenboden und meinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.',
+      description: 'Der heilsame 4-4-6 Rhythmus signalisiert meinem Beckenboden und meinem Vagusnerv: „Du bist in Sicherheit.“ Die sanft verlängerte Ausatmung fördert spürbar die Entspannung und schenkt meinem Gehirn tiefe Ruhe.',
       phases: [
         { name: 'Einatmen', duration: 4, action: 'Sanft durch die Nase füllen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)', isHumming: false },
         { name: 'Halten', duration: 4, action: 'In der Stille verweilen', scale: 1.35, freq: 528, color: 'rgba(194, 155, 99, 0.4)', isHumming: false },
@@ -128,8 +128,8 @@ function initBreathingTool() {
         "Ich darf mich in Akzeptanz üben – dieser Moment darf genau so sein.",
         "Ich werde jeden Tag mehr zur besten Expertin für mich selbst.",
         "Mein Becken darf weich, warm und vollkommen in Sicherheit sein.",
-        "Ich begegne meinem Körper mit Liebe und Verständnis statt mit Kampf.",
-        "Ich lasse allen Leistungsdruck los. Ich bin gut so, wie ich bin.",
+        "Ich begegne meinem Körper mit tiefer Liebe, Fürsorge und Verständnis.",
+        "Ich erlaube mir Leichtigkeit, Freude und Ruhe. Ich bin wundervoll so, wie ich bin.",
         "Jeder sanfte Atemzug schenkt meinem Nervensystem tiefen Frieden."
       ]
     },
@@ -138,7 +138,7 @@ function initBreathingTool() {
       name: 'Bienenatmung (Bhramari)',
       initialTimer: '4 - 8',
       initialStatus: 'Klicke auf Start & summe beim Ausatmen',
-      description: 'Die Bienenatmung (Bhramari) beruhigt durch das sanfte Summen („Mmm“) direkt den Vagusnerv. Durch die doppelt so lange Ausatmung sinkt der Muskeltonus im Becken und innere Schmerzanspannung löst sich.',
+      description: 'Die Bienenatmung (Bhramari) beruhigt durch das sanfte Summen („Mmm“) direkt den Vagusnerv. Durch die doppelt so lange Ausatmung entspannt sich das Becken wunderbar und wohltuende Weite breitet sich aus.',
       phases: [
         { name: 'Einatmen', duration: 4, action: 'Ruhig durch die Nase einatmen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)', isHumming: false },
         { name: 'Ausatmen & Summen', duration: 8, action: 'Mit geschlossenem Mund summen („Mmm“)', scale: 1.0, freq: 216, color: 'rgba(194, 155, 99, 0.45)', isHumming: true }
@@ -146,11 +146,11 @@ function initBreathingTool() {
       affirmations: [
         "Ich bin stark, geduldig und sanft mit mir selbst.",
         "Ich übe mich in Akzeptanz und schenke meinem Körper volles Vertrauen.",
-        "Die sanfte Vibration löst alle Schutzspannung in meinem Becken.",
+        "Die sanfte Vibration schenkt meinem Becken wohltuende Weite, Weichheit und Entspannung.",
         "Mein Vagusnerv bringt tiefe Ruhe und Geborgenheit in jede Zelle.",
         "Ich werde Schritt für Schritt zur besten Expertin für meine Gesundheit.",
         "Ich ehre das Bedürfnis meines Körpers nach Stille und Erholung.",
-        "Mit jedem Summen fließt krampfartige Enge sanft aus meinem Körper."
+        "Mit jedem Summen entfalten sich wohlige Weite, Wärme und Gelassenheit in meinem Körper."
       ]
     }
   };
