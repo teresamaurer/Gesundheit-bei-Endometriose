@@ -116,20 +116,21 @@ function initBreathingTool() {
       name: '4-4-6 Vagus-Atmung',
       initialTimer: '4-4-6',
       initialStatus: 'Klicke auf Start für sanfte 4-4-6 Atmung',
-      description: 'Der heilsame 4-4-6 Rhythmus signalisiert deinem Beckenboden und deinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.',
+      description: 'Der heilsame 4-4-6 Rhythmus signalisiert meinem Beckenboden und meinem Vagusnerv: „Du bist sicher.“ Die verlängerte Ausatmung senkt nachweislich die Schmerzwahrnehmung im Gehirn.',
       phases: [
         { name: 'Einatmen', duration: 4, action: 'Sanft durch die Nase füllen', scale: 1.35, freq: 432, color: 'rgba(212, 139, 123, 0.45)', isHumming: false },
         { name: 'Halten', duration: 4, action: 'In der Stille verweilen', scale: 1.35, freq: 528, color: 'rgba(194, 155, 99, 0.4)', isHumming: false },
         { name: 'Ausatmen', duration: 6, action: 'Lippenbremse & Becken entspannen', scale: 1.0, freq: 396, color: 'rgba(118, 141, 114, 0.35)', isHumming: false }
       ],
       affirmations: [
-        "Mein Becken darf weich, warm und entspannt sein.",
-        "Ich begegne meinem Körper mit Liebe statt mit Kampf.",
-        "Jeder sanfte Atemzug schenkt meinem Nervensystem Sicherheit.",
-        "Ich verbinde mich voller Vertrauen mit meinem gesunden Zukunfts-Ich.",
-        "Ich ehre das Bedürfnis meines Körpers nach echter Ruhe.",
-        "Heilung ist mein natürlicher Zustand.",
-        "Ich bin voller Kraft, Sanftheit und Vertrauen."
+        "Ich bin stark. In mir wohnt eine unerschütterliche, stille Kraft.",
+        "Ich habe Geduld mit mir und schenke meinem Körper die Zeit, die er braucht.",
+        "Ich darf mich in Akzeptanz üben – dieser Moment darf genau so sein.",
+        "Ich werde jeden Tag mehr zur besten Expertin für mich selbst.",
+        "Mein Becken darf weich, warm und vollkommen in Sicherheit sein.",
+        "Ich begegne meinem Körper mit Liebe und Verständnis statt mit Kampf.",
+        "Ich lasse allen Leistungsdruck los. Ich bin gut so, wie ich bin.",
+        "Jeder sanfte Atemzug schenkt meinem Nervensystem tiefen Frieden."
       ]
     },
     'bee': {
@@ -143,12 +144,13 @@ function initBreathingTool() {
         { name: 'Ausatmen & Summen', duration: 8, action: 'Mit geschlossenem Mund summen („Mmm“)', scale: 1.0, freq: 216, color: 'rgba(194, 155, 99, 0.45)', isHumming: true }
       ],
       affirmations: [
-        "Die sanfte Vibration löst alle Anspannung in meinem Becken.",
+        "Ich bin stark, geduldig und sanft mit mir selbst.",
+        "Ich übe mich in Akzeptanz und schenke meinem Körper volles Vertrauen.",
+        "Die sanfte Vibration löst alle Schutzspannung in meinem Becken.",
         "Mein Vagusnerv bringt tiefe Ruhe und Geborgenheit in jede Zelle.",
-        "Mit jedem Summen fließt krampfartige Enge sanft aus meinem Körper.",
-        "Ich erlaube meinem Unterleib, weich, warm und gelöst zu sein.",
-        "Mein Atem wiegt mich sanft in Sicherheit.",
-        "Tiefer Frieden und Leichtigkeit breiten sich in mir aus."
+        "Ich werde Schritt für Schritt zur besten Expertin für meine Gesundheit.",
+        "Ich ehre das Bedürfnis meines Körpers nach Stille und Erholung.",
+        "Mit jedem Summen fließt krampfartige Enge sanft aus meinem Körper."
       ]
     }
   };
