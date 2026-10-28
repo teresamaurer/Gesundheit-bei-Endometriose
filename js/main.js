@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBreathingTool();
   initFaqAccordion();
   initContactForm();
-  initSmoothScroll();
+  initPageRouter();
 });
 
 /* ==========================================================================
@@ -509,28 +509,152 @@ function showToast(message) {
 }
 
 /* ==========================================================================
-   6. SMOOTH SCROLL & ACTIVE LINK HIGHLIGHTING
+   6. PAGE ROUTER (MULTI-PAGE VIEW NAVIGATION)
    ========================================================================== */
-function initSmoothScroll() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-item a');
+function initPageRouter() {
+  const pageViews = document.querySelectorAll('.page-view');
+  const navLinks = document.querySelectorAll('.nav-links .nav-item a');
+  const mainNav = document.getElementById('mainNav');
+  const mobileToggle = document.getElementById('mobileMenuToggle');
 
-  window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset;
+  // Mapping von URL-Hashes auf Seiten & Unter-Elemente
+  const routeMap = {
+    'startseite': { page: 'startseite', anchor: null },
+    'start': { page: 'startseite', anchor: null },
+    'ueber-mich': { page: 'startseite', anchor: 'ueber-mich' },
+    'faq': { page: 'startseite', anchor: 'faq' },
+    'saeulen': { page: 'saeulen', anchor: null },
+    'saeulen-details': { page: 'saeulen', anchor: 'saeulen-details' },
+    'alternative-ansaetze': { page: 'alternative-ansaetze', anchor: null },
+    'atem-oase': { page: 'atem-oase', anchor: null },
+    'sos-hilfe': { page: 'sos-hilfe', anchor: null }
+  };
 
-    sections.forEach(current => {
-      const sectionHeight = current.offsetHeight;
-      const sectionTop = current.offsetTop - 140;
-      const sectionId = current.getAttribute('id');
+  function switchPage(pageId, anchorId = null, updateHistory = true) {
+    const targetPageEl = document.getElementById(`page-${pageId}`)
+      || document.querySelector(`.page-view[data-page="${pageId}"]`)
+      || document.getElementById('page-start');
 
-      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${sectionId}`) {
-            link.classList.add('active');
-          }
-        });
+    if (!targetPageEl) return;
+
+    const actualPageId = targetPageEl.getAttribute('data-page') || 'startseite';
+
+    // 1. Alle Page-Views verbergen, Ziel-Page anzeigen
+    pageViews.forEach(view => {
+      view.classList.remove('active');
+    });
+    targetPageEl.classList.add('active');
+
+    // 2. Navigation-Links aktualisieren
+    navLinks.forEach(link => {
+      const linkPage = link.getAttribute('data-page') || link.getAttribute('href')?.replace('#', '');
+      const isActive = linkPage === actualPageId;
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
       }
     });
+
+    // 3. Mobiles Menü schließen (falls offen)
+    if (mainNav && mainNav.classList.contains('open')) {
+      mainNav.classList.remove('open');
+      if (mobileToggle) {
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        mobileToggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+      }
+    }
+
+    // 4. URL-Historie aktualisieren
+    const targetHash = anchorId ? `#${anchorId}` : `#${actualPageId}`;
+    if (updateHistory && window.location.hash !== targetHash) {
+      history.pushState(null, '', targetHash);
+    }
+
+    // 5. Scrollen: Zu spezifischem Anker oder ganz nach oben
+    if (anchorId) {
+      setTimeout(() => {
+        const anchorEl = document.getElementById(anchorId);
+        if (anchorEl) {
+          anchorEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 60);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  // Behandelt Hash aus URL
+  function handleHash() {
+    const rawHash = (window.location.hash || '').replace('#', '').trim();
+    if (!rawHash) {
+      switchPage('startseite', null, false);
+      return;
+    }
+
+    if (rawHash === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const route = routeMap[rawHash];
+    if (route) {
+      switchPage(route.page, route.anchor, false);
+    } else {
+      const el = document.getElementById(rawHash);
+      if (el) {
+        const parentPage = el.closest('.page-view');
+        if (parentPage) {
+          const pageId = parentPage.getAttribute('data-page');
+          switchPage(pageId, rawHash, false);
+          return;
+        }
+      }
+      switchPage('startseite', null, false);
+    }
+  }
+
+  // Klick-Handler für alle internen Hash-Links (Nav, Hero-Buttons, Footer etc.)
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    const hash = href.replace('#', '').trim();
+
+    if (!hash) return;
+
+    if (hash === 'top') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const route = routeMap[hash];
+    if (route) {
+      e.preventDefault();
+      switchPage(route.page, route.anchor, true);
+      return;
+    }
+
+    const el = document.getElementById(hash);
+    if (el) {
+      const parentPage = el.closest('.page-view');
+      if (parentPage) {
+        e.preventDefault();
+        const pageId = parentPage.getAttribute('data-page');
+        switchPage(pageId, hash, true);
+      }
+    }
   });
+
+  // Browser Vor/Zurück reagieren
+  window.addEventListener('popstate', handleHash);
+  window.addEventListener('hashchange', handleHash);
+
+  // Initial ausführen
+  handleHash();
 }

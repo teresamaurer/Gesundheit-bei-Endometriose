@@ -66,6 +66,9 @@ body {
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Subtile Hintergrund-Textur / Zartes Mandala-Wasserzeichen im Body in warmem Gold */
@@ -525,6 +528,35 @@ a:hover {
 @keyframes floatAnim {
   0% { transform: translateY(0px); }
   100% { transform: translateY(-10px); }
+}
+
+/* ==========================================================================
+   MULTI-PAGE VIEW NAVIGATION (SPA)
+   ========================================================================== */
+.site-main {
+  flex: 1 0 auto;
+  position: relative;
+  min-height: calc(100vh - 86px - 320px);
+}
+
+.page-view {
+  display: none;
+}
+
+.page-view.active {
+  display: block;
+  animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
@@ -1859,6 +1891,7 @@ textarea.form-control {
    FOOTER
    ========================================================================== */
 .site-footer {
+  margin-top: auto;
   background: #251B1D;
   color: #ECE5DE;
   padding: 80px 0 30px;

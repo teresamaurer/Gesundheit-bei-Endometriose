@@ -32,13 +32,11 @@
       <!-- Hauptnavigation -->
       <nav class="main-nav" id="mainNav" aria-label="Hauptnavigation">
         <ul class="nav-links">
-          <li class="nav-item"><a href="#startseite" class="active">Start</a></li>
-          <li class="nav-item"><a href="#ueber-mich">Mein Weg</a></li>
-          <li class="nav-item"><a href="#saeulen">Die 6 Säulen</a></li>
-          <li class="nav-item"><a href="#alternative-ansaetze">Alternative Ansätze</a></li>
-          <li class="nav-item"><a href="#atem-oase">Atem-Oase</a></li>
-          <li class="nav-item"><a href="#sos-hilfe">SOS-Kompass</a></li>
-          <li class="nav-item"><a href="#faq">Gedankenanker</a></li>
+          <li class="nav-item"><a href="#startseite" class="active" data-page="startseite">Start</a></li>
+          <li class="nav-item"><a href="#saeulen" data-page="saeulen">Die 6 Säulen</a></li>
+          <li class="nav-item"><a href="#alternative-ansaetze" data-page="alternative-ansaetze">Alternative Ansätze</a></li>
+          <li class="nav-item"><a href="#atem-oase" data-page="atem-oase">Atem-Oase</a></li>
+          <li class="nav-item"><a href="#sos-hilfe" data-page="sos-hilfe">SOS-Kompass</a></li>
         </ul>
       </nav>
 
@@ -53,10 +51,17 @@
     </div>
   </header>
 
-  <!-- ========================================================================
-       HERO SECTION
-       ======================================================================== -->
-  <section class="hero-section" id="startseite">
+  <main class="site-main" id="mainContent">
+
+    <!-- ========================================================================
+         PAGE 1: STARTSEITE (Start, Mein Weg & Gedankenanker)
+         ======================================================================== -->
+    <div class="page-view active" id="page-start" data-page="startseite">
+
+      <!-- ========================================================================
+           HERO SECTION
+           ======================================================================== -->
+      <section class="hero-section" id="startseite">
     <!-- Mandala-Wasserzeichen: Zart angeschnitten am linken oberen Rand -->
     <div class="mandala-watermark mandala-watermark--hero-left" aria-hidden="true">
       <img src="assets/mandala-gold.svg" alt="" loading="lazy">
@@ -160,10 +165,83 @@
     </div>
   </section>
 
-  <!-- ========================================================================
-       DIE 6 SÄULEN DER ENDOMETRIOSE-GESUNDHEIT (ÜBERSICHTSKARTEN)
-       ======================================================================== -->
-  <section class="section section-alt" id="saeulen">
+      <!-- ========================================================================
+           HÄUFIG GESTELLTE FRAGEN / GEDANKENANKER
+           ======================================================================== -->
+      <section class="section section-alt" id="faq">
+        <!-- Mandala-Wasserzeichen: Angeschnitten am linken Rand -->
+        <div class="mandala-watermark mandala-watermark--faq-left mandala-watermark--reverse" aria-hidden="true">
+          <img src="assets/mandala-gold.svg" alt="" loading="lazy">
+        </div>
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Meine inneren Anker</span>
+            <h2>Mutmacher für mich: Was ich mir in Erinnerung rufe</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <span>Was rufe ich mir in Erinnerung, wenn mein Körper nach intensiver Zuwendung verlangt?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Ich erinnere mich daran: Mein bisheriger Weg und all meine Fortschritte bleiben für immer mein wertvolles Fundament. Heilung vollzieht sich in sanften Wellen. Ich bleibe geduldig und übe mich in herzlicher Akzeptanz: Jede Welle ebbt wieder ab und bringt neue Leichtigkeit. Mein Körper ist mein treuer Verbündeter, der in diesem Augenblick nach meiner liebevollen Fürsorge und Geborgenheit fragt.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <span>Wie werde ich Schritt für Schritt zur besten Expertin für mich selbst?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Indem ich neugierig bleibe, mein biologisches Wissen vertiefe und meinen Körper achtsam voller Wohlwollen wahrnehme. Ich kenne und spüre meinen Körper von innen am allerbesten. Indem ich erfahre, welche Nährstoffe, welche Zyklusphasen und welche Entspannungsübungen mir Kraft schenken, treffe ich informierte, selbstbestimmte Entscheidungen auf Augenhöhe mit Ärzt:innen.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <span>Was bedeutet Akzeptanz für mich im Alltag – und warum ist sie echte Stärke?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Akzeptanz bedeutet, mein Ja zum gegenwärtigen Augenblick zu finden und Frieden mit dem Jetzt zu schließen. Wenn ich mir schenke: <em>„Heute ist ein empfindsamer Tag, und ich begegne mir mit voller Liebe“</em>, entspannt sich mein ganzes Nervensystem augenblicklich. Dadurch gewinnt mein Körper wunderbare Energie, die er voll und ganz für Regeneration, Zellerneuerung und Wohlbefinden nutzen kann.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                <span>Warum darf ich stolz auf meine eigene Stärke sein?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Weil ich jeden Tag aufs Neue lerne, voller Liebe und Güte mit mir selbst umzugehen. Wahre Stärke bedeutet, gut auf mich zu achten, mir Pausen voller Freude zu erlauben, geduldig zu bleiben und voller Vertrauen Schritt für Schritt meinen ganz eigenen, heilsamen Weg zu gehen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> <!-- /#page-start -->
+
+    <!-- ========================================================================
+         PAGE 2: DIE 6 SÄULEN
+         ======================================================================== -->
+    <div class="page-view" id="page-saeulen" data-page="saeulen">
+
+      <!-- ========================================================================
+           DIE 6 SÄULEN DER ENDOMETRIOSE-GESUNDHEIT (ÜBERSICHTSKARTEN)
+           ======================================================================== -->
+      <section class="section section-alt" id="saeulen">
     <!-- Mandala-Wasserzeichen: Angeschnitten am linken oberen Rand -->
     <div class="mandala-watermark mandala-watermark--pillars-left" aria-hidden="true">
       <img src="assets/mandala-gold.svg" alt="" loading="lazy">
@@ -894,11 +972,17 @@
       </div>
     </div>
   </section>
+    </div> <!-- /#page-saeulen -->
 
-  <!-- ========================================================================
-       KOMPLEMENTÄRE & ALTERNATIVE ANSÄTZE
-       ======================================================================== -->
-  <section class="section alternative-section" id="alternative-ansaetze">
+    <!-- ========================================================================
+         PAGE 3: ALTERNATIVE ANSÄTZE
+         ======================================================================== -->
+    <div class="page-view" id="page-alternative-ansaetze" data-page="alternative-ansaetze">
+
+      <!-- ========================================================================
+           KOMPLEMENTÄRE & ALTERNATIVE ANSÄTZE
+           ======================================================================== -->
+      <section class="section alternative-section" id="alternative-ansaetze">
     <div class="mandala-watermark mandala-watermark--pillars-left" aria-hidden="true">
       <img src="assets/mandala-gold.svg" alt="" loading="lazy">
     </div>
@@ -957,11 +1041,17 @@
       </div>
     </div>
   </section>
+    </div> <!-- /#page-alternative-ansaetze -->
 
-  <!-- ========================================================================
-       ATEM-OASE: INTERAKTIVES VAGUSNERV-TOOL
-       ======================================================================== -->
-  <section class="section" id="atem-oase">
+    <!-- ========================================================================
+         PAGE 4: ATEM-OASE
+         ======================================================================== -->
+    <div class="page-view" id="page-atem-oase" data-page="atem-oase">
+
+      <!-- ========================================================================
+           ATEM-OASE: INTERAKTIVES VAGUSNERV-TOOL
+           ======================================================================== -->
+      <section class="section" id="atem-oase">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Mein geschützter Ruheraum</span>
@@ -1018,11 +1108,17 @@
       </div>
     </div>
   </section>
+    </div> <!-- /#page-atem-oase -->
 
-  <!-- ========================================================================
-       SOS-KOMPASS
-       ======================================================================== -->
-  <section class="section section-alt" id="sos-hilfe">
+    <!-- ========================================================================
+         PAGE 5: SOS-KOMPASS
+         ======================================================================== -->
+    <div class="page-view" id="page-sos-hilfe" data-page="sos-hilfe">
+
+      <!-- ========================================================================
+           SOS-KOMPASS
+           ======================================================================== -->
+      <section class="section section-alt" id="sos-hilfe">
     <!-- Mandala-Wasserzeichen: Angeschnitten am rechten Rand -->
     <div class="mandala-watermark mandala-watermark--sos-right" aria-hidden="true">
       <img src="assets/mandala-gold.svg" alt="" loading="lazy">
@@ -1064,74 +1160,9 @@
       </div>
     </div>
   </section>
+    </div> <!-- /#page-sos-hilfe -->
 
-  <!-- ========================================================================
-       HÄUFIG GESTELLTE FRAGEN / GEDANKENANKER
-       ======================================================================== -->
-  <section class="section" id="faq">
-    <!-- Mandala-Wasserzeichen: Angeschnitten am linken Rand -->
-    <div class="mandala-watermark mandala-watermark--faq-left mandala-watermark--reverse" aria-hidden="true">
-      <img src="assets/mandala-gold.svg" alt="" loading="lazy">
-    </div>
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Meine inneren Anker</span>
-        <h2>Mutmacher für mich: Was ich mir in Erinnerung rufe</h2>
-        <img src="assets/divider.svg" alt="Trenner" class="section-divider">
-      </div>
-
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Was rufe ich mir in Erinnerung, wenn mein Körper nach intensiver Zuwendung verlangt?</span>
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Ich erinnere mich daran: Mein bisheriger Weg und all meine Fortschritte bleiben für immer mein wertvolles Fundament. Heilung vollzieht sich in sanften Wellen. Ich bleibe geduldig und übe mich in herzlicher Akzeptanz: Jede Welle ebbt wieder ab und bringt neue Leichtigkeit. Mein Körper ist mein treuer Verbündeter, der in diesem Augenblick nach meiner liebevollen Fürsorge und Geborgenheit fragt.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Wie werde ich Schritt für Schritt zur besten Expertin für mich selbst?</span>
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Indem ich neugierig bleibe, mein biologisches Wissen vertiefe und meinen Körper achtsam voller Wohlwollen wahrnehme. Ich kenne und spüre meinen Körper von innen am allerbesten. Indem ich erfahre, welche Nährstoffe, welche Zyklusphasen und welche Entspannungsübungen mir Kraft schenken, treffe ich informierte, selbstbestimmte Entscheidungen auf Augenhöhe mit Ärzt:innen.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Was bedeutet Akzeptanz für mich im Alltag – und warum ist sie echte Stärke?</span>
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Akzeptanz bedeutet, mein Ja zum gegenwärtigen Augenblick zu finden und Frieden mit dem Jetzt zu schließen. Wenn ich mir schenke: <em>„Heute ist ein empfindsamer Tag, und ich begegne mir mit voller Liebe“</em>, entspannt sich mein ganzes Nervensystem augenblicklich. Dadurch gewinnt mein Körper wunderbare Energie, die er voll und ganz für Regeneration, Zellerneuerung und Wohlbefinden nutzen kann.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Warum darf ich stolz auf meine eigene Stärke sein?</span>
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Weil ich jeden Tag aufs Neue lerne, voller Liebe und Güte mit mir selbst umzugehen. Wahre Stärke bedeutet, gut auf mich zu achten, mir Pausen voller Freude zu erlauben, geduldig zu bleiben und voller Vertrauen Schritt für Schritt meinen ganz eigenen, heilsamen Weg zu gehen.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  </main> <!-- /#mainContent -->
 
   <!-- ========================================================================
        FOOTER
@@ -1163,10 +1194,11 @@
           <h5>Navigation</h5>
           <ul class="footer-links">
             <li><a href="#startseite">Startseite</a></li>
-            <li><a href="#ueber-mich">Mein Weg & Mutmacher</a></li>
+            <li><a href="#saeulen">Die 6 Säulen</a></li>
             <li><a href="#alternative-ansaetze">Alternative Ansätze</a></li>
             <li><a href="#atem-oase">Atem-Oase</a></li>
             <li><a href="#sos-hilfe">SOS-Kompass</a></li>
+            <li><a href="#ueber-mich">Mein Weg &amp; Mutmacher</a></li>
             <li><a href="#faq">Gedankenanker</a></li>
           </ul>
         </div>
@@ -1184,7 +1216,7 @@
           Mein persönliches Wissens- und Mutmacher-Portal bei Endometriose. Erstellt für meinen individuellen Weg zur Expertin für mich selbst.
         </div>
         <div style="display: flex; gap: 20px;">
-          <a href="#startseite" style="color: var(--gold-primary);">Nach oben ↑</a>
+          <a href="#top" style="color: var(--gold-primary);">Nach oben ↑</a>
         </div>
       </div>
     </div>
