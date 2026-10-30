@@ -154,7 +154,10 @@
   }
 
   function seedInitialData() {
-    const today = getTodayDateString();
+    const todayObj = parseDateKey(getTodayDateString());
+    
+    // 1. Heute: Eisprung, milde Schmerzen, Meditation, Dankbar
+    const today = formatDateKey(todayObj);
     trackerData[today] = {
       cycleDay: 14,
       cyclePhase: 'ovulation',
@@ -185,9 +188,97 @@
       nutritionAntiInflammatory: true,
       nutritionTriggers: [],
       helpersUsed: ['Wärmflasche', 'Spaziergang im Grünen'],
+      hasPhysio: false,
+      hasDoctor: false,
       notesDaily: 'Heute morgen 15 Minuten Vagus-Atmung in der Atem-Oase gemacht. Das hat meinem Unterleib spürbar gut getan!',
       customValues: {}
     };
+
+    // 2. Gestern: Arzttermin im Endo-Zentrum, Physio, stärkere Schmerzen
+    const yesterdayObj = new Date(todayObj);
+    yesterdayObj.setDate(todayObj.getDate() - 1);
+    const yesterday = formatDateKey(yesterdayObj);
+    trackerData[yesterday] = {
+      cycleDay: 13,
+      cyclePhase: 'follicular',
+      flow: 'none',
+      cycleSymptoms: [],
+      sleepHours: 6.5,
+      sleepQuality: 3,
+      sleepSymptoms: ['Aufwachen durch Schmerz'],
+      painAbdomen: 7,
+      painBack: 5,
+      painHead: 2,
+      painPelvic: 4,
+      painType: ['krampfartig', 'stechend'],
+      medsPain: ['Ibuprofen 400mg', 'Buscopan'],
+      medsSupplements: ['Magnesium'],
+      medsCustom: 'Mittags Ibuprofen 400mg eingenommen',
+      endoBellySeverity: 3,
+      endoBellySymptoms: ['Druckschmerz', 'Fester Bauch'],
+      digestionStatus: 'bloating',
+      digestionPain: 3,
+      digestionSymptoms: [],
+      energyLevel: 4,
+      brainFogLevel: 5,
+      meditationDone: true,
+      meditationMinutes: 20,
+      meditationTypes: ['Body Scan'],
+      moodTags: ['Überfordert', 'Sanft mit mir'],
+      nutritionAntiInflammatory: true,
+      nutritionTriggers: [],
+      helpersUsed: ['Wärmekissen', 'Kräutertee'],
+      hasDoctor: true,
+      doctorType: 'Endometriose-Zentrum',
+      doctorNotes: 'Ultraschall-Befund besprochen, gute Empfehlungen zur Physiotherapie bekommen',
+      hasPhysio: true,
+      physioTypes: ['Beckenboden-Physio'],
+      physioCustom: 'Mobilisation Becken & Vagusnerv',
+      physioNotes: 'Sanfte Triggerpunktbehandlung, fühlte sich danach entlasteter an',
+      notesDaily: 'Gestern war ein fordernder Tag mit Arzt- und Therapietermin, aber ich habe gut für mich gesorgt.',
+      customValues: {}
+    };
+
+    // 3. Vorgestern: Schmerzfreier, ausgeglichener Tag
+    const dayBeforeObj = new Date(todayObj);
+    dayBeforeObj.setDate(todayObj.getDate() - 2);
+    const dayBefore = formatDateKey(dayBeforeObj);
+    trackerData[dayBefore] = {
+      cycleDay: 12,
+      cyclePhase: 'follicular',
+      flow: 'none',
+      cycleSymptoms: [],
+      sleepHours: 8,
+      sleepQuality: 5,
+      sleepSymptoms: [],
+      painAbdomen: 0,
+      painBack: 0,
+      painHead: 0,
+      painPelvic: 0,
+      painType: [],
+      medsPain: [],
+      medsSupplements: ['Omega-3', 'Zink'],
+      medsCustom: '',
+      endoBellySeverity: 0,
+      endoBellySymptoms: [],
+      digestionStatus: 'normal',
+      digestionPain: 0,
+      digestionSymptoms: [],
+      energyLevel: 8,
+      brainFogLevel: 9,
+      meditationDone: true,
+      meditationMinutes: 10,
+      meditationTypes: ['Stilles Verweilen'],
+      moodTags: ['Ausgeglichen', 'Hoffnungsvoll'],
+      nutritionAntiInflammatory: true,
+      nutritionTriggers: [],
+      helpersUsed: ['Sanftes Dehnen'],
+      hasDoctor: false,
+      hasPhysio: false,
+      notesDaily: 'Ein wunderbar schmerzfreier Tag voller Leichtigkeit!',
+      customValues: {}
+    };
+
     saveTrackerData();
   }
 
@@ -246,6 +337,70 @@
     dateInput.value = currentDate;
   }
 
+  function hasAnyDayData(data) {
+    if (!data) return false;
+    return !!(
+      data.cycleDay ||
+      (data.cyclePhase && data.cyclePhase !== '') ||
+      (data.flow && data.flow !== 'none') ||
+      (data.cycleSymptoms && data.cycleSymptoms.length) ||
+      Number(data.painAbdomen) > 0 ||
+      Number(data.painBack) > 0 ||
+      Number(data.painHead) > 0 ||
+      Number(data.painPelvic) > 0 ||
+      (data.painType && data.painType.length) ||
+      (data.medsPain && data.medsPain.length) ||
+      (data.medsSupplements && data.medsSupplements.length) ||
+      data.medsCustom ||
+      data.hasDoctor ||
+      data.doctorType ||
+      data.hasPhysio ||
+      (data.physioTypes && data.physioTypes.length) ||
+      Number(data.endoBellySeverity) > 0 ||
+      data.meditationDone ||
+      (data.moodTags && data.moodTags.length) ||
+      data.notesDaily
+    );
+  }
+
+  function getMaxPainForDay(data) {
+    if (!data) return 0;
+    return Math.max(
+      Number(data.painAbdomen) || 0,
+      Number(data.painBack) || 0,
+      Number(data.painHead) || 0,
+      Number(data.painPelvic) || 0
+    );
+  }
+
+  function getCyclePhaseIcon(phase) {
+    const map = {
+      menstruation: '🩸',
+      follicular: '🌱',
+      ovulation: '🌸',
+      luteal: '🌙'
+    };
+    return map[phase] || '✨';
+  }
+
+  function getCyclePhaseShortName(phase) {
+    const map = {
+      menstruation: 'Periode',
+      follicular: 'Follikel',
+      ovulation: 'Eisprung',
+      luteal: 'Luteal'
+    };
+    return map[phase] || '';
+  }
+
+  function getPainChipClass(val) {
+    val = Number(val) || 0;
+    if (val === 0) return 'pain-chip pain-chip-0';
+    if (val <= 3) return 'pain-chip pain-chip-mild';
+    if (val <= 6) return 'pain-chip pain-chip-mod';
+    return 'pain-chip pain-chip-sev';
+  }
+
   function renderWeekStrip() {
     const stripEl = document.getElementById('trackerWeekStrip');
     if (!stripEl) return;
@@ -253,6 +408,18 @@
     stripEl.innerHTML = '';
     const centerDate = parseDateKey(currentDate);
     const todayStr = getTodayDateString();
+
+    // Datumsbereich der aktuellen Woche für den Header berechnen
+    const startObj = new Date(centerDate);
+    startObj.setDate(centerDate.getDate() - 3);
+    const endObj = new Date(centerDate);
+    endObj.setDate(centerDate.getDate() + 3);
+
+    const rangeEl = document.getElementById('stripWeekRangeDisplay');
+    if (rangeEl) {
+      const months = ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.'];
+      rangeEl.textContent = `${startObj.getDate()}. ${months[startObj.getMonth()]} – ${endObj.getDate()}. ${months[endObj.getMonth()]} ${endObj.getFullYear()}`;
+    }
     
     // 3 Tage davor, der gewählte Tag, 3 Tage danach (7 Tage-Fenster)
     for (let i = -3; i <= 3; i++) {
@@ -266,15 +433,157 @@
 
       const isCurrent = dayKey === currentDate;
       const isToday = dayKey === todayStr;
-      const hasData = trackerData[dayKey] && Object.keys(trackerData[dayKey]).length > 0;
+      const data = trackerData[dayKey];
+      const hasData = hasAnyDayData(data);
 
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `week-strip-day ${isCurrent ? 'active' : ''} ${isToday ? 'today' : ''}`;
+      btn.className = `week-strip-card ${isCurrent ? 'active' : ''} ${isToday ? 'today' : ''}`;
+      btn.setAttribute('aria-label', `Tag ${dayNum}. ${weekdayStr}, ${formatGermanDate(dayKey)}`);
+
+      let badgesHtml = '';
+      let cycleHtml = '';
+
+      if (hasData) {
+        // 1. Zyklus & Phase
+        if (data.cycleDay || data.cyclePhase) {
+          const phaseClass = data.cyclePhase ? `phase-${data.cyclePhase}` : '';
+          const phaseIcon = getCyclePhaseIcon(data.cyclePhase);
+          const ztText = data.cycleDay ? `ZT ${data.cycleDay}` : '';
+          const phaseName = getCyclePhaseShortName(data.cyclePhase);
+          cycleHtml = `
+            <div class="strip-card-cycle">
+              <span class="strip-cycle-badge ${phaseClass}" title="Zyklustag: ${data.cycleDay || '—'}, Phase: ${getCyclePhaseLabel(data.cyclePhase)}">
+                ${phaseIcon} ${ztText ? `<strong>${ztText}</strong>` : ''} ${phaseName ? `· ${phaseName}` : ''}
+              </span>
+            </div>
+          `;
+        }
+
+        const badgesList = [];
+
+        // 2. Schmerz (Schmerzhaft oder nicht?)
+        const maxPain = getMaxPainForDay(data);
+        if (maxPain === 0) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-pain-0" title="Schmerzfrei (0/10)">
+              🟢 Schmerzfrei
+            </span>
+          `);
+        } else if (maxPain <= 3) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-pain-mild" title="Leichte Schmerzen (Intensität ${maxPain}/10)">
+              🟡 ⚡ ${maxPain}/10
+            </span>
+          `);
+        } else if (maxPain <= 6) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-pain-mod" title="Spürbare Schmerzen (Intensität ${maxPain}/10)">
+              🟠 ⚡ ${maxPain}/10
+            </span>
+          `);
+        } else {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-pain-sev" title="Starke Schmerzen (Intensität ${maxPain}/10)">
+              🔴 ⚡ ${maxPain}/10
+            </span>
+          `);
+        }
+
+        // 3. Arzttermin / Physio
+        const hasDoctor = data.hasDoctor || data.doctorType;
+        const hasPhysio = data.hasPhysio || (data.physioTypes && data.physioTypes.length) || data.physioCustom;
+        if (hasDoctor && hasPhysio) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-doctor" title="Arzt- &amp; Physiotermin wahrgenommen">
+              🩺+💆‍♀️ Termine
+            </span>
+          `);
+        } else if (hasDoctor) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-doctor" title="Arzttermin: ${escapeHtml(data.doctorType || 'Wahrgenommen')}">
+              🩺 Arzttermin
+            </span>
+          `);
+        } else if (hasPhysio) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-doctor" title="Physiotherapie wahrgenommen">
+              💆‍♀️ Physio
+            </span>
+          `);
+        }
+
+        // 4. Medikamente / Vitalstoffe
+        const hasMeds = (data.medsPain && data.medsPain.length) || (data.medsSupplements && data.medsSupplements.length) || data.medsCustom;
+        if (hasMeds) {
+          const medNames = [
+            ...(data.medsPain || []),
+            ...(data.medsSupplements || [])
+          ];
+          const tooltip = medNames.length ? escapeHtml(medNames.join(', ')) : 'Medikamente/Vitalstoffe eingenommen';
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-meds" title="${tooltip}">
+              💊 Meds
+            </span>
+          `);
+        }
+
+        // 5. Meditation & Entspannung
+        if (data.meditationDone) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-meditation" title="Meditation: ${data.meditationMinutes || 10} Minuten praktiziert">
+              🧘‍♀️ ${data.meditationMinutes || 10}m
+            </span>
+          `);
+        }
+
+        // 6. Stimmung & Wohlbefinden / Energie
+        if (data.moodTags && data.moodTags.length) {
+          const firstMood = escapeHtml(data.moodTags[0]);
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-mood" title="Seelenbefinden: ${escapeHtml(data.moodTags.join(', '))}">
+              💖 ${firstMood}
+            </span>
+          `);
+        } else if (data.energyLevel) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-mood" title="Energie-Level: ${data.energyLevel}/10">
+              🔋 ${data.energyLevel}/10
+            </span>
+          `);
+        }
+
+        // 7. Endo-Belly
+        if (Number(data.endoBellySeverity) > 0) {
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-belly" title="Endo-Belly Stufe ${data.endoBellySeverity}">
+              🎈 Stufe ${data.endoBellySeverity}
+            </span>
+          `);
+        }
+
+        badgesHtml = `
+          <div class="strip-card-badges">
+            ${badgesList.join('')}
+          </div>
+        `;
+      } else {
+        badgesHtml = `
+          <div class="strip-card-empty">
+            <span class="plus-sign">+</span>
+            <span>Eintragen</span>
+          </div>
+        `;
+      }
+
       btn.innerHTML = `
-        <span class="strip-weekday">${weekdayStr}</span>
-        <span class="strip-daynumber">${dayNum}</span>
-        ${hasData ? '<span class="strip-has-entry" title="Eintrag vorhanden"></span>' : '<span style="height: 5px; margin-top: 4px;"></span>'}
+        <div class="strip-card-header">
+          <span class="strip-weekday">${weekdayStr}</span>
+          <span class="strip-daynumber">${dayNum}</span>
+          ${isToday ? '<span class="strip-today-badge">Heute</span>' : ''}
+        </div>
+        ${cycleHtml}
+        ${badgesHtml}
       `;
 
       btn.addEventListener('click', () => {
@@ -1364,6 +1673,12 @@
       });
     }
 
+    // Wochen-Buttons (◀ Vorherige 7 Tage / Nächste 7 Tage ▶)
+    const stripPrevBtn = document.getElementById('stripPrevWeekBtn');
+    const stripNextBtn = document.getElementById('stripNextWeekBtn');
+    if (stripPrevBtn) stripPrevBtn.addEventListener('click', () => stepDate(-7));
+    if (stripNextBtn) stripNextBtn.addEventListener('click', () => stepDate(7));
+
     // 2. Toolbar: Kategorie hinzufügen (+ Button)
     const addCatBtn = document.getElementById('trackerAddCategoryBtn');
     const addModal = document.getElementById('modalAddCategory');
@@ -1430,7 +1745,7 @@
       closePrintModalBtn.addEventListener('click', () => printModal.classList.remove('active'));
     }
 
-    // Druck-Option Karten (Tagesbericht vs. 14 Tage Verlauf)
+    // Druck-Option Karten (Wochenübersicht vs. Monatsübersicht vs. Tagesbericht)
     if (printModal) {
       printModal.querySelectorAll('.print-option-card').forEach(card => {
         card.addEventListener('click', () => {
@@ -1443,7 +1758,7 @@
     if (executePrintBtn) {
       executePrintBtn.addEventListener('click', () => {
         const activeOption = printModal.querySelector('.print-option-card.active');
-        const printMode = activeOption ? activeOption.getAttribute('data-mode') : 'day';
+        const printMode = activeOption ? activeOption.getAttribute('data-mode') : 'week';
         const includeNotesCb = document.getElementById('printIncludeAppointmentNotes');
         const includePrivateNotes = includeNotesCb ? includeNotesCb.checked : false;
         printModal.classList.remove('active');
@@ -1558,16 +1873,33 @@
     const printContainer = document.getElementById('printReportContainer');
     if (!printContainer) return;
 
-    if (mode === 'day') {
-      printContainer.innerHTML = generateDayPrintHtml(currentDate, includePrivateNotes);
-    } else {
-      printContainer.innerHTML = generateHistoryPrintHtml(14, includePrivateNotes);
+    // 1. Dynamisches @page CSS injizieren für saubere Orientierung (Querformat für Woche & Monat)
+    let pageStyleEl = document.getElementById('printDynamicOrientationStyle');
+    if (!pageStyleEl) {
+      pageStyleEl = document.createElement('style');
+      pageStyleEl.id = 'printDynamicOrientationStyle';
+      document.head.appendChild(pageStyleEl);
     }
 
-    // Druckdialog des Browsers aufrufen
+    if (mode === 'week' || mode === 'month') {
+      pageStyleEl.textContent = '@page { size: A4 landscape; margin: 8mm 8mm; }';
+    } else {
+      pageStyleEl.textContent = '@page { size: A4 portrait; margin: 10mm 10mm; }';
+    }
+
+    // 2. Inhalt generieren
+    if (mode === 'week') {
+      printContainer.innerHTML = generateWeekPrintHtml(currentDate, includePrivateNotes);
+    } else if (mode === 'month') {
+      printContainer.innerHTML = generateMonthPrintHtml(currentDate, includePrivateNotes);
+    } else {
+      printContainer.innerHTML = generateDayPrintHtml(currentDate, includePrivateNotes);
+    }
+
+    // 3. Druckdialog aufrufen
     setTimeout(() => {
       window.print();
-    }, 150);
+    }, 180);
   }
 
   function renderPrintAppointmentsCard(data, includePrivateNotes) {
@@ -1740,84 +2072,385 @@
     `;
   }
 
-  function generateHistoryPrintHtml(daysCount, includePrivateNotes = false) {
-    const centerDate = parseDateKey(currentDate);
-    const rows = [];
+  function getDigestionStatusShort(status) {
+    const map = {
+      normal: 'Norm',
+      constipation: 'Verstopf.',
+      diarrhea: 'Durchfall',
+      bloating: 'Blähung'
+    };
+    return map[status] || '—';
+  }
 
-    for (let i = daysCount - 1; i >= 0; i--) {
+  function generateWeekPrintHtml(centerDateStr, includePrivateNotes = false) {
+    const centerDate = parseDateKey(centerDateStr);
+    const days = [];
+    let totalPainSum = 0;
+    let painDaysCount = 0;
+    let medsDaysCount = 0;
+    let appointmentsCount = 0;
+    let totalMeditationMins = 0;
+
+    for (let i = -3; i <= 3; i++) {
+      const d = new Date(centerDate);
+      d.setDate(centerDate.getDate() + i);
+      const key = formatDateKey(d);
+      const data = trackerData[key] || {};
+      days.push({ dateObj: d, key: key, data: data });
+
+      const maxP = getMaxPainForDay(data);
+      if (maxP > 0) {
+        painDaysCount++;
+        totalPainSum += maxP;
+      }
+      if ((data.medsPain && data.medsPain.length) || (data.medsSupplements && data.medsSupplements.length) || data.medsCustom) {
+        medsDaysCount++;
+      }
+      if (data.hasDoctor || data.doctorType || data.hasPhysio || (data.physioTypes && data.physioTypes.length)) {
+        appointmentsCount++;
+      }
+      if (data.meditationDone) {
+        totalMeditationMins += (Number(data.meditationMinutes) || 10);
+      }
+    }
+
+    const avgPain = painDaysCount > 0 ? (totalPainSum / painDaysCount).toFixed(1) : '0';
+    const dateRangeStr = `${formatGermanDate(days[0].key)} bis ${formatGermanDate(days[6].key)}`;
+
+    const rows = days.map(item => {
+      const d = item.dateObj;
+      const data = item.data;
+      const weekdays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+      const dateShort = `${weekdays[d.getDay()]}, ${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+
+      // Zyklus & Phase
+      let cycleCell = '—';
+      if (data.cycleDay || data.cyclePhase || (data.flow && data.flow !== 'none')) {
+        const parts = [];
+        if (data.cycleDay) parts.push(`<strong>ZT ${data.cycleDay}</strong>`);
+        if (data.cyclePhase) parts.push(getCyclePhaseLabel(data.cyclePhase));
+        if (data.flow && data.flow !== 'none') parts.push(`Blutung: ${getFlowLabel(data.flow)}`);
+        cycleCell = parts.join('<br>');
+      }
+
+      // Schmerzen (Unterleib, Rücken, Kopf, Becken)
+      const painParts = [];
+      const pAbd = Number(data.painAbdomen) || 0;
+      const pBck = Number(data.painBack) || 0;
+      const pHd = Number(data.painHead) || 0;
+      const pPel = Number(data.painPelvic) || 0;
+
+      painParts.push(`Bauch: <span class="${getPainChipClass(pAbd)}">${pAbd}/10</span>`);
+      if (pBck > 0) painParts.push(`Rücken: <span class="${getPainChipClass(pBck)}">${pBck}/10</span>`);
+      if (pHd > 0) painParts.push(`Kopf: <span class="${getPainChipClass(pHd)}">${pHd}/10</span>`);
+      if (pPel > 0) painParts.push(`Becken: <span class="${getPainChipClass(pPel)}">${pPel}/10</span>`);
+      if (data.painType && data.painType.length) {
+        painParts.push(`<em style="font-size: 7.2pt; color: #555;">${escapeHtml(data.painType.join(', '))}</em>`);
+      }
+      const painCell = painParts.join('<br>');
+
+      // Endo-Belly & Verdauung
+      const bellyParts = [];
+      if (Number(data.endoBellySeverity) > 0) {
+        bellyParts.push(`🎈 Belly: <strong>Stufe ${data.endoBellySeverity}/4</strong>`);
+      }
+      if (data.digestionStatus) {
+        bellyParts.push(`🌿 ${getDigestionStatusLabel(data.digestionStatus)}`);
+      }
+      if (Number(data.digestionPain) > 0) {
+        bellyParts.push(`Schmerz Stuhl: ${data.digestionPain}/10`);
+      }
+      const bellyCell = bellyParts.length ? bellyParts.join('<br>') : '—';
+
+      // Schlaf & Energie
+      const sleepParts = [];
+      if (data.sleepHours) sleepParts.push(`😴 ${data.sleepHours}h (${data.sleepQuality || 0}/5★)`);
+      if (data.energyLevel) sleepParts.push(`🔋 Vitalität: ${data.energyLevel}/10`);
+      const sleepCell = sleepParts.length ? sleepParts.join('<br>') : '—';
+
+      // Stimmung / Befinden
+      let moodCell = '—';
+      if (data.moodTags && data.moodTags.length) {
+        moodCell = `💖 ${escapeHtml(data.moodTags.join(', '))}`;
+      }
+
+      // Medikamente & Vitalstoffe
+      const medParts = [];
+      if (data.medsPain && data.medsPain.length) medParts.push(`<strong>${escapeHtml(data.medsPain.join(', '))}</strong>`);
+      if (data.medsSupplements && data.medsSupplements.length) medParts.push(escapeHtml(data.medsSupplements.join(', ')));
+      if (data.medsCustom) medParts.push(`<span style="font-size: 7.2pt; color: #444;">${escapeHtml(data.medsCustom)}</span>`);
+      const medsCell = medParts.length ? medParts.join('<br>') : '—';
+
+      // Arzt- & Therapietermine
+      const appParts = [];
+      if (data.hasPhysio || (data.physioTypes && data.physioTypes.length) || data.physioCustom) {
+        const pDesc = data.physioCustom ? escapeHtml(data.physioCustom) : (data.physioTypes ? data.physioTypes.join(', ') : 'Wahrgenommen');
+        appParts.push(`💆‍♀️ Physio: <strong>${pDesc}</strong>`);
+        if (includePrivateNotes && data.physioNotes) {
+          appParts.push(`<span style="font-style: italic; color: #555;">„${escapeHtml(data.physioNotes)}“</span>`);
+        }
+      }
+      if (data.hasDoctor || data.doctorType) {
+        const dDesc = data.doctorType ? escapeHtml(data.doctorType) : 'Arzttermin';
+        appParts.push(`🩺 ${dDesc}`);
+        if (includePrivateNotes && data.doctorNotes) {
+          appParts.push(`<span style="font-style: italic; color: #555;">„${escapeHtml(data.doctorNotes)}“</span>`);
+        }
+      }
+      const appCell = appParts.length ? appParts.join('<br>') : '—';
+
+      // Meditation & Notizen
+      const noteParts = [];
+      if (data.meditationDone) {
+        const mType = data.meditationTypes && data.meditationTypes.length ? `(${data.meditationTypes[0]})` : '';
+        noteParts.push(`🧘‍♀️ ${data.meditationMinutes || 10} Min ${mType}`);
+      }
+      if (data.notesDaily) {
+        const truncNote = data.notesDaily.length > 80 ? data.notesDaily.substring(0, 77) + '…' : data.notesDaily;
+        noteParts.push(`📝 <em>„${escapeHtml(truncNote)}“</em>`);
+      }
+      const noteCell = noteParts.length ? noteParts.join('<br>') : '—';
+
+      return `
+        <tr>
+          <td class="cell-date">${dateShort}</td>
+          <td class="cell-cycle">${cycleCell}</td>
+          <td class="cell-pain">${painCell}</td>
+          <td>${bellyCell}</td>
+          <td>${sleepCell}</td>
+          <td>${moodCell}</td>
+          <td class="cell-meds">${medsCell}</td>
+          <td class="cell-appointments">${appCell}</td>
+          <td>${noteCell}</td>
+        </tr>
+      `;
+    }).join('');
+
+    return `
+      <div class="print-landscape-wrapper">
+        <div class="print-header">
+          <div class="print-title">
+            <h1>Gesundheit bei Endometriose – Symptom-Wochenbericht (7 Tage)</h1>
+            <p>Strukturierte Wochenübersicht für die gynäkologische &amp; schmerztherapeutische Verlaufskontrolle</p>
+          </div>
+          <div class="print-meta-box">
+            Zeitraum: <strong>${dateRangeStr}</strong><br>
+            Erstellt am: ${formatGermanDate(getTodayDateString())}
+          </div>
+        </div>
+
+        <div class="print-stats-bar">
+          <span class="print-stat-item">Schmerztage: <strong>${painDaysCount} von 7 Tagen</strong></span>
+          <span class="print-stat-item">Ø Schmerzintensität: <strong>${avgPain} / 10</strong></span>
+          <span class="print-stat-item">Medikamenteneinnahme: <strong>${medsDaysCount} Tage</strong></span>
+          <span class="print-stat-item">Arzt- / Therapietermine: <strong>${appointmentsCount} wahrgenommen</strong></span>
+          <span class="print-stat-item">Achtsamkeit &amp; Meditation: <strong>${totalMeditationMins} Minuten gesamt</strong></span>
+        </div>
+
+        <table class="print-week-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>🩸 Zyklus &amp; Phase</th>
+              <th>⚡ Schmerzen (1–10)</th>
+              <th>🎈 Belly &amp; Darm</th>
+              <th>😴 Schlaf &amp; Energie</th>
+              <th>💖 Befinden</th>
+              <th>💊 Medikamente</th>
+              <th>🩺 Termine</th>
+              <th>🧘‍♀️ Achtsamkeit &amp; Notiz</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+
+        <div class="print-legend">
+          <h4>Legende &amp; Skalen (nach EEL-Kriterien)</h4>
+          <div class="print-legend-grid">
+            <div class="legend-item"><span class="pain-chip pain-chip-0">0/10</span> Schmerzfrei</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-mild">1–3/10</span> Leicht / gut tolerierbar</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-mod">4–6/10</span> Mäßig / Alltag beeinträchtigt</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-sev">7–10/10</span> Stark / Bettruhe erforderlich</div>
+            <div class="legend-item">🩸 ZT = Zyklustag</div>
+            <div class="legend-item">🎈 Belly: Stufe 1 (leicht) bis 4 (schmerzhaft gespannt)</div>
+            <div class="legend-item">💊 Medikation: Schmerzmittel &amp; Vitalstoff-Therapie</div>
+            <div class="legend-item">🩺 Termine: ${includePrivateNotes ? 'Inklusive persönlicher Notizen' : 'Notizen aus Datenschutzgründen ausgeblendet'}</div>
+          </div>
+        </div>
+
+        <div class="print-doctor-notes">
+          <h4>Ärztliche Besprechungsnotizen / Nächste Therapieschritte:</h4>
+          <div class="print-notes-lines"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  function generateMonthPrintHtml(centerDateStr, includePrivateNotes = false) {
+    const centerDate = parseDateKey(centerDateStr);
+    const days = [];
+    let totalPainSum = 0;
+    let painDaysCount = 0;
+    let maxPainOverall = 0;
+    let maxPainDay = '—';
+    let medsDaysCount = 0;
+    let appointmentsCount = 0;
+
+    // 30 Tage rückblickend bis zum Stichtag
+    for (let i = 29; i >= 0; i--) {
       const d = new Date(centerDate);
       d.setDate(centerDate.getDate() - i);
       const key = formatDateKey(d);
       const data = trackerData[key] || {};
+      days.push({ dateObj: d, key: key, data: data });
 
-      const dateShort = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
-      rows.push(`
-        <tr>
-          <td class="date-cell">${dateShort}</td>
-          <td>${data.cycleDay ? `T${data.cycleDay}` : '—'}</td>
-          <td>${getFlowLabelShort(data.flow)}</td>
-          <td><strong>${data.painAbdomen !== undefined ? data.painAbdomen : '—'}</strong></td>
-          <td>${data.painBack !== undefined ? data.painBack : '—'}</td>
-          <td>${data.painHead !== undefined ? data.painHead : '—'}</td>
-          <td>${data.endoBellySeverity !== undefined ? `${data.endoBellySeverity}/4` : '—'}</td>
-          <td>${data.sleepHours ? `${data.sleepHours}h` : '—'}</td>
-          <td>${data.energyLevel !== undefined ? data.energyLevel : '—'}</td>
-          <td>${data.medsPain && data.medsPain.length ? data.medsPain.join(', ') : '—'}</td>
-          <td>${getAppointmentsSummaryShort(data)}</td>
-        </tr>
-      `);
+      const maxP = getMaxPainForDay(data);
+      if (maxP > 0) {
+        painDaysCount++;
+        totalPainSum += maxP;
+        if (maxP > maxPainOverall) {
+          maxPainOverall = maxP;
+          maxPainDay = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+        }
+      }
+      if ((data.medsPain && data.medsPain.length) || (data.medsSupplements && data.medsSupplements.length) || data.medsCustom) {
+        medsDaysCount++;
+      }
+      if (data.hasDoctor || data.doctorType || data.hasPhysio || (data.physioTypes && data.physioTypes.length)) {
+        appointmentsCount++;
+      }
     }
 
+    const avgPain = painDaysCount > 0 ? (totalPainSum / painDaysCount).toFixed(1) : '0';
+    const dateRangeStr = `${formatGermanDate(days[0].key)} bis ${formatGermanDate(days[29].key)}`;
+
+    const rows = days.map(item => {
+      const d = item.dateObj;
+      const data = item.data;
+      const weekdays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+      const dateShort = `${weekdays[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+
+      const zt = data.cycleDay ? `T${data.cycleDay}` : '—';
+      const flow = getFlowLabelShort(data.flow);
+
+      const pAbd = Number(data.painAbdomen) || 0;
+      const pBck = Number(data.painBack) || 0;
+      const pHd = Number(data.painHead) || 0;
+      const pPel = Number(data.painPelvic) || 0;
+
+      const chipAbd = pAbd > 0 ? `<span class="${getPainChipClass(pAbd)}">${pAbd}</span>` : '0';
+      const chipBck = pBck > 0 ? `<span class="${getPainChipClass(pBck)}">${pBck}</span>` : '0';
+      const chipHd = pHd > 0 ? `<span class="${getPainChipClass(pHd)}">${pHd}</span>` : '0';
+      const chipPel = pPel > 0 ? `<span class="${getPainChipClass(pPel)}">${pPel}</span>` : '0';
+
+      const belly = Number(data.endoBellySeverity) > 0 ? `${data.endoBellySeverity}/4` : '—';
+      const digestion = data.digestionStatus ? getDigestionStatusShort(data.digestionStatus) : '—';
+      const sleep = data.sleepHours ? `${data.sleepHours}h` : '—';
+      const energy = data.energyLevel !== undefined ? `${data.energyLevel}/10` : '—';
+      const mood = data.moodTags && data.moodTags.length ? escapeHtml(data.moodTags[0]) : '—';
+
+      // Meds short
+      let meds = '—';
+      if (data.medsPain && data.medsPain.length) {
+        meds = `💊 ${escapeHtml(data.medsPain.join(', '))}`;
+      } else if (data.medsSupplements && data.medsSupplements.length) {
+        meds = 'Supplements';
+      }
+
+      // Termine
+      const app = getAppointmentsSummaryShort(data);
+
+      // Meditation
+      const med = data.meditationDone ? `🧘 ${data.meditationMinutes || 10}m` : '—';
+
+      return `
+        <tr>
+          <td class="cell-date">${dateShort}</td>
+          <td>${zt}</td>
+          <td>${flow}</td>
+          <td>${chipAbd}</td>
+          <td>${chipBck}</td>
+          <td>${chipHd}</td>
+          <td>${chipPel}</td>
+          <td>${belly}</td>
+          <td>${digestion}</td>
+          <td>${sleep}</td>
+          <td>${energy}</td>
+          <td>${mood}</td>
+          <td>${meds}</td>
+          <td>${app}</td>
+          <td>${med}</td>
+        </tr>
+      `;
+    }).join('');
+
     return `
-      <div class="print-header">
-        <div class="print-title">
-          <h1>Endometriose Symptom-Verlauf (${daysCount} Tage)</h1>
-          <p>Übersicht für den Arzt- / Gynäkologie-Termin</p>
+      <div class="print-landscape-wrapper">
+        <div class="print-header">
+          <div class="print-title">
+            <h1>Endometriose Symptom-Monatsübersicht (30 Tage)</h1>
+            <p>Kompakte Verlaufsmatrix nach EEL-Standard für das Endometriosezentrum &amp; Gynäkologie</p>
+          </div>
+          <div class="print-meta-box">
+            Zeitraum: <strong>${dateRangeStr}</strong><br>
+            Stichtag: <strong>${formatGermanDate(centerDateStr)}</strong>
+          </div>
         </div>
-        <div class="print-meta-box">
-          Stichtag: <strong>${formatGermanDate(currentDate)}</strong><br>
-          Zeitraum: <strong>Letzte ${daysCount} Tage</strong>
+
+        <div class="print-stats-bar">
+          <span class="print-stat-item">Dokumentierte Tage: <strong>30 Tage</strong></span>
+          <span class="print-stat-item">Schmerztage: <strong>${painDaysCount} / 30</strong></span>
+          <span class="print-stat-item">Ø Schmerz (an Schmerztagen): <strong>${avgPain} / 10</strong></span>
+          <span class="print-stat-item">Spitzen-Schmerztag: <strong>${maxPainOverall > 0 ? `${maxPainOverall}/10 (${maxPainDay})` : 'Keine'}</strong></span>
+          <span class="print-stat-item">Tage mit Medikation: <strong>${medsDaysCount} Tage</strong></span>
+          <span class="print-stat-item">Wahrgenommene Termine: <strong>${appointmentsCount}</strong></span>
         </div>
-      </div>
 
-      <table class="print-history-table">
-        <thead>
-          <tr>
-            <th>Datum</th>
-            <th>🩸 Tag</th>
-            <th>Blutung</th>
-            <th>⚡ Bauch (1–10)</th>
-            <th>⚡ Rücken</th>
-            <th>⚡ Kopf</th>
-            <th>🎈 Belly</th>
-            <th>😴 Schlaf</th>
-            <th>🔋 Energie</th>
-            <th>💊 Medikamente</th>
-            <th>🩺 Termine</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows.join('')}
-        </tbody>
-      </table>
+        <table class="print-month-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>🩸 ZT</th>
+              <th>Blutung</th>
+              <th>⚡ Bauch</th>
+              <th>⚡ Rücken</th>
+              <th>⚡ Kopf</th>
+              <th>⚡ Becken</th>
+              <th>🎈 Belly</th>
+              <th>🌿 Darm</th>
+              <th>😴 Schlaf</th>
+              <th>🔋 Energie</th>
+              <th>💖 Befinden</th>
+              <th>💊 Medikamente</th>
+              <th>🩺 Termine</th>
+              <th>🧘 Achtsamkeit</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
 
-      <!-- Legende -->
-      <div class="print-legend">
-        <h4>Legende & Erläuterung</h4>
-        <div class="print-legend-grid">
-          <div class="legend-item"><strong>Skala 1–3:</strong> Leicht</div>
-          <div class="legend-item"><strong>Skala 4–6:</strong> Mäßig / Alltag eingeschränkt</div>
-          <div class="legend-item"><strong>Skala 7–10:</strong> Stark / Auszeit nötig</div>
-          <div class="legend-item">🩸 T = Zyklustag</div>
-          <div class="legend-item">Blutung: K=Keine, S=Schmier, L=Leicht, M=Mittel, St=Stark</div>
-          <div class="legend-item">🎈 Belly: 0=Keiner bis 4=Schmerzhaft</div>
-          <div class="legend-item">🩺 Termine: Physio- &amp; Arzttermine (Notizen privat)</div>
+        <div class="print-legend">
+          <h4>Legende &amp; Symbolerklärung</h4>
+          <div class="print-legend-grid">
+            <div class="legend-item"><span class="pain-chip pain-chip-0">0</span> Schmerzfrei</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-mild">1–3</span> Milde Schmerzen</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-mod">4–6</span> Mäßige Schmerzen</div>
+            <div class="legend-item"><span class="pain-chip pain-chip-sev">7–10</span> Starke Schmerzen</div>
+            <div class="legend-item">Blutung: K=Keine, S=Schmier, L=Leicht, M=Mittel, St=Stark</div>
+            <div class="legend-item">🎈 Belly: 0 (keiner) bis 4 (stark gespannt)</div>
+            <div class="legend-item">🌿 Darm: N=Normal, V=Verstopfung, D=Durchfall, B=Blähungen</div>
+            <div class="legend-item">🩺 Termine: Ärztliche &amp; physiotherapeutische Behandlungen</div>
+          </div>
         </div>
-      </div>
 
-      <div class="print-doctor-notes">
-        <h4>Ärztliche Notizen:</h4>
-        <div class="print-notes-lines"></div>
+        <div class="print-doctor-notes">
+          <h4>Ärztliche Bemerkungen &amp; Wiedervorstellung:</h4>
+          <div class="print-notes-lines"></div>
+        </div>
       </div>
     `;
   }

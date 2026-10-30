@@ -2233,8 +2233,21 @@
             </div>
           </div>
 
-          <!-- Wochen-Streifen für schnelle Orientierung -->
-          <div class="tracker-week-strip" id="trackerWeekStrip" aria-label="Wochenübersicht">
+          <!-- Wochen-Navigation & Streifen für schnelle Orientierung -->
+          <div class="tracker-week-nav-bar">
+            <button type="button" class="week-nav-btn" id="stripPrevWeekBtn" aria-label="Vorherige 7 Tage">
+              ◀ Vorherige 7 Tage
+            </button>
+            <div class="week-nav-title-group">
+              <span class="week-nav-label">Tages- &amp; Symptomübersicht</span>
+              <span class="week-nav-range" id="stripWeekRangeDisplay">Lade Woche...</span>
+            </div>
+            <button type="button" class="week-nav-btn" id="stripNextWeekBtn" aria-label="Nächste 7 Tage">
+              Nächste 7 Tage ▶
+            </button>
+          </div>
+
+          <div class="tracker-week-strip" id="trackerWeekStrip" aria-label="Wochen-Tagesübersicht">
             <!-- Dynamisch über tracker.js befüllt -->
           </div>
 
@@ -2352,18 +2365,25 @@
               Wähle aus, welches Format du drucken oder als PDF-Datei abspeichern möchtest. Der Bericht enthält übersichtliche Symbole und eine vollständige Legende:
             </p>
             <div class="print-options-grid">
-              <div class="print-option-card active" data-mode="day">
-                <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
-                <h4>Tagesbericht</h4>
+              <div class="print-option-card active" data-mode="week">
+                <div style="font-size: 2rem; margin-bottom: 8px;">📅</div>
+                <h4>Wochenübersicht (7 Tage)</h4>
                 <p style="font-size: 0.82rem; color: var(--text-muted);">
-                  Ausführlicher Einzeltag mit allen Details, Skalen, Medikation &amp; Notizen.
+                  <strong>1 Seite DIN A4 (Querformat):</strong> Detaillierte 7-Tage-Tabelle mit allen Symptomen, Schmerzskalen, Medikamenten, Terminen &amp; Reflexionen.
                 </p>
               </div>
-              <div class="print-option-card" data-mode="history">
-                <div style="font-size: 2rem; margin-bottom: 8px;">📊</div>
-                <h4>14-Tage Verlauf</h4>
+              <div class="print-option-card" data-mode="month">
+                <div style="font-size: 2rem; margin-bottom: 8px;">🗓️</div>
+                <h4>Monatsübersicht (30 Tage)</h4>
                 <p style="font-size: 0.82rem; color: var(--text-muted);">
-                  Kompakte Schmerz- &amp; Zyklus-Verlaufstabelle – ideal für den Arztbesuch!
+                  <strong>1 Seite DIN A4 (Querformat):</strong> Kompakte klinische Matrix nach EEL-Standard – ideal für die Gynäkologie / das Endo-Zentrum!
+                </p>
+              </div>
+              <div class="print-option-card" data-mode="day">
+                <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
+                <h4>Tagesbericht (1 Tag)</h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                  <strong>1 Seite DIN A4 (Hochformat):</strong> Ausführlicher Einzeltag mit allen Details, Skalen, Notizen &amp; Wohlfühlmoment.
                 </p>
               </div>
             </div>
@@ -2379,7 +2399,7 @@
               </label>
             </div>
             <div style="font-size: 0.82rem; color: var(--text-light); line-height: 1.5; background: var(--bg-card-soft); padding: 10px 14px; border-radius: var(--radius-sm);">
-              💡 <strong>Tipp für PDF-Speicherung:</strong> Im anschließenden Druckfenster deines Browsers einfach als Drucker „Als PDF speichern“ auswählen.
+              💡 <strong>Tipp für PDF-Speicherung:</strong> Im anschließenden Druckfenster deines Browsers einfach als Drucker „Als PDF speichern“ auswählen. Für Wochen- &amp; Monatsübersicht ist das Querformat optimal voreingestellt!
             </div>
           </div>
           <div class="tracker-modal-footer">
@@ -2389,9 +2409,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Unsichtbarer Druckcontainer für Print & PDF -->
-      <div id="printReportContainer" aria-hidden="true"></div>
 
     </div> <!-- /#page-tracker -->
 
@@ -2456,6 +2473,9 @@
       </div>
     </div>
   </footer>
+
+  <!-- Dedizierter Druckcontainer für PDF-Export & Print (als direktes Kind von body) -->
+  <div id="printReportContainer" aria-hidden="true"></div>
 
   <!-- Scripts -->
   <script src="js/main.js"></script>

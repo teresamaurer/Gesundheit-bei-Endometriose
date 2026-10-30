@@ -133,75 +133,280 @@
   transition: opacity 0.4s ease;
 }
 
-/* --- Wochen-/Monatsstreifen (Schnellnavigation) --- */
-.tracker-week-strip {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+/* --- Wochen-Navigation & Datumsstreifen --- */
+.tracker-week-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
   background: var(--bg-card-soft);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 10px;
+  padding: 8px 14px;
+  gap: 10px;
+}
+
+.week-nav-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.week-nav-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--gold-primary);
+  color: var(--rose-primary);
+  transform: translateY(-1px);
+}
+
+.week-nav-title-group {
+  text-align: center;
+  flex: 1;
+}
+
+.week-nav-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.week-nav-range {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* --- Wochen-Streifen mit Tages-Karten --- */
+.tracker-week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
   margin-bottom: 28px;
 }
 
-.week-strip-day {
+.week-strip-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 8px 4px;
-  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: var(--transition-smooth);
-  border: 1px solid transparent;
-  background: transparent;
+  transition: all 0.22s ease;
+  border: 1.5px solid var(--border-light);
+  background: #FFFFFF;
+  text-align: left;
+  position: relative;
+  min-height: 148px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.week-strip-day:hover {
-  background: var(--bg-secondary);
-}
-
-.week-strip-day.active {
-  background: #fff;
-  border-color: var(--rose-primary);
+.week-strip-card:hover {
+  border-color: var(--rose-light, #E8C4C4);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
 }
 
-.week-strip-day.today {
-  position: relative;
+.week-strip-card.active {
+  background: #FFFDFB;
+  border-color: var(--rose-primary);
+  box-shadow: 0 0 0 2px rgba(184, 80, 106, 0.2), var(--shadow-md);
 }
 
-.week-strip-day.today::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--rose-primary);
+.week-strip-card.today {
+  border-color: var(--gold-primary);
+}
+
+/* Header inside day card */
+.strip-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 6px;
+  margin-bottom: 7px;
 }
 
 .strip-weekday {
   font-size: 0.75rem;
   color: var(--text-light);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .strip-daynumber {
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--text-main);
-  margin-top: 2px;
 }
 
-.strip-has-entry {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--gold-primary);
-  margin-top: 4px;
+.strip-today-badge {
+  font-size: 0.62rem;
+  background: var(--gold-light, #FAF3E6);
+  color: var(--gold-primary);
+  border: 1px solid var(--gold-primary);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Zyklus-Zeile */
+.strip-card-cycle {
+  margin-bottom: 6px;
+}
+
+.strip-cycle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #F8F5F1;
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.strip-cycle-badge.phase-menstruation {
+  background: #FDF2F4;
+  border-color: #EBBEC5;
+  color: #B83250;
+}
+
+.strip-cycle-badge.phase-follicular {
+  background: #F3F9F4;
+  border-color: #CBE5D2;
+  color: #2F7D48;
+}
+
+.strip-cycle-badge.phase-ovulation {
+  background: #FFF9ED;
+  border-color: #F2DDB8;
+  color: #9C6818;
+}
+
+.strip-cycle-badge.phase-luteal {
+  background: #F7F4FA;
+  border-color: #DCCFEA;
+  color: #6C4296;
+}
+
+/* Badge-Liste für Kategorien & Symptome */
+.strip-card-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.strip-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  line-height: 1.25;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Schmerz-Badges */
+.strip-badge-pain-0 {
+  background: #EAF7EE;
+  color: #1F7A38;
+  border: 1px solid #B8E4C3;
+}
+
+.strip-badge-pain-mild {
+  background: #FFFBEA;
+  color: #8C6A0A;
+  border: 1px solid #FFE699;
+}
+
+.strip-badge-pain-mod {
+  background: #FFF3EB;
+  color: #C05A12;
+  border: 1px solid #FFD0B3;
+}
+
+.strip-badge-pain-sev {
+  background: #FDF0F2;
+  color: #C92A42;
+  border: 1px solid #F7BEC6;
+  font-weight: 700;
+}
+
+/* Spezifische Kategorie-Badges */
+.strip-badge-doctor {
+  background: #EFF6FF;
+  color: #1D5494;
+  border: 1px solid #BFDBFE;
+}
+
+.strip-badge-meds {
+  background: #FDF4FF;
+  color: #862788;
+  border: 1px solid #F3C9FC;
+}
+
+.strip-badge-meditation {
+  background: #FAF5FF;
+  color: #6B21A8;
+  border: 1px solid #E9D5FF;
+}
+
+.strip-badge-mood {
+  background: #FFF5F7;
+  color: #9E2A4B;
+  border: 1px solid #FBCFE8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.strip-badge-belly {
+  background: #FFF7ED;
+  color: #9A3412;
+  border: 1px solid #FED7AA;
+}
+
+/* Platzhalter für unberührte Tage */
+.strip-card-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  font-size: 0.74rem;
+  padding: 16px 4px;
+  gap: 4px;
+  opacity: 0.7;
+}
+
+.strip-card-empty span.plus-sign {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1;
 }
 
 /* --- Tracker Toolbar / Aktionen --- */
@@ -841,15 +1046,16 @@
 }
 
 /* --- Druck-Modal / Druckoptionen --- */
+/* --- Druck-Modal / Druckoptionen --- */
 .print-options-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
   margin-bottom: 20px;
 }
 
 .print-option-card {
-  padding: 16px;
+  padding: 14px 12px;
   border-radius: var(--radius-md);
   border: 2px solid var(--border-light);
   background: var(--bg-primary);
@@ -867,8 +1073,9 @@
 
 .print-option-card h4 {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   margin-bottom: 6px;
+  color: var(--text-main);
 }
 
 /* --- Druckbereich (Wird bei window.print() gerendert) --- */
@@ -878,103 +1085,294 @@
 
 /* ==========================================================================
    PRINT STYLESHEET (@media print)
-   Optimiert fuer sauberes A4-Druckbild, Symbole & Legende fuer den Arztbesuch
+   Optimiert fuer sauberes A4-Druckbild (Querformat / Hochformat)
    ========================================================================== */
 @media print {
-  /* Alles andere auf der Seite ausblenden */
-  body * {
-    visibility: hidden;
-  }
-
-  .site-header,
-  .site-footer,
-  .main-nav,
-  .mobile-menu-toggle,
-  .mandala-watermark,
-  .tracker-hero,
-  .tracker-date-bar,
-  .tracker-week-strip,
-  .tracker-toolbar,
-  .tracker-modal-overlay,
-  .site-main {
+  /* 1. Alles außerhalb des Druckcontainers komplett ausblenden */
+  body > *:not(#printReportContainer) {
     display: none !important;
   }
 
-  /* Nur den Druck-Container einblenden */
-  #printReportContainer,
-  #printReportContainer * {
-    visibility: visible;
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+    width: 100% !important;
+    height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   }
 
+  /* 2. Druckcontainer einblenden & formatieren */
   #printReportContainer {
     display: block !important;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 15mm 12mm;
-    background: #FFFFFF;
-    color: #1A1A1A;
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    font-size: 10pt;
-    line-height: 1.45;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
 
-  /* Druck-Header */
+  #printReportContainer * {
+    visibility: visible !important;
+  }
+
+  /* Allgemeine Druck-Header */
   .print-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 2px solid #C29B63;
-    padding-bottom: 10px;
-    margin-bottom: 16px;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   .print-title h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 18pt;
+    font-size: 16pt;
     color: #2E2225;
-    margin: 0 0 3px 0;
+    margin: 0 0 2px 0;
     font-weight: 700;
+    line-height: 1.2;
   }
 
   .print-title p {
-    font-size: 8.5pt;
-    color: #555;
+    font-size: 8pt;
+    color: #555555;
     margin: 0;
   }
 
   .print-meta-box {
     text-align: right;
-    font-size: 9pt;
-    color: #333;
+    font-size: 8pt;
+    color: #333333;
+    line-height: 1.35;
   }
 
   .print-meta-box strong {
-    font-size: 10.5pt;
+    font-size: 9pt;
     color: #2E2225;
   }
 
-  /* Druck-Grid & Tabellen */
+  /* Statistische Kennzahlenleiste */
+  .print-stats-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    background: #FAF7F2;
+    border: 1px solid #E5DED4;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 7.8pt;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .print-stat-item strong {
+    color: #2E2225;
+  }
+
+  /* ========================================================================
+     A. WOCHENÜBERSICHT (7 TAGE, QUERFORMAT)
+     ======================================================================== */
+  .print-landscape-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-week-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+    font-size: 7.8pt;
+    line-height: 1.3;
+  }
+
+  .print-week-table th,
+  .print-week-table td {
+    border: 1px solid #D0C8BE;
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+
+  .print-week-table th {
+    background: #F4EFEA;
+    font-weight: 700;
+    color: #2E2225;
+    text-align: left;
+    font-size: 8pt;
+    white-space: nowrap;
+  }
+
+  .print-week-table tr:nth-child(even) td {
+    background: #FCFAF8;
+  }
+
+  .print-week-table td.cell-date {
+    font-weight: 700;
+    color: #2E2225;
+    white-space: nowrap;
+    background: #F8F5F0 !important;
+    width: 75px;
+  }
+
+  .print-week-table td.cell-cycle {
+    width: 110px;
+  }
+
+  .print-week-table td.cell-pain {
+    width: 165px;
+  }
+
+  .print-week-table td.cell-meds {
+    width: 140px;
+  }
+
+  .print-week-table td.cell-appointments {
+    width: 140px;
+  }
+
+  /* Farbige Schmerz-Chips in Tabellen */
+  .pain-chip {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 7.5pt;
+    margin: 1px 2px 1px 0;
+    border: 0.5px solid transparent;
+  }
+
+  .pain-chip-0 {
+    background: #EAF7EE;
+    color: #1F7A38;
+    border-color: #B8E4C3;
+  }
+
+  .pain-chip-mild {
+    background: #FFFBEA;
+    color: #8C6A0A;
+    border-color: #FFE699;
+  }
+
+  .pain-chip-mod {
+    background: #FFF3EB;
+    color: #C05A12;
+    border-color: #FFD0B3;
+  }
+
+  .pain-chip-sev {
+    background: #FDF0F2;
+    color: #C92A42;
+    border-color: #F7BEC6;
+  }
+
+  /* ========================================================================
+     B. MONATSÜBERSICHT (30 TAGE MATRIX, QUERFORMAT)
+     ======================================================================== */
+  .print-month-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 6px;
+    font-size: 7.2pt;
+    line-height: 1.15;
+  }
+
+  .print-month-table th,
+  .print-month-table td {
+    border: 1px solid #CCC4B8;
+    padding: 2.2px 3.5px;
+    text-align: center;
+  }
+
+  .print-month-table th {
+    background: #F2ECE5;
+    font-weight: 700;
+    color: #2E2225;
+    font-size: 7.4pt;
+  }
+
+  .print-month-table td.cell-date {
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #FAF7F2 !important;
+  }
+
+  .print-month-table tr:nth-child(even) td {
+    background: #FDFCFB;
+  }
+
+  /* Fußnoten & Legende */
+  .print-legend {
+    border: 1px dashed #C29B63;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    background: #FFFDF9;
+    page-break-inside: avoid;
+  }
+
+  .print-legend h4 {
+    margin: 0 0 3px 0;
+    font-size: 8.5pt;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #2E2225;
+  }
+
+  .print-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px 8px;
+    font-size: 7.2pt;
+    color: #444;
+  }
+
+  .print-doctor-notes {
+    margin-top: 8px;
+    border-top: 1px solid #CCC;
+    padding-top: 5px;
+    page-break-inside: avoid;
+  }
+
+  .print-doctor-notes h4 {
+    margin: 0 0 4px 0;
+    font-size: 8.5pt;
+    color: #2E2225;
+  }
+
+  .print-notes-lines {
+    height: 36px;
+    border-bottom: 1px dashed #AAA;
+    border-top: 1px dashed #AAA;
+  }
+
+  /* ========================================================================
+     C. EINZELTAGESBERICHT (HOCHFORMAT)
+     ======================================================================== */
   .print-summary-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .print-item-card {
     border: 1px solid #D9D2C9;
-    border-radius: 5px;
-    padding: 8px 12px;
-    page-break-inside: avoid;
+    border-radius: 4px;
+    padding: 8px 10px;
     background: #FAF7F2;
+    page-break-inside: avoid;
   }
 
   .print-item-card h4 {
     margin: 0 0 5px 0;
-    font-size: 10pt;
+    font-size: 9.5pt;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -986,101 +1384,18 @@
   .print-item-card p,
   .print-item-card ul {
     margin: 0;
-    font-size: 9pt;
+    font-size: 8.5pt;
     color: #333;
+    line-height: 1.4;
   }
 
   .print-pain-indicator {
     display: inline-block;
-    padding: 2px 7px;
-    border-radius: 4px;
+    padding: 1px 6px;
+    border-radius: 3px;
     font-weight: 700;
-    font-size: 9pt;
-    border: 1px solid #888;
-  }
-
-  /* Druck-Tabelle fuer Verlaufsansicht (7-30 Tage) */
-  .print-history-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 16px;
     font-size: 8.5pt;
-  }
-
-  .print-history-table th,
-  .print-history-table td {
-    border: 1px solid #BBB;
-    padding: 5px 6px;
-    text-align: center;
-  }
-
-  .print-history-table th {
-    background: #F4EFEA;
-    font-weight: 700;
-    color: #2E2225;
-  }
-
-  .print-history-table td.date-cell {
-    text-align: left;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  /* Druck-Legende */
-  .print-legend {
-    border: 1px dashed #C29B63;
-    border-radius: 5px;
-    padding: 10px 14px;
-    margin-top: 14px;
-    page-break-inside: avoid;
-    background: #FFFDF9;
-  }
-
-  .print-legend h4 {
-    margin: 0 0 6px 0;
-    font-size: 9.5pt;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    color: #2E2225;
-  }
-
-  .print-legend-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    font-size: 8pt;
-    color: #444;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  /* Notizfeld fuer Arztgespräch */
-  .print-doctor-notes {
-    margin-top: 18px;
-    border-top: 1px solid #CCC;
-    padding-top: 10px;
-    page-break-inside: avoid;
-  }
-
-  .print-doctor-notes h4 {
-    margin: 0 0 8px 0;
-    font-size: 9.5pt;
-    color: #2E2225;
-  }
-
-  .print-notes-lines {
-    height: 50px;
-    border-bottom: 1px dashed #999;
-    border-top: 1px dashed #999;
-    margin-bottom: 6px;
-  }
-
-  @page {
-    size: A4 portrait;
-    margin: 10mm 8mm;
+    border: 1px solid #888;
   }
 }
 
@@ -1096,22 +1411,39 @@
     flex-direction: column;
     align-items: flex-start;
   }
-}
-
-@media (max-width: 600px) {
-  .tracker-week-strip {
-    grid-template-columns: repeat(7, 1fr);
-    overflow-x: auto;
-    padding: 6px;
-    gap: 4px;
-  }
-  .strip-weekday {
-    font-size: 0.65rem;
-  }
-  .strip-daynumber {
-    font-size: 0.9rem;
-  }
   .print-options-grid {
     grid-template-columns: 1fr;
   }
+  .tracker-week-strip {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .week-strip-card {
+    min-width: 140px;
+    max-width: 160px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
 }
+
+@media (max-width: 600px) {
+  .tracker-week-nav-bar {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .week-nav-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .strip-weekday {
+    font-size: 0.7rem;
+  }
+  .strip-daynumber {
+    font-size: 1rem;
+  }
+}
+
