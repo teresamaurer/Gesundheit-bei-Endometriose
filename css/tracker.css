@@ -619,6 +619,93 @@
   text-align: right;
 }
 
+/* --- Arzt- & Therapietermine Styling --- */
+.appointment-subcard {
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 14px;
+  transition: var(--transition-smooth);
+}
+
+.appointment-subcard:last-child {
+  margin-bottom: 0;
+}
+
+.appointment-subcard.is-active {
+  background: #FFFDF9;
+  border-color: rgba(194, 155, 99, 0.45);
+  box-shadow: 0 2px 8px rgba(194, 155, 99, 0.08);
+}
+
+.appointment-subcard-header {
+  margin-bottom: 10px;
+}
+
+.appointment-toggle-pill {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-light);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.appointment-toggle-pill:hover {
+  border-color: var(--gold-primary);
+  background: var(--gold-light);
+}
+
+.appointment-toggle-pill.active {
+  background: var(--sage-light);
+  border-color: var(--sage-primary);
+  color: var(--sage-dark);
+}
+
+.privacy-notice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  color: var(--text-light);
+  background: rgba(194, 155, 99, 0.08);
+  border: 1px dashed rgba(194, 155, 99, 0.35);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.quick-suggestions-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.quick-suggest-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  padding: 3px 9px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.quick-suggest-btn:hover {
+  background: var(--rose-light);
+  border-color: var(--rose-primary);
+  color: var(--rose-dark);
+}
+
 /* --- Modal Dialog: Kategorie hinzufügen --- */
 .tracker-modal-overlay {
   position: fixed;

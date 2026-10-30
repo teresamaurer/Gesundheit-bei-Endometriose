@@ -17,6 +17,7 @@
     { id: 'sleep', title: 'Schlaf & Erholung', icon: '😴', defaultActive: true },
     { id: 'pain', title: 'Schmerzen (1–10)', icon: '⚡', defaultActive: true, highlight: true },
     { id: 'meds', title: 'Medikamente & Vitalstoffe', icon: '💊', defaultActive: true },
+    { id: 'appointments', title: 'Arzt- & Therapietermine', icon: '🩺', defaultActive: true },
     { id: 'endobelly', title: 'Endo-Belly (Blähbauch)', icon: '🎈', defaultActive: true },
     { id: 'digestion', title: 'Verdauung & Darmgesundheit', icon: '🌿', defaultActive: true },
     { id: 'energy', title: 'Energie & Vitalität', icon: '🔋', defaultActive: true },
@@ -140,6 +141,13 @@
       nutritionAntiInflammatory: false,
       nutritionTriggers: [],
       helpersUsed: [],
+      hasPhysio: false,
+      physioTypes: [],
+      physioCustom: '',
+      physioNotes: '',
+      hasDoctor: false,
+      doctorType: '',
+      doctorNotes: '',
       notesDaily: '',
       customValues: {}
     };
@@ -353,6 +361,9 @@
       case 'meds':
         bodyHtml = renderMedsCardContent(dayData);
         break;
+      case 'appointments':
+        bodyHtml = renderAppointmentsCardContent(dayData);
+        break;
       case 'endobelly':
         bodyHtml = renderEndoBellyCardContent(dayData);
         break;
@@ -395,6 +406,7 @@
       sleep: 'Schlafdauer, Erholung & Ruhe',
       pain: 'Differenzierte Skala von 1 bis 10',
       meds: 'Schmerzmittel, Hormone & Vitalstoffe',
+      appointments: 'Physiotherapie, Facharztbesuche & vertrauliche Notizen',
       endobelly: 'Spannungsgefühl & Schwellung',
       digestion: 'Stuhlgang, Blähungen & Dyschezie',
       energy: 'Vitalität & Fatigue-Level (1–10)',
@@ -593,7 +605,101 @@
     `;
   }
 
-  // 5. ENDO-BELLY
+  // 5. ARZT- & THERAPIETERMINE
+  function renderAppointmentsCardContent(data) {
+    const physioPills = [
+      'Beckenboden-Physio',
+      'Manuelle Therapie',
+      'Osteopathie',
+      'Lymphdrainage',
+      'Krankengymnastik',
+      'Faszientherapie'
+    ];
+    const doctorSuggestions = [
+      'Gynäkologie',
+      'Endometriose-Zentrum',
+      'Schmerztherapie',
+      'Hausarzt',
+      'Gastroenterologie',
+      'Radiologie / MRT'
+    ];
+
+    const hasPhysio = !!data.hasPhysio;
+    const hasDoctor = !!data.hasDoctor;
+
+    return `
+      <!-- 1. Physiotherapie & Körpertherapie -->
+      <div class="appointment-subcard ${hasPhysio ? 'is-active' : ''}" id="subcard-physio">
+        <div class="appointment-subcard-header">
+          <button type="button" class="appointment-toggle-pill ${hasPhysio ? 'active' : ''}" id="btn-togglePhysio">
+            <span>💆‍♀️ Physiotherapie wahrgenommen</span>
+            <span class="toggle-status-icon">${hasPhysio ? '✓ Erfasst' : '○ Nicht erfasst'}</span>
+          </button>
+        </div>
+
+        <div class="appointment-fields" style="${hasPhysio ? '' : 'opacity: 0.85;'}">
+          <div class="tracker-field-group">
+            <label class="tracker-label">
+              <span>Therapie-Schwerpunkt</span>
+              <span class="tracker-label-desc">Mehrfachauswahl möglich</span>
+            </label>
+            <div class="pill-options-group multi-pill" data-field="physioTypes">
+              ${renderPills(physioPills, data.physioTypes || [])}
+            </div>
+          </div>
+
+          <div class="tracker-field-group">
+            <label class="tracker-label" for="input-physioCustom">
+              <span>Behandlung / Therapeutin / Praxis</span>
+            </label>
+            <input type="text" class="tracker-input" id="input-physioCustom" value="${escapeHtml(data.physioCustom || '')}" placeholder="z. B. Beckenboden-Triggerpunkte, Mobilisation, Praxis Müller...">
+          </div>
+
+          <div class="tracker-field-group">
+            <div class="tracker-label">
+              <label for="textarea-physioNotes"><span>Persönliche Notizen zur Physiotherapie</span></label>
+              <span class="privacy-notice-badge">🔒 Nicht im PDF-Druck</span>
+            </div>
+            <textarea class="tracker-textarea" id="textarea-physioNotes" rows="2" placeholder="Übungen für zuhause, körperliche Reaktion, wie es dir getan hat...">${escapeHtml(data.physioNotes || '')}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Arzttermin & Facharzt -->
+      <div class="appointment-subcard ${hasDoctor ? 'is-active' : ''}" id="subcard-doctor">
+        <div class="appointment-subcard-header">
+          <button type="button" class="appointment-toggle-pill ${hasDoctor ? 'active' : ''}" id="btn-toggleDoctor">
+            <span>🩺 Arzttermin wahrgenommen</span>
+            <span class="toggle-status-icon">${hasDoctor ? '✓ Erfasst' : '○ Nicht erfasst'}</span>
+          </button>
+        </div>
+
+        <div class="appointment-fields" style="${hasDoctor ? '' : 'opacity: 0.85;'}">
+          <div class="tracker-field-group">
+            <label class="tracker-label" for="input-doctorType">
+              <span>Was für ein Arzttermin war das?</span>
+              <span class="tracker-label-desc">Selbst eintragen / Fachrichtung</span>
+            </label>
+            <input type="text" class="tracker-input" id="input-doctorType" value="${escapeHtml(data.doctorType || '')}" placeholder="z. B. Gynäkologie, Endometriose-Zentrum Dr. Weber...">
+            <div class="quick-suggestions-wrap">
+              <span style="font-size: 0.75rem; color: var(--text-light); align-self: center;">Schnell-Vorschläge:</span>
+              ${doctorSuggestions.map(s => `<button type="button" class="quick-suggest-btn" data-suggest="${escapeHtml(s)}">${escapeHtml(s)}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="tracker-field-group">
+            <div class="tracker-label">
+              <label for="textarea-doctorNotes"><span>Persönliche Notizen zum Arzttermin</span></label>
+              <span class="privacy-notice-badge">🔒 Nicht im PDF-Druck</span>
+            </div>
+            <textarea class="tracker-textarea" id="textarea-doctorNotes" rows="2" placeholder="Besprochene Befunde, nächste Schritte, persönliche Fragen, Gedanken...">${escapeHtml(data.doctorNotes || '')}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 6. ENDO-BELLY
   function renderEndoBellyCardContent(data) {
     return `
       <div class="tracker-field-group">
@@ -1053,6 +1159,124 @@
         saveTrackerData();
       });
     }
+
+    // 7. Arzt- & Therapietermine
+    if (catId === 'appointments') {
+      const togglePhysioBtn = card.querySelector('#btn-togglePhysio');
+      const subcardPhysio = card.querySelector('#subcard-physio');
+      const statusPhysioIcon = togglePhysioBtn ? togglePhysioBtn.querySelector('.toggle-status-icon') : null;
+
+      const updatePhysioUi = () => {
+        if (togglePhysioBtn) {
+          togglePhysioBtn.classList.toggle('active', !!dayData.hasPhysio);
+          if (statusPhysioIcon) statusPhysioIcon.textContent = dayData.hasPhysio ? '✓ Erfasst' : '○ Nicht erfasst';
+        }
+        if (subcardPhysio) {
+          subcardPhysio.classList.toggle('is-active', !!dayData.hasPhysio);
+          const fields = subcardPhysio.querySelector('.appointment-fields');
+          if (fields) fields.style.opacity = dayData.hasPhysio ? '1' : '0.85';
+        }
+      };
+
+      if (togglePhysioBtn) {
+        togglePhysioBtn.addEventListener('click', () => {
+          dayData.hasPhysio = !dayData.hasPhysio;
+          updatePhysioUi();
+          saveTrackerData();
+        });
+      }
+
+      card.querySelectorAll('.pill-options-group[data-field="physioTypes"] .tracker-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!dayData.hasPhysio && dayData.physioTypes && dayData.physioTypes.length > 0) {
+            dayData.hasPhysio = true;
+            updatePhysioUi();
+          }
+        });
+      });
+
+      const inputPhysioCustom = card.querySelector('#input-physioCustom');
+      if (inputPhysioCustom) {
+        inputPhysioCustom.addEventListener('input', (e) => {
+          dayData.physioCustom = e.target.value;
+          if (e.target.value.trim() && !dayData.hasPhysio) {
+            dayData.hasPhysio = true;
+            updatePhysioUi();
+          }
+          saveTrackerData();
+        });
+      }
+
+      const textareaPhysioNotes = card.querySelector('#textarea-physioNotes');
+      if (textareaPhysioNotes) {
+        textareaPhysioNotes.addEventListener('input', (e) => {
+          dayData.physioNotes = e.target.value;
+          saveTrackerData();
+        });
+      }
+
+      const toggleDoctorBtn = card.querySelector('#btn-toggleDoctor');
+      const subcardDoctor = card.querySelector('#subcard-doctor');
+      const statusDoctorIcon = toggleDoctorBtn ? toggleDoctorBtn.querySelector('.toggle-status-icon') : null;
+
+      const updateDoctorUi = () => {
+        if (toggleDoctorBtn) {
+          toggleDoctorBtn.classList.toggle('active', !!dayData.hasDoctor);
+          if (statusDoctorIcon) statusDoctorIcon.textContent = dayData.hasDoctor ? '✓ Erfasst' : '○ Nicht erfasst';
+        }
+        if (subcardDoctor) {
+          subcardDoctor.classList.toggle('is-active', !!dayData.hasDoctor);
+          const fields = subcardDoctor.querySelector('.appointment-fields');
+          if (fields) fields.style.opacity = dayData.hasDoctor ? '1' : '0.85';
+        }
+      };
+
+      if (toggleDoctorBtn) {
+        toggleDoctorBtn.addEventListener('click', () => {
+          dayData.hasDoctor = !dayData.hasDoctor;
+          updateDoctorUi();
+          saveTrackerData();
+        });
+      }
+
+      const inputDoctorType = card.querySelector('#input-doctorType');
+      if (inputDoctorType) {
+        inputDoctorType.addEventListener('input', (e) => {
+          dayData.doctorType = e.target.value;
+          if (e.target.value.trim() && !dayData.hasDoctor) {
+            dayData.hasDoctor = true;
+            updateDoctorUi();
+          }
+          saveTrackerData();
+        });
+      }
+
+      card.querySelectorAll('.quick-suggest-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-suggest');
+          if (inputDoctorType) {
+            const currentVal = inputDoctorType.value.trim();
+            if (!currentVal) {
+              inputDoctorType.value = val;
+            } else if (!currentVal.includes(val)) {
+              inputDoctorType.value = `${currentVal}, ${val}`;
+            }
+            dayData.doctorType = inputDoctorType.value;
+            dayData.hasDoctor = true;
+            updateDoctorUi();
+            saveTrackerData();
+          }
+        });
+      });
+
+      const textareaDoctorNotes = card.querySelector('#textarea-doctorNotes');
+      if (textareaDoctorNotes) {
+        textareaDoctorNotes.addEventListener('input', (e) => {
+          dayData.doctorNotes = e.target.value;
+          saveTrackerData();
+        });
+      }
+    }
   }
 
   function setupCustomCardInteractions(card, customCat, dayData) {
@@ -1220,8 +1444,10 @@
       executePrintBtn.addEventListener('click', () => {
         const activeOption = printModal.querySelector('.print-option-card.active');
         const printMode = activeOption ? activeOption.getAttribute('data-mode') : 'day';
+        const includeNotesCb = document.getElementById('printIncludeAppointmentNotes');
+        const includePrivateNotes = includeNotesCb ? includeNotesCb.checked : false;
         printModal.classList.remove('active');
-        triggerPrintReport(printMode);
+        triggerPrintReport(printMode, includePrivateNotes);
       });
     }
 
@@ -1328,14 +1554,14 @@
   /* ==========================================================================
      DRUCK- & PDF-GENERIERUNG MIT SYMBOLEN & LEGENDE
      ========================================================================== */
-  function triggerPrintReport(mode) {
+  function triggerPrintReport(mode, includePrivateNotes = false) {
     const printContainer = document.getElementById('printReportContainer');
     if (!printContainer) return;
 
     if (mode === 'day') {
-      printContainer.innerHTML = generateDayPrintHtml(currentDate);
+      printContainer.innerHTML = generateDayPrintHtml(currentDate, includePrivateNotes);
     } else {
-      printContainer.innerHTML = generateHistoryPrintHtml(14);
+      printContainer.innerHTML = generateHistoryPrintHtml(14, includePrivateNotes);
     }
 
     // Druckdialog des Browsers aufrufen
@@ -1344,7 +1570,56 @@
     }, 150);
   }
 
-  function generateDayPrintHtml(dateStr) {
+  function renderPrintAppointmentsCard(data, includePrivateNotes) {
+    const hasPhysio = data.hasPhysio || (data.physioTypes && data.physioTypes.length) || data.physioCustom;
+    const hasDoctor = data.hasDoctor || data.doctorType;
+    if (!hasPhysio && !hasDoctor) return '';
+
+    const physioParts = [];
+    if (data.physioTypes && data.physioTypes.length) physioParts.push(data.physioTypes.join(', '));
+    if (data.physioCustom) physioParts.push(escapeHtml(data.physioCustom));
+
+    return `
+      <div class="print-item-card" style="margin-bottom: 14px; background: #FFFDF9; border: 1.5px solid #C29B63;">
+        <h4>🩺 Arzt- &amp; Therapietermine</h4>
+        <p style="margin: 0; line-height: 1.6;">
+          ${hasPhysio ? `
+            • 💆‍♀️ Physiotherapie: <strong>${physioParts.length ? physioParts.join(' – ') : 'Wahrgenommen'}</strong><br>
+            ${includePrivateNotes && data.physioNotes ? `<span style="font-style: italic; color: #444; margin-left: 14px; display: inline-block;">Notiz: „${escapeHtml(data.physioNotes)}“</span><br>` : ''}
+          ` : ''}
+          ${hasDoctor ? `
+            • 🩺 Arzttermin: <strong>${data.doctorType ? escapeHtml(data.doctorType) : 'Wahrgenommen'}</strong><br>
+            ${includePrivateNotes && data.doctorNotes ? `<span style="font-style: italic; color: #444; margin-left: 14px; display: inline-block;">Notiz: „${escapeHtml(data.doctorNotes)}“</span><br>` : ''}
+          ` : ''}
+          ${!includePrivateNotes && (data.physioNotes || data.doctorNotes) ? `
+            <span style="font-size: 8pt; color: #777;">🔒 Persönliche Gesprächs- &amp; Behandlungsnotizen wurden zum Schutz deiner Privatsphäre im Ausdruck ausgeblendet.</span>
+          ` : ''}
+        </p>
+      </div>
+    `;
+  }
+
+  function getAppointmentsSummaryShort(data) {
+    const parts = [];
+    if (data.hasPhysio || (data.physioTypes && data.physioTypes.length) || data.physioCustom) {
+      if (data.physioTypes && data.physioTypes.length) {
+        parts.push(`💆‍♀️ Physio (${data.physioTypes[0].replace('-Physio', '')})`);
+      } else {
+        parts.push('💆‍♀️ Physio');
+      }
+    }
+    if (data.hasDoctor || data.doctorType) {
+      if (data.doctorType) {
+        const shortDoc = data.doctorType.split(',')[0].trim();
+        parts.push(`🩺 Dr. (${shortDoc.length > 15 ? shortDoc.substring(0, 13) + '…' : shortDoc})`);
+      } else {
+        parts.push('🩺 Arzttermin');
+      }
+    }
+    return parts.length ? parts.join('<br>') : '—';
+  }
+
+  function generateDayPrintHtml(dateStr, includePrivateNotes = false) {
     const data = getDayData(dateStr);
     const dateFormatted = formatGermanDate(dateStr);
 
@@ -1429,6 +1704,9 @@
         </div>
       </div>
 
+      <!-- Arzt- & Therapietermine -->
+      ${renderPrintAppointmentsCard(data, includePrivateNotes)}
+
       <!-- Notizen & Reflexion -->
       ${data.notesDaily ? `
         <div class="print-item-card" style="margin-bottom: 16px;">
@@ -1450,6 +1728,7 @@
           <div class="legend-item">🌿 Verdauung / Dyschezie</div>
           <div class="legend-item">😴 Schlafqualität (1–5)</div>
           <div class="legend-item">💊 Medikation / Schmerztherapie</div>
+          <div class="legend-item">🩺 Arzt- &amp; Therapietermine</div>
         </div>
       </div>
 
@@ -1461,7 +1740,7 @@
     `;
   }
 
-  function generateHistoryPrintHtml(daysCount) {
+  function generateHistoryPrintHtml(daysCount, includePrivateNotes = false) {
     const centerDate = parseDateKey(currentDate);
     const rows = [];
 
@@ -1484,6 +1763,7 @@
           <td>${data.sleepHours ? `${data.sleepHours}h` : '—'}</td>
           <td>${data.energyLevel !== undefined ? data.energyLevel : '—'}</td>
           <td>${data.medsPain && data.medsPain.length ? data.medsPain.join(', ') : '—'}</td>
+          <td>${getAppointmentsSummaryShort(data)}</td>
         </tr>
       `);
     }
@@ -1513,6 +1793,7 @@
             <th>😴 Schlaf</th>
             <th>🔋 Energie</th>
             <th>💊 Medikamente</th>
+            <th>🩺 Termine</th>
           </tr>
         </thead>
         <tbody>
@@ -1530,6 +1811,7 @@
           <div class="legend-item">🩸 T = Zyklustag</div>
           <div class="legend-item">Blutung: K=Keine, S=Schmier, L=Leicht, M=Mittel, St=Stark</div>
           <div class="legend-item">🎈 Belly: 0=Keiner bis 4=Schmerzhaft</div>
+          <div class="legend-item">🩺 Termine: Physio- &amp; Arzttermine (Notizen privat)</div>
         </div>
       </div>
 
