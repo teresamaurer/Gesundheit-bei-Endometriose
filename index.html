@@ -13,6 +13,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tracker.css">
 </head>
 <body>
 
@@ -38,6 +39,7 @@
           <li class="nav-item"><a href="#organ-visualisierung" data-page="organ-visualisierung">Organ-Visualisierung</a></li>
           <li class="nav-item"><a href="#atem-oase" data-page="atem-oase">Atem-Oase</a></li>
           <li class="nav-item"><a href="#sos-hilfe" data-page="sos-hilfe">SOS-Kompass</a></li>
+          <li class="nav-item"><a href="#tracker" data-page="tracker">Endo-Tracker</a></li>
         </ul>
       </nav>
 
@@ -2184,6 +2186,204 @@
   </section>
     </div> <!-- /#page-sos-hilfe -->
 
+    <!-- ========================================================================
+         PAGE 6: ENDO-TRACKER & SYMPTOM-TAGEBUCH
+         ======================================================================== -->
+    <div class="page-view" id="page-tracker" data-page="tracker">
+      <section class="section" id="tracker-section">
+        <!-- Zartes Mandala-Wasserzeichen -->
+        <div class="mandala-watermark mandala-watermark--hero-left" aria-hidden="true">
+          <img src="assets/mandala-gold.svg" alt="" loading="lazy">
+        </div>
+
+        <div class="container" id="trackerMainContainer">
+          <!-- Intro / Hero -->
+          <div class="tracker-hero">
+            <span class="section-tag">Sanfte Achtsamkeit für meinen Körper</span>
+            <h1>Mein Endo-Tracker &amp; Tagebuch</h1>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p class="tracker-hero-lead">
+              Hier halte ich Tag für Tag fest, wie es mir geht. Nicht zur Bewertung, sondern voller Mitgefühl und als wertvoller Wegweiser auf meinem Weg zur besten Expertin für mich selbst. Alle Einträge bleiben zu 100 % sicher und privat auf diesem Gerät gespeichert.
+            </p>
+          </div>
+
+          <!-- Kalender- & Datums-Leiste -->
+          <div class="tracker-date-bar">
+            <div class="tracker-date-controls">
+              <button type="button" class="date-nav-btn" id="trackerPrevDayBtn" aria-label="Vorheriger Tag">
+                ◀ Vorheriger Tag
+              </button>
+              <button type="button" class="date-nav-btn today-btn" id="trackerTodayBtn" aria-label="Heute">
+                Heute
+              </button>
+              <button type="button" class="date-nav-btn" id="trackerNextDayBtn" aria-label="Nächster Tag">
+                Nächster Tag ▶
+              </button>
+            </div>
+
+            <div class="current-date-display">
+              <span class="current-date-text" id="trackerDateDisplay">Lade Datum...</span>
+              <div class="date-picker-wrapper">
+                <input type="date" class="tracker-date-input" id="trackerDatePicker" aria-label="Anderes Datum wählen">
+              </div>
+            </div>
+
+            <div class="save-status-badge" id="trackerSaveBadge">
+              ✓ Automatisch gesichert
+            </div>
+          </div>
+
+          <!-- Wochen-Streifen für schnelle Orientierung -->
+          <div class="tracker-week-strip" id="trackerWeekStrip" aria-label="Wochenübersicht">
+            <!-- Dynamisch über tracker.js befüllt -->
+          </div>
+
+          <!-- Aktionsleiste (Kategorien hinzufügen, anpassen, PDF drucken) -->
+          <div class="tracker-toolbar">
+            <div class="toolbar-actions-left">
+              <button type="button" class="tracker-btn tracker-btn-primary" id="trackerAddCategoryBtn">
+                <span style="font-size: 1.2rem; font-weight: 700; line-height: 1;">+</span> Eigene Kategorie hinzufügen
+              </button>
+              <button type="button" class="tracker-btn tracker-btn-secondary" id="trackerManageCategoriesBtn">
+                ⚙️ Kategorien anpassen
+              </button>
+            </div>
+
+            <div class="toolbar-actions-right">
+              <button type="button" class="tracker-btn tracker-btn-print" id="trackerPrintBtn">
+                🖨️ Als PDF drucken / speichern
+              </button>
+              <button type="button" class="tracker-btn tracker-btn-secondary" id="trackerExportBtn" title="Daten als JSON-Datei auf dem Computer sichern">
+                💾 Backup sichern
+              </button>
+              <button type="button" class="tracker-btn tracker-btn-secondary" id="trackerImportBtn" title="Gesichertes Backup wiederherstellen">
+                📥 Backup laden
+              </button>
+              <input type="file" id="trackerImportFile" accept=".json" style="display: none;">
+            </div>
+          </div>
+
+          <!-- Tracking-Karten Grid -->
+          <div class="tracker-cards-grid" id="trackerCardsGrid">
+            <!-- Dynamisch über tracker.js gerendert -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal: Neue Kategorie hinzufügen -->
+      <div class="tracker-modal-overlay" id="modalAddCategory" role="dialog" aria-modal="true" aria-labelledby="modalAddCategoryTitle">
+        <div class="tracker-modal">
+          <div class="tracker-modal-header">
+            <h3 id="modalAddCategoryTitle">Neue Tracking-Kategorie</h3>
+            <button type="button" class="tracker-modal-close" id="closeAddCategoryModalBtn" aria-label="Schließen">&times;</button>
+          </div>
+          <div class="tracker-modal-body">
+            <div class="tracker-field-group">
+              <label class="tracker-label" for="newCategoryTitle"><span>Name des Tracking-Punkts</span></label>
+              <input type="text" class="tracker-input" id="newCategoryTitle" placeholder="z. B. CBD-Tropfen, Akupunktur, Stresslevel...">
+            </div>
+
+            <div class="tracker-field-group">
+              <label class="tracker-label" for="newCategoryType"><span>Art der Abfrage</span></label>
+              <select class="tracker-select" id="newCategoryType">
+                <option value="scale10">Schieberegler (Skala 1 bis 10)</option>
+                <option value="rating5">Sterne-Bewertung (1 bis 5)</option>
+                <option value="boolean">Ja / Nein (Erledigt-Status)</option>
+                <option value="text">Freitext / Notizfeld</option>
+              </select>
+            </div>
+
+            <div class="tracker-field-group">
+              <label class="tracker-label"><span>Passendes Symbol wählen</span></label>
+              <div class="icon-selector-grid">
+                <button type="button" class="icon-choice-btn active" data-icon="🌿">🌿</button>
+                <button type="button" class="icon-choice-btn" data-icon="💊">💊</button>
+                <button type="button" class="icon-choice-btn" data-icon="🧘‍♀️">🧘‍♀️</button>
+                <button type="button" class="icon-choice-btn" data-icon="✨">✨</button>
+                <button type="button" class="icon-choice-btn" data-icon="🌸">🌸</button>
+                <button type="button" class="icon-choice-btn" data-icon="🍵">🍵</button>
+                <button type="button" class="icon-choice-btn" data-icon="⚡">⚡</button>
+                <button type="button" class="icon-choice-btn" data-icon="💧">💧</button>
+                <button type="button" class="icon-choice-btn" data-icon="🛌">🛌</button>
+                <button type="button" class="icon-choice-btn" data-icon="🏃‍♀️">🏃‍♀️</button>
+                <button type="button" class="icon-choice-btn" data-icon="🛁">🛁</button>
+                <button type="button" class="icon-choice-btn" data-icon="🍎">🍎</button>
+                <button type="button" class="icon-choice-btn" data-icon="🩹">🩹</button>
+                <button type="button" class="icon-choice-btn" data-icon="🌙">🌙</button>
+                <button type="button" class="icon-choice-btn" data-icon="❤️">❤️</button>
+                <button type="button" class="icon-choice-btn" data-icon="📝">📝</button>
+              </div>
+            </div>
+          </div>
+          <div class="tracker-modal-footer">
+            <button type="button" class="tracker-btn tracker-btn-secondary" id="cancelAddCategoryBtn">Abbrechen</button>
+            <button type="button" class="tracker-btn tracker-btn-primary" id="saveNewCategoryBtn">Kategorie anlegen</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Kategorien verwalten & wiederherstellen -->
+      <div class="tracker-modal-overlay" id="modalManageCategories" role="dialog" aria-modal="true" aria-labelledby="modalManageCategoriesTitle">
+        <div class="tracker-modal">
+          <div class="tracker-modal-header">
+            <h3 id="modalManageCategoriesTitle">Kategorien anpassen</h3>
+            <button type="button" class="tracker-modal-close" id="closeManageCategoriesModalBtn" aria-label="Schließen">&times;</button>
+          </div>
+          <div class="tracker-modal-body">
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+              Hier kannst du ausgeblendete Tracking-Punkte wieder aktivieren oder nicht benötigte Bereiche ausblenden:
+            </p>
+            <div class="manage-categories-list" id="manageCategoriesList">
+              <!-- Dynamisch befüllt -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Druck-Optionen (Tagesbericht vs. Verlauf) -->
+      <div class="tracker-modal-overlay" id="modalPrintOptions" role="dialog" aria-modal="true" aria-labelledby="modalPrintTitle">
+        <div class="tracker-modal">
+          <div class="tracker-modal-header">
+            <h3 id="modalPrintTitle">PDF-Druckbericht erstellen</h3>
+            <button type="button" class="tracker-modal-close" id="closePrintModalBtn" aria-label="Schließen">&times;</button>
+          </div>
+          <div class="tracker-modal-body">
+            <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 16px;">
+              Wähle aus, welches Format du drucken oder als PDF-Datei abspeichern möchtest. Der Bericht enthält übersichtliche Symbole und eine vollständige Legende:
+            </p>
+            <div class="print-options-grid">
+              <div class="print-option-card active" data-mode="day">
+                <div style="font-size: 2rem; margin-bottom: 8px;">📄</div>
+                <h4>Tagesbericht</h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                  Ausführlicher Einzeltag mit allen Details, Skalen, Medikation &amp; Notizen.
+                </p>
+              </div>
+              <div class="print-option-card" data-mode="history">
+                <div style="font-size: 2rem; margin-bottom: 8px;">📊</div>
+                <h4>14-Tage Verlauf</h4>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                  Kompakte Schmerz- &amp; Zyklus-Verlaufstabelle – ideal für den Arztbesuch!
+                </p>
+              </div>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-light); line-height: 1.5; background: var(--bg-card-soft); padding: 10px 14px; border-radius: var(--radius-sm);">
+              💡 <strong>Tipp für PDF-Speicherung:</strong> Im anschließenden Druckfenster deines Browsers einfach als Drucker „Als PDF speichern“ auswählen.
+            </div>
+          </div>
+          <div class="tracker-modal-footer">
+            <button type="button" class="tracker-btn tracker-btn-primary" id="executePrintBtn">
+              🖨️ Druckansicht öffnen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unsichtbarer Druckcontainer für Print & PDF -->
+      <div id="printReportContainer" aria-hidden="true"></div>
+
+    </div> <!-- /#page-tracker -->
+
   </main> <!-- /#mainContent -->
 
   <!-- ========================================================================
@@ -2221,6 +2421,7 @@
             <li><a href="#organ-visualisierung">Organ-Visualisierung</a></li>
             <li><a href="#atem-oase">Atem-Oase</a></li>
             <li><a href="#sos-hilfe">SOS-Kompass</a></li>
+            <li><a href="#tracker">Endo-Tracker &amp; Tagebuch</a></li>
             <li><a href="#ueber-mich">Mein Weg &amp; Mutmacher</a></li>
             <li><a href="#faq">Gedankenanker</a></li>
           </ul>
@@ -2247,5 +2448,6 @@
 
   <!-- Scripts -->
   <script src="js/main.js"></script>
+  <script src="js/tracker.js"></script>
 </body>
 </html>

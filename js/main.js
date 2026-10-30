@@ -535,7 +535,10 @@ function initPageRouter() {
     'organ-energie': { page: 'organ-visualisierung', anchor: 'organ-energie' },
     'organ-reise': { page: 'organ-visualisierung', anchor: 'organ-reise' },
     'atem-oase': { page: 'atem-oase', anchor: null },
-    'sos-hilfe': { page: 'sos-hilfe', anchor: null }
+    'sos-hilfe': { page: 'sos-hilfe', anchor: null },
+    'tracker': { page: 'tracker', anchor: null },
+    'tagebuch': { page: 'tracker', anchor: null },
+    'symptom-tracker': { page: 'tracker', anchor: null }
   };
 
   function switchPage(pageId, anchorId = null, updateHistory = true) {
@@ -552,6 +555,10 @@ function initPageRouter() {
       view.classList.remove('active');
     });
     targetPageEl.classList.add('active');
+
+    if (actualPageId === 'tracker' && typeof window.initEndoTracker === 'function') {
+      window.initEndoTracker();
+    }
 
     // 2. Navigation-Links aktualisieren
     navLinks.forEach(link => {

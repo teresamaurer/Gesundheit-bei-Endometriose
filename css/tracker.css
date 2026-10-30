@@ -1,0 +1,1030 @@
+/* ==========================================================================
+   ENDO-TRACKER & SYMPTOM-TAGEBUCH - STYLESHEET
+   Aesthetik: Beruhigend, feminin, warm, achtsam im Einklang mit dem Design System
+   ========================================================================== */
+
+/* --- Tracker Hero & Intro --- */
+.tracker-hero {
+  padding: 40px 0 24px;
+  text-align: center;
+  position: relative;
+}
+
+.tracker-hero h1 {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.tracker-hero-lead {
+  max-width: 760px;
+  margin: 0 auto 20px;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* --- Kalender- & Datums-Leiste --- */
+.tracker-date-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tracker-date-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.date-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.date-nav-btn:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+}
+
+.date-nav-btn.today-btn {
+  background: var(--rose-light);
+  border-color: var(--rose-primary);
+  color: var(--rose-dark);
+}
+
+.date-nav-btn.today-btn:hover {
+  background: var(--rose-primary);
+  color: #fff;
+}
+
+.current-date-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-picker-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tracker-date-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.tracker-date-input:focus {
+  border-color: var(--rose-primary);
+  box-shadow: 0 0 0 3px rgba(212, 139, 123, 0.2);
+}
+
+.current-date-text {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.save-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--sage-dark);
+  background: var(--sage-light);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  transition: opacity 0.4s ease;
+}
+
+/* --- Wochen-/Monatsstreifen (Schnellnavigation) --- */
+.tracker-week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  margin-bottom: 28px;
+}
+
+.week-strip-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.week-strip-day:hover {
+  background: var(--bg-secondary);
+}
+
+.week-strip-day.active {
+  background: #fff;
+  border-color: var(--rose-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.week-strip-day.today {
+  position: relative;
+}
+
+.week-strip-day.today::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rose-primary);
+}
+
+.strip-weekday {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.strip-daynumber {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 2px;
+}
+
+.strip-has-entry {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold-primary);
+  margin-top: 4px;
+}
+
+/* --- Tracker Toolbar / Aktionen --- */
+.tracker-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.toolbar-actions-left,
+.toolbar-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tracker-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+}
+
+.tracker-btn-primary {
+  background: var(--rose-primary);
+  color: #fff;
+}
+
+.tracker-btn-primary:hover {
+  background: var(--rose-dark);
+  box-shadow: 0 4px 14px rgba(212, 139, 123, 0.3);
+}
+
+.tracker-btn-secondary {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  color: var(--text-main);
+}
+
+.tracker-btn-secondary:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+}
+
+.tracker-btn-print {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+}
+
+.tracker-btn-print:hover {
+  background: var(--gold-primary);
+  color: #fff;
+}
+
+/* --- Tracking Cards Grid --- */
+.tracker-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Einzelne Tracking-Karte */
+.tracker-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tracker-card:hover {
+  border-color: rgba(194, 155, 99, 0.45);
+  box-shadow: var(--shadow-md);
+}
+
+.tracker-card.card-highlight {
+  border-color: rgba(212, 139, 123, 0.45);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF8 100%);
+}
+
+.tracker-card.card-full-width {
+  grid-column: 1 / -1;
+}
+
+/* Card Header */
+.tracker-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(194, 155, 99, 0.15);
+}
+
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-icon {
+  font-size: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-title-group h3 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.card-title-group p {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-action-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-size: 1rem;
+}
+
+.card-action-btn:hover {
+  background: var(--rose-light);
+  color: var(--rose-dark);
+}
+
+/* --- Formular-Elemente im Tracker --- */
+.tracker-field-group {
+  margin-bottom: 18px;
+}
+
+.tracker-field-group:last-child {
+  margin-bottom: 0;
+}
+
+.tracker-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.tracker-label-desc {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.tracker-value-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  transition: all 0.25s ease;
+}
+
+/* --- Schmerz-Slider & 1-10 Skala --- */
+.pain-slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scale-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, 
+    #768D72 0%, 
+    #A3B899 30%, 
+    #C29B63 50%, 
+    #D48B7B 75%, 
+    #B94A48 100%);
+  outline: none;
+  cursor: pointer;
+}
+
+.scale-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid var(--gold-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.scale-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.scale-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid var(--gold-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.scale-ticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  font-size: 0.72rem;
+  color: var(--text-light);
+}
+
+/* Farbliche Abstufungen für Schmerzwerte */
+.pain-badge-0 { background: var(--sage-light); color: var(--sage-dark); }
+.pain-badge-low { background: #EBF1EA; color: #51694D; }
+.pain-badge-mid { background: #FDF4E7; color: #9E7944; }
+.pain-badge-high { background: #FBECE8; color: #B96F60; }
+.pain-badge-extreme { background: #FDE8E8; color: #9C1C1C; font-weight: 700; }
+
+/* --- Option Pills / Tags (Mehrfachauswahl & Einzelauswahl) --- */
+.pill-options-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tracker-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+}
+
+.tracker-pill:hover {
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  border-color: var(--gold-primary);
+}
+
+.tracker-pill.active {
+  background: var(--rose-primary);
+  border-color: var(--rose-primary);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(212, 139, 123, 0.25);
+}
+
+.tracker-pill.active-sage {
+  background: var(--sage-primary);
+  border-color: var(--sage-primary);
+  color: #fff;
+}
+
+/* --- Rating Stars (1-5 Sterne / Stufen) --- */
+.star-rating-group {
+  display: flex;
+  gap: 6px;
+}
+
+.star-rating-btn {
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--border-light);
+  background: var(--bg-card-soft);
+}
+
+.star-rating-btn:hover,
+.star-rating-btn.active {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+}
+
+/* --- Inputs & Textfelder --- */
+.tracker-input,
+.tracker-select,
+.tracker-textarea {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--text-main);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.tracker-input:focus,
+.tracker-select:focus,
+.tracker-textarea:focus {
+  border-color: var(--rose-primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(212, 139, 123, 0.15);
+}
+
+.tracker-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* --- Checkbox Liste (Medikamente, Trigger etc.) --- */
+.checkbox-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card-soft);
+  border: 1px solid rgba(194, 155, 99, 0.15);
+  transition: var(--transition-smooth);
+}
+
+.checkbox-item:hover {
+  background: #fff;
+  border-color: var(--border-light);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--rose-primary);
+  cursor: pointer;
+}
+
+.checkbox-extra-input {
+  max-width: 140px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  text-align: right;
+}
+
+/* --- Modal Dialog: Kategorie hinzufügen --- */
+.tracker-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(46, 34, 37, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.tracker-modal-overlay.active {
+  display: flex;
+}
+
+.tracker-modal {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-lg);
+  max-width: 520px;
+  width: 100%;
+  padding: 30px;
+  position: relative;
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tracker-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tracker-modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--text-main);
+}
+
+.tracker-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-light);
+  cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.tracker-modal-close:hover {
+  background: var(--bg-secondary);
+  color: var(--rose-primary);
+}
+
+.tracker-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.icon-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.icon-choice-btn {
+  font-size: 1.3rem;
+  background: var(--bg-secondary);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.icon-choice-btn:hover {
+  background: var(--gold-light);
+  transform: scale(1.1);
+}
+
+.icon-choice-btn.active {
+  background: var(--gold-light);
+  border-color: var(--gold-primary);
+}
+
+.tracker-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* --- Modal: Kategorien verwalten & wiederherstellen --- */
+.manage-categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.manage-category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-card-soft);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(194, 155, 99, 0.15);
+}
+
+/* --- Druck-Modal / Druckoptionen --- */
+.print-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.print-option-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  background: var(--bg-primary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-align: center;
+}
+
+.print-option-card:hover,
+.print-option-card.active {
+  border-color: var(--rose-primary);
+  background: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+}
+
+.print-option-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+/* --- Druckbereich (Wird bei window.print() gerendert) --- */
+#printReportContainer {
+  display: none;
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET (@media print)
+   Optimiert fuer sauberes A4-Druckbild, Symbole & Legende fuer den Arztbesuch
+   ========================================================================== */
+@media print {
+  /* Alles andere auf der Seite ausblenden */
+  body * {
+    visibility: hidden;
+  }
+
+  .site-header,
+  .site-footer,
+  .main-nav,
+  .mobile-menu-toggle,
+  .mandala-watermark,
+  .tracker-hero,
+  .tracker-date-bar,
+  .tracker-week-strip,
+  .tracker-toolbar,
+  .tracker-modal-overlay,
+  .site-main {
+    display: none !important;
+  }
+
+  /* Nur den Druck-Container einblenden */
+  #printReportContainer,
+  #printReportContainer * {
+    visibility: visible;
+  }
+
+  #printReportContainer {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 15mm 12mm;
+    background: #FFFFFF;
+    color: #1A1A1A;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+
+  /* Druck-Header */
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #C29B63;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .print-title h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18pt;
+    color: #2E2225;
+    margin: 0 0 3px 0;
+    font-weight: 700;
+  }
+
+  .print-title p {
+    font-size: 8.5pt;
+    color: #555;
+    margin: 0;
+  }
+
+  .print-meta-box {
+    text-align: right;
+    font-size: 9pt;
+    color: #333;
+  }
+
+  .print-meta-box strong {
+    font-size: 10.5pt;
+    color: #2E2225;
+  }
+
+  /* Druck-Grid & Tabellen */
+  .print-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .print-item-card {
+    border: 1px solid #D9D2C9;
+    border-radius: 5px;
+    padding: 8px 12px;
+    page-break-inside: avoid;
+    background: #FAF7F2;
+  }
+
+  .print-item-card h4 {
+    margin: 0 0 5px 0;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #2E2225;
+    border-bottom: 1px solid #E6E0D8;
+    padding-bottom: 3px;
+  }
+
+  .print-item-card p,
+  .print-item-card ul {
+    margin: 0;
+    font-size: 9pt;
+    color: #333;
+  }
+
+  .print-pain-indicator {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 9pt;
+    border: 1px solid #888;
+  }
+
+  /* Druck-Tabelle fuer Verlaufsansicht (7-30 Tage) */
+  .print-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 8.5pt;
+  }
+
+  .print-history-table th,
+  .print-history-table td {
+    border: 1px solid #BBB;
+    padding: 5px 6px;
+    text-align: center;
+  }
+
+  .print-history-table th {
+    background: #F4EFEA;
+    font-weight: 700;
+    color: #2E2225;
+  }
+
+  .print-history-table td.date-cell {
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Druck-Legende */
+  .print-legend {
+    border: 1px dashed #C29B63;
+    border-radius: 5px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    page-break-inside: avoid;
+    background: #FFFDF9;
+  }
+
+  .print-legend h4 {
+    margin: 0 0 6px 0;
+    font-size: 9.5pt;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: #2E2225;
+  }
+
+  .print-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    font-size: 8pt;
+    color: #444;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* Notizfeld fuer Arztgespräch */
+  .print-doctor-notes {
+    margin-top: 18px;
+    border-top: 1px solid #CCC;
+    padding-top: 10px;
+    page-break-inside: avoid;
+  }
+
+  .print-doctor-notes h4 {
+    margin: 0 0 8px 0;
+    font-size: 9.5pt;
+    color: #2E2225;
+  }
+
+  .print-notes-lines {
+    height: 50px;
+    border-bottom: 1px dashed #999;
+    border-top: 1px dashed #999;
+    margin-bottom: 6px;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm 8mm;
+  }
+}
+
+/* --- Responsive Anpassungen --- */
+@media (max-width: 900px) {
+  .tracker-hero h1 {
+    font-size: 2.1rem;
+  }
+  .tracker-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .tracker-date-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .tracker-week-strip {
+    grid-template-columns: repeat(7, 1fr);
+    overflow-x: auto;
+    padding: 6px;
+    gap: 4px;
+  }
+  .strip-weekday {
+    font-size: 0.65rem;
+  }
+  .strip-daynumber {
+    font-size: 0.9rem;
+  }
+  .print-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
