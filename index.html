@@ -35,6 +35,7 @@
           <li class="nav-item"><a href="#startseite" class="active" data-page="startseite">Start</a></li>
           <li class="nav-item"><a href="#saeulen" data-page="saeulen">Die 6 Säulen</a></li>
           <li class="nav-item"><a href="#alternative-ansaetze" data-page="alternative-ansaetze">Alternative Ansätze</a></li>
+          <li class="nav-item"><a href="#organ-visualisierung" data-page="organ-visualisierung">Organ-Visualisierung</a></li>
           <li class="nav-item"><a href="#atem-oase" data-page="atem-oase">Atem-Oase</a></li>
           <li class="nav-item"><a href="#sos-hilfe" data-page="sos-hilfe">SOS-Kompass</a></li>
         </ul>
@@ -1044,7 +1045,1028 @@
     </div> <!-- /#page-alternative-ansaetze -->
 
     <!-- ========================================================================
-         PAGE 4: ATEM-OASE
+         PAGE 4: HEILSAME ORGAN- & BAUCHRAUM-VISUALISIERUNG
+         ======================================================================== -->
+    <div class="page-view" id="page-organ-visualisierung" data-page="organ-visualisierung">
+
+      <!-- ========================================================================
+           HERO: HEILSAMER BAUCHRAUM & EINFÜHRUNG
+           ======================================================================== -->
+      <section class="section organ-hero-section" id="organ-visualisierung-hero">
+        <div class="mandala-watermark mandala-watermark--pillars-left" aria-hidden="true">
+          <img src="assets/mandala-gold.svg" alt="" loading="lazy">
+        </div>
+        <div class="container">
+          <div class="section-header text-center">
+            <span class="section-tag">Heilsame Innenwelt &amp; Selbstfürsorge</span>
+            <h2>Mein gesunder Bauchraum: Organe visualisieren &amp; heilsame Kraft schenken</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p class="lead" style="max-width: 820px; margin: 0 auto 20px;">
+              Oft ist der Bauchraum bei Endometriose mit Anspannung, Schmerzerinnerungen und Schonhaltungen verknüpft. Diese Seite ist dein persönlicher Kraftort, um deinen Schoß- und Bauchraum mit neuen, heilsamen inneren Bildern zu erfüllen. Sieh deine Organe in ihrer natürlichen, vollkommenen Gesundheit – rosig durchblutet, weich, geschmeidig pulsierend und in freier, reibungsloser Bewegung zueinander. Schenke jedem Bereich wohltuende Aufmerksamkeit und heilsames Licht.
+            </p>
+          </div>
+
+          <!-- Schnellauswahl / Quick Navigation Pills -->
+          <div class="organ-quick-nav">
+            <a href="#organ-karte" class="quick-nav-pill">
+              <span class="pill-icon">🗺️</span>
+              <span>Bauchraum-Landkarte</span>
+            </a>
+            <a href="#organ-uebergaenge" class="quick-nav-pill">
+              <span class="pill-icon">🌊</span>
+              <span>Gleiträume &amp; Übergänge</span>
+            </a>
+            <a href="#organ-galerie" class="quick-nav-pill">
+              <span class="pill-icon">🌸</span>
+              <span>Organ-Porträts</span>
+            </a>
+            <a href="#organ-energie" class="quick-nav-pill highlight">
+              <span class="pill-icon">✨</span>
+              <span>Heilsame Energie senden</span>
+            </a>
+            <a href="#organ-reise" class="quick-nav-pill">
+              <span class="pill-icon">🧘</span>
+              <span>Geführte Reise</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================================
+           SEKTION 1: INTERAKTIVE BAUCHRAUM-LANDKARTE (ANATOMISCHE ÜBERSICHT)
+           ======================================================================== -->
+      <section class="section section-alt" id="organ-karte">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Anatomische Visualisierung</span>
+            <h2>Interaktive Bauchraum-Landkarte</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p>
+              Berühre oder klicke auf die Organe in der Landkarte, um ihre gesunde Form, Lage und Nachbarschaft zu erkunden. Wähle eine Filterkategorie, um den Fokus gezielt auf deinen Schoßraum oder deine Mitte zu richten.
+            </p>
+          </div>
+
+          <!-- Filterleiste für Organkategorien -->
+          <div class="organ-filter-bar" role="tablist" aria-label="Organbereiche filtern">
+            <button class="organ-filter-btn active" data-filter="all" role="tab" aria-selected="true">
+              ✨ Alle Organe
+            </button>
+            <button class="organ-filter-btn" data-filter="pelvis" role="tab" aria-selected="false">
+              🌸 Schoßraum &amp; Becken
+            </button>
+            <button class="organ-filter-btn" data-filter="digestion" role="tab" aria-selected="false">
+              🥑 Verdauung &amp; Mitte
+            </button>
+            <button class="organ-filter-btn" data-filter="vitality" role="tab" aria-selected="false">
+              🌿 Vitalität &amp; Rhythmus
+            </button>
+          </div>
+
+          <!-- Zwei-Spalten-Layout: Interaktive SVG-Karte + Live-Fokuskarte -->
+          <div class="organ-map-layout">
+            <!-- Linke Spalte: Responsive SVG Anatomie-Karte -->
+            <div class="organ-svg-wrapper">
+              <div class="svg-map-legend">
+                <span class="legend-dot active"></span> Klicke auf ein Organ zum Fokussieren
+              </div>
+
+              <svg class="organ-anatomy-svg" viewBox="0 0 540 760" id="organAnatomySvg" aria-label="Interaktive Übersichtskarte des weiblichen Bauch- und Beckenraums">
+                <defs>
+                  <!-- Licht & Schattenfilter -->
+                  <filter id="organGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+
+                  <filter id="energyAura" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur" />
+                    <feFlood flood-color="#C29B63" flood-opacity="0.6" result="glowColor" />
+                    <feComposite in="glowColor" in2="blur" operator="in" result="coloredBlur" />
+                    <feMerge>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+
+                  <!-- Organverläufe (Gesunder, rosiger, vitaler Zustand) -->
+                  <!-- Zwerchfell: Sanftes Salbeigrün mit Goldhauch -->
+                  <linearGradient id="gradDiaphragm" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#8DA689" />
+                    <stop offset="60%" stop-color="#768D72" />
+                    <stop offset="100%" stop-color="#5B7258" />
+                  </linearGradient>
+
+                  <!-- Leber: Samtiges, warmes Terracotta-Purpur -->
+                  <linearGradient id="gradLiver" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#D97A68" />
+                    <stop offset="50%" stop-color="#B85949" />
+                    <stop offset="100%" stop-color="#8F3C2E" />
+                  </linearGradient>
+
+                  <!-- Gallenblase: Zartes Heilsalbei-Gold -->
+                  <linearGradient id="gradGall" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#C2D69B" />
+                    <stop offset="100%" stop-color="#768D72" />
+                  </linearGradient>
+
+                  <!-- Magen & Milz: Warmes Rosenquarz-Gold -->
+                  <linearGradient id="gradStomach" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#EAA698" />
+                    <stop offset="60%" stop-color="#D48B7B" />
+                    <stop offset="100%" stop-color="#B36A5B" />
+                  </linearGradient>
+
+                  <!-- Nieren: Warmes Kastanien-Beerenrosa mit Goldkappe -->
+                  <linearGradient id="gradKidney" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#D98277" />
+                    <stop offset="60%" stop-color="#AC544B" />
+                    <stop offset="100%" stop-color="#78342D" />
+                  </linearGradient>
+
+                  <!-- Darm: Sanftes, rosig-warmes Faltenband -->
+                  <linearGradient id="gradIntestines" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#F2C4B8" />
+                    <stop offset="50%" stop-color="#E2A698" />
+                    <stop offset="100%" stop-color="#C88476" />
+                  </linearGradient>
+
+                  <!-- Gebärmutter: Strahlendes, warmes Herz-Rosa -->
+                  <linearGradient id="gradUterus" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FFA89B" />
+                    <stop offset="45%" stop-color="#EE8576" />
+                    <stop offset="100%" stop-color="#C25A4B" />
+                  </linearGradient>
+
+                  <!-- Eierstöcke: Perlmutt-Ivory mit Roségold -->
+                  <linearGradient id="gradOvary" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFF5F2" />
+                    <stop offset="40%" stop-color="#F8DDD7" />
+                    <stop offset="100%" stop-color="#E2A89C" />
+                  </linearGradient>
+
+                  <!-- Douglas-Raum: Zartes, seidiges Champagner-Türkis (Schutzfilm) -->
+                  <linearGradient id="gradDouglas" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#C6E3D8" />
+                    <stop offset="50%" stop-color="#93C8B5" />
+                    <stop offset="100%" stop-color="#6DAA96" />
+                  </linearGradient>
+
+                  <!-- Harnblase: Zartes, dehnbares Pfirsich-Rosa -->
+                  <linearGradient id="gradBladder" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FFD4CC" />
+                    <stop offset="60%" stop-color="#F7AEA1" />
+                    <stop offset="100%" stop-color="#DF7E6E" />
+                  </linearGradient>
+
+                  <!-- Beckenboden: Sanfte Salbei-Hängematte -->
+                  <linearGradient id="gradPelvicFloor" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#768D72" />
+                    <stop offset="50%" stop-color="#A1B89D" />
+                    <stop offset="100%" stop-color="#768D72" />
+                  </linearGradient>
+
+                  <!-- Faszien & Seidennetz -->
+                  <linearGradient id="gradFascia" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#C29B63" stop-opacity="0.45" />
+                    <stop offset="50%" stop-color="#D48B7B" stop-opacity="0.25" />
+                    <stop offset="100%" stop-color="#768D72" stop-opacity="0.45" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Weibliche Körperkontur (Hintergrund-Silhouette) -->
+                <g class="body-contour" opacity="0.35">
+                  <!-- Torso-Umriss: Brustkorb, Taille, geschwungenes Becken -->
+                  <path d="M 170 30 C 220 30, 320 30, 370 30 C 400 70, 420 130, 410 190 C 400 240, 370 290, 360 350 C 350 410, 385 470, 415 540 C 430 580, 435 630, 430 730 L 110 730 C 105 630, 110 580, 125 540 C 155 470, 190 410, 180 350 C 170 290, 140 240, 130 190 C 120 130, 140 70, 170 30 Z" 
+                        fill="#F4EFEA" stroke="#C29B63" stroke-width="1.8" stroke-dasharray="4 4" />
+                  <!-- Sanfte Wirbelsäulen-Linie -->
+                  <line x1="270" y1="40" x2="270" y2="700" stroke="#C29B63" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.4" />
+                  <!-- Beckenschaufeln (Andeutung) -->
+                  <path d="M 130 510 Q 180 480 230 530" fill="none" stroke="#C29B63" stroke-width="1.5" opacity="0.3" />
+                  <path d="M 410 510 Q 360 480 310 530" fill="none" stroke="#C29B63" stroke-width="1.5" opacity="0.3" />
+                </g>
+
+                <!-- Fasziale Leitbahnen & Gleitschichten (Hintergrund-Netzwerk) -->
+                <g class="organ-fascia-net" data-category="vitality" data-organ="fascia">
+                  <path d="M 270 95 C 220 180, 200 320, 270 480 C 340 320, 320 180, 270 95" 
+                        fill="none" stroke="url(#gradFascia)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6" />
+                  <path d="M 180 150 Q 270 290 360 150" fill="none" stroke="url(#gradFascia)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5" />
+                  <path d="M 170 520 Q 270 470 370 520" fill="none" stroke="url(#gradFascia)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5" />
+                </g>
+
+                <!-- 1. Zwerchfell (Diaphragma) - Das atmende Dach -->
+                <g class="organ-interactive-group" data-organ="diaphragm" data-category="vitality" tabindex="0" role="button" aria-label="Zwerchfell: Das atmende Dach">
+                  <path class="organ-path" d="M 150 145 C 190 95, 350 95, 390 145 C 340 125, 200 125, 150 145 Z" 
+                        fill="url(#gradDiaphragm)" stroke="#5B7258" stroke-width="1.8" />
+                  <!-- Atempfeile (Sanfte Wellen) -->
+                  <path d="M 270 108 L 270 128 M 264 122 L 270 128 L 276 122" fill="none" stroke="#FAF7F2" stroke-width="1.5" opacity="0.85" />
+                  <text x="270" y="85" text-anchor="middle" class="organ-label-svg">Zwerchfell</text>
+                </g>
+
+                <!-- 2. Nieren & Nebennieren (Renes) - Flanken -->
+                <g class="organ-interactive-group" data-organ="kidneys" data-category="vitality" tabindex="0" role="button" aria-label="Nieren und Nebennieren">
+                  <!-- Rechte Niere (vom Betrachter links) -->
+                  <g>
+                    <!-- Nebenniere als goldene Haube -->
+                    <path class="organ-path-sub" d="M 175 228 C 182 220, 198 220, 205 228 C 198 232, 182 232, 175 228 Z" fill="#C29B63" />
+                    <!-- Niere Bohnenform -->
+                    <path class="organ-path" d="M 172 232 C 160 250, 160 285, 175 305 C 192 315, 208 300, 205 280 C 200 268, 195 260, 200 250 C 205 240, 192 225, 172 232 Z" 
+                          fill="url(#gradKidney)" stroke="#78342D" stroke-width="1.5" />
+                    <!-- Harnleiter-Abgang -->
+                    <path d="M 195 275 C 190 340, 210 450, 235 550" fill="none" stroke="#D48B7B" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.6" />
+                  </g>
+                  <!-- Linke Niere (vom Betrachter rechts) -->
+                  <g>
+                    <!-- Nebenniere -->
+                    <path class="organ-path-sub" d="M 335 224 C 342 216, 358 216, 365 224 C 358 228, 342 228, 335 224 Z" fill="#C29B63" />
+                    <!-- Niere -->
+                    <path class="organ-path" d="M 368 228 C 380 246, 380 281, 365 301 C 348 311, 332 296, 335 276 C 340 264, 345 256, 340 246 C 335 236, 348 221, 368 228 Z" 
+                          fill="url(#gradKidney)" stroke="#78342D" stroke-width="1.5" />
+                    <!-- Harnleiter-Abgang -->
+                    <path d="M 345 271 C 350 340, 330 450, 305 550" fill="none" stroke="#D48B7B" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.6" />
+                  </g>
+                  <text x="145" y="270" text-anchor="middle" class="organ-label-svg">Niere re.</text>
+                  <text x="395" y="266" text-anchor="middle" class="organ-label-svg">Niere li.</text>
+                </g>
+
+                <!-- 3. Leber & Gallenblase (Hepar) - Rechter Oberbauch -->
+                <g class="organ-interactive-group" data-organ="liver" data-category="digestion" tabindex="0" role="button" aria-label="Leber und Gallenblase">
+                  <!-- Großer Leberlappen -->
+                  <path class="organ-path" d="M 160 152 C 210 135, 275 140, 290 155 C 300 175, 285 225, 260 235 C 215 245, 165 230, 150 195 C 145 175, 150 158, 160 152 Z" 
+                        fill="url(#gradLiver)" stroke="#8F3C2E" stroke-width="1.8" />
+                  <!-- Gallenblase unter der Leber -->
+                  <path class="organ-path-sub" d="M 235 230 C 242 225, 252 232, 250 244 C 248 252, 238 252, 234 244 C 232 238, 232 232, 235 230 Z" 
+                        fill="url(#gradGall)" stroke="#51694D" stroke-width="1.2" />
+                  <text x="195" y="195" text-anchor="middle" class="organ-label-svg on-dark">Leber</text>
+                </g>
+
+                <!-- 4. Magen, Bauchspeicheldrüse & Milz - Linker Oberbauch -->
+                <g class="organ-interactive-group" data-organ="stomach" data-category="digestion" tabindex="0" role="button" aria-label="Magen, Milz und Bauchspeicheldrüse">
+                  <!-- Magen-Sichelform -->
+                  <path class="organ-path" d="M 285 160 C 330 150, 365 175, 360 215 C 355 245, 310 260, 285 245 C 275 235, 275 220, 290 205 C 305 190, 295 170, 285 160 Z" 
+                        fill="url(#gradStomach)" stroke="#B36A5B" stroke-width="1.8" />
+                  <!-- Milz seitlich -->
+                  <path class="organ-path-sub" d="M 370 185 C 385 190, 385 215, 372 225 C 362 220, 362 195, 370 185 Z" fill="#9E5344" opacity="0.8" />
+                  <text x="330" y="210" text-anchor="middle" class="organ-label-svg on-dark">Magen</text>
+                </g>
+
+                <!-- 5. Darm (Dünndarm & Dickdarm) - Bauchmitte -->
+                <g class="organ-interactive-group" data-organ="intestines" data-category="digestion" tabindex="0" role="button" aria-label="Darmtrakt: Dünndarm und Dickdarm">
+                  <!-- Dickdarm-Rahmen (Colon ascendens, transversum, descendens & Sigma) -->
+                  <path class="organ-path" d="M 180 390 C 175 320, 175 270, 190 260 C 230 250, 310 250, 350 260 C 365 270, 365 320, 360 390 C 355 425, 340 445, 320 460 C 300 450, 310 430, 340 420 C 345 370, 345 285, 330 275 C 300 268, 240 268, 210 275 C 195 285, 195 370, 200 420 C 185 410, 182 400, 180 390 Z" 
+                        fill="url(#gradIntestines)" stroke="#C88476" stroke-width="1.6" opacity="0.9" />
+                  <!-- Dünndarmschlingen (Zentrum) in weichen Wellen -->
+                  <g class="organ-path-sub" opacity="0.85">
+                    <path d="M 215 300 Q 270 290 325 300 Q 330 325 270 330 Q 210 335 220 360 Q 270 355 325 365 Q 320 395 270 390 Q 220 385 230 415 Q 270 415 310 415" 
+                          fill="none" stroke="#B96F60" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 215 300 Q 270 290 325 300 Q 330 325 270 330 Q 210 335 220 360 Q 270 355 325 365 Q 320 395 270 390 Q 220 385 230 415 Q 270 415 310 415" 
+                          fill="none" stroke="#F8EDE9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" />
+                  </g>
+                  <text x="270" y="360" text-anchor="middle" class="organ-label-svg on-dark">Darmtrakt</text>
+                </g>
+
+                <!-- ================= SCHOSSRAUM & BECKEN ================= -->
+
+                <!-- 6. Douglas-Raum & Bauchfell (Excavatio rectouterina) - Die Seidentasche hinter der Gebärmutter -->
+                <g class="organ-interactive-group" data-organ="douglas" data-category="pelvis" tabindex="0" role="button" aria-label="Douglas-Raum und Bauchfell: Glatter Gleitraum">
+                  <!-- Seidige Gleittasche hinter/unter Gebärmutter -->
+                  <path class="organ-path" d="M 220 510 C 235 540, 305 540, 320 510 C 310 530, 230 530, 220 510 Z" 
+                        fill="url(#gradDouglas)" stroke="#51694D" stroke-width="2" />
+                  <!-- Glanz- und Gleitlinien -->
+                  <path d="M 235 518 Q 270 526 305 518" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.8" />
+                  <text x="270" y="546" text-anchor="middle" class="organ-label-svg special-douglas">Douglas-Gleitraum</text>
+                </g>
+
+                <!-- 7. Gebärmutter (Uterus) mit Haltebändern -->
+                <g class="organ-interactive-group" data-organ="uterus" data-category="pelvis" tabindex="0" role="button" aria-label="Gebärmutter: Das weiche Herz des Schoßraums">
+                  <!-- Elastische Bänder (Ligamenta uterosacralia & rotunda) -->
+                  <path class="organ-path-sub" d="M 225 480 Q 180 500 160 520" fill="none" stroke="#C29B63" stroke-width="2" stroke-dasharray="3 3" opacity="0.85" />
+                  <path class="organ-path-sub" d="M 315 480 Q 360 500 380 520" fill="none" stroke="#C29B63" stroke-width="2" stroke-dasharray="3 3" opacity="0.85" />
+                  <!-- Uterus-Körper (Birnenform / geschützte Knospe) -->
+                  <path class="organ-path" d="M 240 460 C 225 450, 235 435, 270 435 C 305 435, 315 450, 300 460 C 295 485, 285 515, 270 515 C 255 515, 245 485, 240 460 Z" 
+                        fill="url(#gradUterus)" stroke="#C25A4B" stroke-width="2" filter="url(#organGlow)" />
+                  <!-- Goldener Lebensfunke im Zentrum -->
+                  <circle cx="270" cy="460" r="5" fill="#FFE5A3" opacity="0.9" />
+                  <text x="270" y="475" text-anchor="middle" class="organ-label-svg on-dark">Gebärmutter</text>
+                </g>
+
+                <!-- 8. Eierstöcke & Eileiter (Ovarien & Tuben) -->
+                <g class="organ-interactive-group" data-organ="ovaries" data-category="pelvis" tabindex="0" role="button" aria-label="Eierstöcke und Eileiter: Schwebende Schöpferkraft">
+                  <!-- Rechter Eileiter & Eierstock (vom Betrachter links) -->
+                  <g>
+                    <!-- Eileiterbogen geschwungen -->
+                    <path class="organ-path" d="M 240 442 C 210 430, 185 435, 175 450" fill="none" stroke="#EE8576" stroke-width="3" stroke-linecap="round" />
+                    <!-- Fimbrientrichter -->
+                    <path d="M 175 450 C 170 452, 168 456, 172 458" fill="none" stroke="#EE8576" stroke-width="2" />
+                    <!-- Eierstock (Perlmutt-Mandel) -->
+                    <ellipse class="organ-path" cx="178" cy="465" rx="14" ry="9" transform="rotate(-15 178 465)" 
+                             fill="url(#gradOvary)" stroke="#C29B63" stroke-width="1.8" />
+                  </g>
+                  <!-- Linker Eileiter & Eierstock (vom Betrachter rechts) -->
+                  <g>
+                    <!-- Eileiterbogen -->
+                    <path class="organ-path" d="M 300 442 C 330 430, 355 435, 365 450" fill="none" stroke="#EE8576" stroke-width="3" stroke-linecap="round" />
+                    <!-- Fimbrientrichter -->
+                    <path d="M 365 450 C 370 452, 372 456, 368 458" fill="none" stroke="#EE8576" stroke-width="2" />
+                    <!-- Eierstock -->
+                    <ellipse class="organ-path" cx="362" cy="465" rx="14" ry="9" transform="rotate(15 362 465)" 
+                             fill="url(#gradOvary)" stroke="#C29B63" stroke-width="1.8" />
+                  </g>
+                  <text x="140" y="470" text-anchor="middle" class="organ-label-svg">Eierstock re.</text>
+                  <text x="400" y="470" text-anchor="middle" class="organ-label-svg">Eierstock li.</text>
+                </g>
+
+                <!-- 9. Harnblase (Vesica urinaria) - Weich federnd vor/unter Uterus -->
+                <g class="organ-interactive-group" data-organ="bladder" data-category="pelvis" tabindex="0" role="button" aria-label="Harnblase: Das elastische Beckenorgan">
+                  <path class="organ-path" d="M 235 550 C 235 530, 305 530, 305 550 C 305 575, 235 575, 235 550 Z" 
+                        fill="url(#gradBladder)" stroke="#DF7E6E" stroke-width="1.8" />
+                  <!-- Vesikouteriner Gleitspalt-Andeutung -->
+                  <path d="M 245 532 Q 270 528 295 532" fill="none" stroke="#FAF7F2" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.8" />
+                  <text x="270" y="560" text-anchor="middle" class="organ-label-svg">Blase</text>
+                </g>
+
+                <!-- 10. Beckenboden (Pelvic Floor) - Die elastische Hängematte -->
+                <g class="organ-interactive-group" data-organ="pelvicfloor" data-category="pelvis" tabindex="0" role="button" aria-label="Beckenboden: Tragende Hängematte">
+                  <path class="organ-path" d="M 180 610 C 220 645, 320 645, 360 610 C 320 625, 220 625, 180 610 Z" 
+                        fill="url(#gradPelvicFloor)" stroke="#51694D" stroke-width="2" />
+                  <!-- Schwingungspfeil (Federung) -->
+                  <path d="M 270 635 L 270 622 M 264 628 L 270 622 L 276 628" fill="none" stroke="#FAF7F2" stroke-width="1.5" opacity="0.9" />
+                  <text x="270" y="662" text-anchor="middle" class="organ-label-svg">Beckenboden</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Rechte Spalte: Interaktives Organ-Fokusfenster -->
+            <div class="organ-focus-card" id="organFocusCard">
+              <div class="focus-card-header">
+                <span class="focus-badge" id="focusCategoryBadge">Schoßraum &amp; Becken</span>
+                <span class="focus-latin-name" id="focusLatinName">Uterus</span>
+              </div>
+              <h3 class="focus-title" id="focusTitle">Gebärmutter</h3>
+              
+              <div class="focus-divider"></div>
+
+              <!-- Gesunder Zustand Text -->
+              <div class="focus-block">
+                <div class="focus-block-label">
+                  <span class="block-icon">✨</span>
+                  <strong>So sieht sie vollkommen gesund aus:</strong>
+                </div>
+                <p id="focusHealthDesc">
+                  Wie eine weiche, geschützte Knospe im Zentrum deines Beckens. Wunderbar elastisch, prall und rosig durchblutet. Das Muskelgewebe (Myometrium) schwingt frei in alle Richtungen – ohne Schmerzreize, ohne Krampf.
+                </p>
+              </div>
+
+              <!-- Übergang zu Nachbarn -->
+              <div class="focus-block">
+                <div class="focus-block-label">
+                  <span class="block-icon">🌊</span>
+                  <strong>Harmonischer Übergang zu Nachbarorganen:</strong>
+                </div>
+                <p id="focusTransitionDesc">
+                  Sanft getragen von elastischen Bändern. Nach hinten gleitet sie seidig am Douglas-Raum und Enddarm vorbei; nach vorn federt sie weich an die dehnbare Blase an. Völlige Bewegungsfreiheit bei jedem Atemzug.
+                </p>
+              </div>
+
+              <!-- Heilsame Affirmation -->
+              <div class="focus-affirmation-box" id="focusAffirmationBox">
+                <p class="focus-affirmation-quote" id="focusAffirmation">
+                  „Mein Schoßraum ist ein sicherer, warmer Ort. Meine Gebärmutter darf vollkommen weich, entspannt und heilsam durchblutet sein.“
+                </p>
+              </div>
+
+              <!-- Aktionen -->
+              <div class="focus-actions">
+                <button type="button" class="btn btn-primary btn-sm" id="btnFocusSendEnergy">
+                  <span class="btn-icon">✨</span> Heilsame Energie senden
+                </button>
+                <a href="#organ-galerie" class="btn btn-outline btn-sm" id="btnFocusViewDetail">
+                  Zum ausführlichen Porträt ↓
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================================
+           SEKTION 2: DIE ÜBERGÄNGE & GLEITRÄUME (REIBUNGSLOSE FREIHEIT)
+           ======================================================================== -->
+      <section class="section" id="organ-uebergaenge">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Harmonische Nachbarschaft &amp; Faszien</span>
+            <h2>Die Gleiträume: Wie gesunde Organe schmerzfrei gleiten</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p>
+              Bei Endometriose führen Entzündungen oft zu Verklebungen (Adhäsionen). Umso kraftvoller ist es, das Gehirn mit Bildern von <em>vollkommener Gleitfähigkeit</em> und samtener Seide zu nähren. Im gesunden Zustand berühren sich Organe nicht starr, sondern gleiten auf hauchfeinen Flüssigkeitsfilmen reibungslos aneinander vorbei.
+            </p>
+          </div>
+
+          <div class="gleitraum-grid">
+            <!-- 1. Douglas-Raum & Bauchfell -->
+            <div class="gleitraum-card highlight-card">
+              <div class="gleitraum-icon-badge gold">🌊</div>
+              <span class="gleitraum-tag">Schlüsselelement bei Endometriose</span>
+              <h3>1. Der Douglas-Raum: Die flüssige Seidentasche</h3>
+              <p class="gleitraum-latin">Excavatio rectouterina &amp; Peritoneum</p>
+              <p>
+                Die tiefste Senke des Bauchraums zwischen Gebärmutterhinterwand und Mastdarm (Rektum). 
+              </p>
+              <div class="gleitraum-visual-guide">
+                <strong>Heilsames inneres Bild:</strong>
+                Stelle dir diesen Raum vor wie zwei Bahnen feinster, nasser Seide. Ein hauchdünner, schützender Film klarer Peritonealflüssigkeit sorgt dafür, dass Darm und Gebärmutter bei jedem Schritt, bei jeder Darmbewegung und bei jedem Bücken vollkommen lautlos, sanft und reibungsfrei aneinander vorbeigleiten. Kein Ziehen, kein Widerstand – pure Leichtigkeit.
+              </div>
+            </div>
+
+            <!-- 2. Blase und Gebärmutter -->
+            <div class="gleitraum-card">
+              <div class="gleitraum-icon-badge rose">🕊️</div>
+              <span class="gleitraum-tag">Federnde Nachbarschaft</span>
+              <h3>2. Das vesikouterine Gleitlager</h3>
+              <p class="gleitraum-latin">Septum vesicouterinum &amp; Blasenbett</p>
+              <p>
+                Zwischen der Vorderwand der Gebärmutter und der Harnblase liegt eine elastische, bindegewebige Verschiebeschicht.
+              </p>
+              <div class="gleitraum-visual-guide">
+                <strong>Heilsames inneres Bild:</strong>
+                Wie ein weiches Daunenkissen gibt diese Schicht geschmeidig nach. Füllt sich die Blase mit Wasser, weicht die Gebärmutter federnd aus. Entleert sich die Blase, schwingt alles harmonisch zurück. Beide Organe schenken sich gegenseitig Raum zum Atmen.
+              </div>
+            </div>
+
+            <!-- 3. Schwebende Eierstöcke & Eileiter -->
+            <div class="gleitraum-card">
+              <div class="gleitraum-icon-badge sage">🌸</div>
+              <span class="gleitraum-tag">Freie Schwingung</span>
+              <h3>3. Die freie Schwebung der Eierstöcke</h3>
+              <p class="gleitraum-latin">Mesoovarium &amp; Ligamentum latum uteri</p>
+              <p>
+                Eierstöcke und Eileiter sind nicht an den Beckenknochen festgewachsen, sondern schwingen an zarten Bändern frei im Beckenraum.
+              </p>
+              <div class="gleitraum-visual-guide">
+                <strong>Heilsames inneres Bild:</strong>
+                Sie schweben wie Seerosen auf einem ruhigen Teich. Die zarten Fimbrientrichter bewegen sich sanft wie sanfte Meeresanemonen über den Darmschlingen, frei von jeglicher Anhaftung, leicht und durchlässig.
+              </div>
+            </div>
+
+            <!-- 4. Zwerchfell-Beckenboden-Pumpe -->
+            <div class="gleitraum-card">
+              <div class="gleitraum-icon-badge gold">🌬️</div>
+              <span class="gleitraum-tag">Die 20.000-fache tägliche Organmassage</span>
+              <h3>4. Die Zwerchfell-Beckenboden-Atemachse</h3>
+              <p class="gleitraum-latin">Diaphragma thoracale &amp; Diaphragma pelvis</p>
+              <p>
+                Das Zwerchfell oben und der Beckenboden unten bilden die atmenden Pole des Bauchraums.
+              </p>
+              <div class="gleitraum-visual-guide">
+                <strong>Heilsames inneres Bild:</strong>
+                Mit jedem Atemzug senkt sich das Zwerchfell nach unten und massiert Leber, Magen und Darm. Der Beckenboden gibt wie ein elastisches Trampolin nach. Beim Ausatmen schwingt alles wieder nach oben. Alle 10 Organe werden in dieser Wiege permanent sanft mobilisiert und durchwärmt.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================================
+           SEKTION 3: DETAILLIERTE ORGAN-GALERIE (10 GESUNDE ORGANE IM PORTRÄT)
+           ======================================================================== -->
+      <section class="section section-alt" id="organ-galerie">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Meine Organe im Porträt</span>
+            <h2>So sehen meine Organe in voller Gesundheit aus</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p>
+              Nimm dir Zeit für jedes Organ. Betrachte die Zeichnung, lies die Beschreibung und verankere das Gefühl von rosiger Vitalität, Weichheit und Wohlbefinden in deinem Bewusstsein.
+            </p>
+          </div>
+
+          <div class="organ-gallery-grid">
+            <!-- 1. Gebärmutter -->
+            <article class="organ-card" id="card-uterus" data-organ="uterus">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <path d="M 100 20 C 135 20, 160 40, 145 80 C 135 110, 115 140, 100 140 C 85 140, 65 110, 55 80 C 40 40, 65 20, 100 20 Z" 
+                        fill="url(#gradUterus)" stroke="#C25A4B" stroke-width="2" filter="url(#organGlow)" />
+                  <path d="M 50 60 Q 20 80 10 110" fill="none" stroke="#C29B63" stroke-width="2" stroke-dasharray="3 3" opacity="0.8" />
+                  <path d="M 150 60 Q 180 80 190 110" fill="none" stroke="#C29B63" stroke-width="2" stroke-dasharray="3 3" opacity="0.8" />
+                  <circle cx="100" cy="70" r="14" fill="#FFE5A3" opacity="0.75" />
+                  <circle cx="100" cy="70" r="6" fill="#FFFFFF" opacity="0.9" />
+                </svg>
+                <span class="organ-card-badge rose">Schoßraum-Zentrum</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Gebärmutter</h3>
+                  <span class="latin-name">Uterus</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht sie gesund aus:</strong>
+                  <p>Eine samtweiche, kräftige Lotusknospe. Das Gewebe ist warm, hervorragend durchblutet in zartem Rosérot, frei beweglich und elastisch. Keine harten Verspannungen, keine Schmerzimpulse – reiner Schutz und Geborgenheit.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Hängt frei an elastischen Faszienbändern im Becken. Schmiegt sich sanft an die Vorderwand der Blase an und gleitet auf der Rückseite über den samtigen Douglas-Raum vollkommen frei am Darm vorbei.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Mein Schoßraum ist warm, weich und in Sicherheit. Ich schenke meiner Gebärmutter tiefe Ruhe.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="uterus">
+                  ✨ Energie an Gebärmutter senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 2. Eierstöcke & Eileiter -->
+            <article class="organ-card" id="card-ovaries" data-organ="ovaries">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <!-- Eileiterbogen -->
+                  <path d="M 30 110 C 50 50, 110 35, 140 50 C 160 60, 175 75, 170 95" fill="none" stroke="#EE8576" stroke-width="4" stroke-linecap="round" />
+                  <!-- Fimbrientrichter -->
+                  <path d="M 170 95 C 175 90, 185 92, 185 102 C 180 112, 170 108, 170 95 Z" fill="#EE8576" opacity="0.8" />
+                  <!-- Eierstock -->
+                  <ellipse cx="150" cy="115" rx="26" ry="17" transform="rotate(-15 150 115)" fill="url(#gradOvary)" stroke="#C29B63" stroke-width="2" filter="url(#organGlow)" />
+                  <circle cx="150" cy="115" r="5" fill="#FFE5A3" />
+                </svg>
+                <span class="organ-card-badge gold">Weibliche Urkraft</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Eierstöcke &amp; Eileiter</h3>
+                  <span class="latin-name">Ovarien &amp; Tuben</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sehen sie gesund aus:</strong>
+                  <p>Zwei mandelförmige, perlmuttfarben schimmernde Juwelen. Die Fimbrien der Eileiter fächeln sanft wie zarte Blütenblätter. Frei von Zysten, Entzündungen oder Verwachsungen – lebendig pulsierend im Rhythmus des Mondes.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Schweben frei beweglich an der seitlichen Beckenwand über den Darmschlingen, ohne irgendwo anzuhaften. Sie schwingen elastisch mit jedem Schritt mit.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Meine Eierstöcke pulsieren im heilsamen Rhythmus der Natur. Ich segne meine weibliche Schöpferkraft.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="ovaries">
+                  ✨ Energie an Eierstöcke senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 3. Douglas-Raum & Bauchfell -->
+            <article class="organ-card" id="card-douglas" data-organ="douglas">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <path d="M 30 50 C 60 120, 140 120, 170 50 C 150 90, 50 90, 30 50 Z" 
+                        fill="url(#gradDouglas)" stroke="#51694D" stroke-width="2.5" filter="url(#organGlow)" />
+                  <path d="M 50 75 Q 100 100 150 75" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+                  <circle cx="100" cy="90" r="18" fill="rgba(198, 227, 216, 0.4)" />
+                </svg>
+                <span class="organ-card-badge sage">Seidiger Gleitraum</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Douglas-Raum &amp; Bauchfell</h3>
+                  <span class="latin-name">Excavatio rectouterina</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht er gesund aus:</strong>
+                  <p>Spiegelglatt wie feuchter Seidenstoff. Eine hauchdünne, klare Schicht Peritonealflüssigkeit benetzt diesen Raum. Vollkommen frei von Narbengewebe, Entzündungshitze oder Verklebungen – ein reiner Raum des reibungslosen Fließens.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Ermöglicht es Gebärmutterhinterwand und Mastdarm, wie zwei nasse Seidentücher absolut widerstands- und schmerzfrei aneinander vorbeizugleiten.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Der Raum hinter meiner Gebärmutter ist frei, weit, seidig glatt und vollkommen entspannt.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="douglas">
+                  ✨ Energie an Douglas-Raum senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 4. Harnblase -->
+            <article class="organ-card" id="card-bladder" data-organ="bladder">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <path d="M 40 85 C 40 45, 160 45, 160 85 C 160 125, 40 125, 40 85 Z" 
+                        fill="url(#gradBladder)" stroke="#DF7E6E" stroke-width="2" filter="url(#organGlow)" />
+                  <path d="M 60 75 Q 100 65 140 75" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.75" />
+                  <circle cx="100" cy="85" r="8" fill="#FFE5A3" opacity="0.6" />
+                </svg>
+                <span class="organ-card-badge rose">Loslassen &amp; Weite</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Harnblase</h3>
+                  <span class="latin-name">Vesica urinaria</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht sie gesund aus:</strong>
+                  <p>Ein geschmeidiger, elastischer Hohlmuskel mit glatter, gesunder Schleimhaut. Passt sich sanft und flexibel ihrem Füllstand an – ohne Reizungen, Druckgefühl oder Brennen. Ein Ort des vertrauensvollen Loslassens.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Ruht weich vor der Gebärmutter auf dem Beckenboden. Eine feine Bindegewebsschicht federt jede Bewegung sanft ab.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Meine Blase ist entspannt, weit und weich. Ich darf Altes vertrauensvoll loslassen.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="bladder">
+                  ✨ Energie an Harnblase senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 5. Darmtrakt -->
+            <article class="organ-card" id="card-intestines" data-organ="intestines">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <!-- Dickdarmbogen -->
+                  <path d="M 30 130 C 25 50, 40 30, 100 30 C 160 30, 175 50, 170 130" fill="none" stroke="url(#gradIntestines)" stroke-width="16" stroke-linecap="round" />
+                  <!-- Dünndarmwelle -->
+                  <path d="M 60 70 Q 100 60 140 70 Q 140 95 100 95 Q 60 95 60 115 Q 100 115 140 115" fill="none" stroke="#D48B7B" stroke-width="7" stroke-linecap="round" />
+                </svg>
+                <span class="organ-card-badge gold">Rhythmische Mitte</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Darmtrakt</h3>
+                  <span class="latin-name">Intestinum (Colon &amp; Ileum)</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht er gesund aus:</strong>
+                  <p>Rosig, warm und von sanften, rhythmischen Wellen (Peristaltik) durchströmt wie ein ruhiges Meer. Das Mikrobiom floriert in Harmonie, die Schleimhautbarriere ist dicht und stark. Kein Blähbauch, kein Völlegefühl.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Die Darmschlingen gleiten frei und ungestört über Gebärmutter, Eierstöcke und Beckenwand. Das Rektum gleitet sanft hinter dem Douglas-Raum.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Mein Darm arbeitet in friedlicher Ruhe und Leichtigkeit. Sanfte Wellen des Wohlbefindens durchströmen mich.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="intestines">
+                  ✨ Energie an Darm senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 6. Leber & Gallenblase -->
+            <article class="organ-card" id="card-liver" data-organ="liver">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <path d="M 30 50 C 90 25, 160 30, 175 50 C 185 75, 165 125, 135 135 C 80 145, 35 130, 20 95 C 15 75, 20 58, 30 50 Z" 
+                        fill="url(#gradLiver)" stroke="#8F3C2E" stroke-width="2" filter="url(#organGlow)" />
+                  <!-- Galle -->
+                  <path d="M 120 120 C 130 115, 142 122, 140 134 C 138 142, 126 142, 122 134 Z" fill="url(#gradGall)" stroke="#51694D" stroke-width="1.5" />
+                  <circle cx="95" cy="85" r="10" fill="#FFE5A3" opacity="0.6" />
+                </svg>
+                <span class="organ-card-badge rose">Regeneration &amp; Entgiftung</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Leber &amp; Gallenblase</h3>
+                  <span class="latin-name">Hepar &amp; Vesica biliaris</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht sie gesund aus:</strong>
+                  <p>Samtig rotbraun, kraftvoll und weich wie Seide. Sie filtert und reinigt unermüdlich dein Blut, baut überschüssige Östrogene gelassen ab und schenkt deinem Körper vitale Energie und Leichtigkeit.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Schmiegt sich harmonisch an die Unterseite des Zwerchfells an. Wird mit jedem Atemzug sanft massiert und massiert ihrerseits Magen und Darm.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Meine Leber reinigt und erneuert mein Blut mit kraftvoller Ruhe. Sie balanciert meine Hormone in Perfektion.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="liver">
+                  ✨ Energie an Leber senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 7. Magen, Milz & Bauchspeicheldrüse -->
+            <article class="organ-card" id="card-stomach" data-organ="stomach">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <path d="M 50 40 C 110 30, 160 65, 150 115 C 145 145, 90 155, 60 140 C 45 125, 50 105, 70 90 C 85 75, 70 50, 50 40 Z" 
+                        fill="url(#gradStomach)" stroke="#B36A5B" stroke-width="2" filter="url(#organGlow)" />
+                  <ellipse cx="165" cy="95" rx="14" ry="24" transform="rotate(15 165 95)" fill="#9E5344" opacity="0.8" />
+                  <circle cx="100" cy="115" r="9" fill="#FFE5A3" opacity="0.6" />
+                </svg>
+                <span class="organ-card-badge gold">Innere Nährung</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Magen &amp; Bauchspeicheldrüse</h3>
+                  <span class="latin-name">Gaster &amp; Pankreas</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sehen sie gesund aus:</strong>
+                  <p>Ein wohlig warmes Verdauungsfeuer ohne brennende Entzündungshitze. Die Magenschleimhaut ist samtig geschützt, die Bauchspeicheldrüse spendet fein ausbalancierte Enzyme für müheloses Aufschließen der Nahrung.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Gebettet im linken Oberbauch, atmet synchron mit dem Zwerchfell und gibt den Nahrungsbrei sanft an den Zwölffingerdarm weiter.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Meine Mitte ist warm, genährt und in Balance. Ich nehme das Gute auf und wandle es in Lebenskraft.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="stomach">
+                  ✨ Energie an Magen senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 8. Nieren & Nebennieren -->
+            <article class="organ-card" id="card-kidneys" data-organ="kidneys">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <!-- Goldene Nebennieren-Kappe -->
+                  <path d="M 75 35 C 90 22, 120 22, 135 35 C 120 42, 90 42, 75 35 Z" fill="#C29B63" filter="url(#organGlow)" />
+                  <!-- Niere -->
+                  <path d="M 70 42 C 55 65, 55 110, 75 135 C 100 148, 122 130, 118 102 C 110 88, 102 78, 110 65 C 118 52, 100 32, 70 42 Z" 
+                        fill="url(#gradKidney)" stroke="#78342D" stroke-width="2" />
+                  <circle cx="85" cy="90" r="8" fill="#FFE5A3" opacity="0.7" />
+                </svg>
+                <span class="organ-card-badge sage">Urkraft &amp; Entlastung</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Nieren &amp; Nebennieren</h3>
+                  <span class="latin-name">Renes &amp; Glandulae suprarenales</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sehen sie gesund aus:</strong>
+                  <p>In ein weiches, warmes Fettlager an den Flanken gebettet. Die Nieren filtern dein Blut in gelassener Stetigkeit. Die goldenen Nebennieren dürfen loslassen: Dauerstress weicht tiefer Ruhe und Regeneration.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Gleiten sanft am großen Lendenmuskel (Psoas) bei jedem Schritt mit. Über die feinen Harnleiter elastisch mit der Blase verbunden.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Meine Nieren sind voller tiefer Lebenskraft. Meine Nebennieren schalten auf tiefe Erholung und Ruhe.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="kidneys">
+                  ✨ Energie an Nieren senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 9. Zwerchfell & Beckenboden -->
+            <article class="organ-card" id="card-diaphragm" data-organ="diaphragm">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <!-- Zwerchfellbogen oben -->
+                  <path d="M 20 60 C 60 15, 140 15, 180 60 C 140 40, 60 40, 20 60 Z" fill="url(#gradDiaphragm)" stroke="#5B7258" stroke-width="2" />
+                  <!-- Beckenbodenbogen unten -->
+                  <path d="M 30 120 C 70 145, 130 145, 170 120 C 130 135, 70 135, 30 120 Z" fill="url(#gradPelvicFloor)" stroke="#51694D" stroke-width="2" />
+                  <!-- Atemwellen-Pfeile -->
+                  <path d="M 100 50 L 100 85 M 94 77 L 100 85 L 106 77" fill="none" stroke="#C29B63" stroke-width="2" />
+                  <path d="M 100 135 L 100 100 M 94 108 L 100 100 L 106 108" fill="none" stroke="#C29B63" stroke-width="2" />
+                </svg>
+                <span class="organ-card-badge rose">Die atmende Wiege</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Zwerchfell &amp; Beckenboden</h3>
+                  <span class="latin-name">Diaphragma &amp; Pelvic Floor</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sehen sie gesund aus:</strong>
+                  <p>Zwei geschmeidig schwingende Trampoline. Weder verkrampft noch erschlafft, sondern in elastischer, freier Federung. Sie schenken allen Organen mit jedem Atemzug eine wohlige, belebende Wellenmassage.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Über große Faszienzüge (die tiefe vordere Faszienlinie) direkt mit Gebärmutter, Blase, Magen und Herz verbunden. Ein atmendes Kontinuum.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Mein Atem wiegt meine Organe sanft. Mein Beckenboden wird weich, weit und vollkommen entspannt.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="diaphragm">
+                  ✨ Energie an Zwerchfell &amp; Beckenboden senden
+                </button>
+              </div>
+            </article>
+
+            <!-- 10. Das Fasziennetz -->
+            <article class="organ-card" id="card-fascia" data-organ="fascia">
+              <div class="organ-card-media">
+                <svg viewBox="0 0 200 160" class="organ-detail-svg">
+                  <!-- Kristallines Seidennetz -->
+                  <path d="M 20 30 Q 100 80 180 30 M 20 130 Q 100 80 180 130 M 40 20 Q 100 80 40 140 M 160 20 Q 100 80 160 140" 
+                        fill="none" stroke="url(#gradFascia)" stroke-width="2" stroke-dasharray="3 3" />
+                  <circle cx="100" cy="80" r="28" fill="rgba(212, 139, 123, 0.15)" stroke="#C29B63" stroke-width="1.5" />
+                  <circle cx="100" cy="80" r="8" fill="#FFE5A3" />
+                </svg>
+                <span class="organ-card-badge gold">Verbindende Seide</span>
+              </div>
+              <div class="organ-card-content">
+                <div class="organ-card-names">
+                  <h3>Das Fasziennetz</h3>
+                  <span class="latin-name">Fascia abdominalis &amp; Peritoneum</span>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌸 So sieht es gesund aus:</strong>
+                  <p>Kristallklar, reich an Hyaluronsäure und Feuchtigkeit, hochelastisch wie ein feines Spinnennetz. Es bettet alle Organe schützend ein und lässt sie mühelos aneinander vorbeigleiten, ohne Verklebung oder Spannung.</p>
+                </div>
+                <div class="organ-info-row">
+                  <strong>🌊 Übergang zu Nachbarn:</strong>
+                  <p>Verbindet jedes einzelne Organ mit der Wirbelsäule und der Bauchwand zu einem harmonischen, atmenden Gesamtkunstwerk.</p>
+                </div>
+                <div class="organ-affirmation-snippet">
+                  „Mein Bindegewebe ist feucht, elastisch und frei. Alle Organe tanzen in harmonischer Eintracht.“
+                </div>
+                <button type="button" class="btn btn-outline btn-sm btn-card-energy" data-target-organ="fascia">
+                  ✨ Energie an Fasziennetz senden
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================================
+           SEKTION 4: INTERAKTIVES HEILSAMES ENERGIE-RITUAL
+           ======================================================================== -->
+      <section class="section" id="organ-energie">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Mein Visualisierungs-Ritual</span>
+            <h2>Heilsame Energie &amp; Licht an meine Organe senden</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p>
+              Wähle ein Organ oder deinen gesamten Bauchraum, bestimme deine heilsame Lichtfrequenz und nimm dir 30 bis 60 Sekunden Zeit. Schließe sanft die Augen, atme tief in deinen Unterbauch und stelle dir vor, wie das heilsame Licht das Gewebe durchflutet.
+            </p>
+          </div>
+
+          <div class="energy-ritual-box">
+            <!-- Steuerung: Organ & Lichtwahl -->
+            <div class="energy-controls-grid">
+              <!-- Organ-Auswahl -->
+              <div class="control-group">
+                <label for="energyOrganSelector" class="control-label">1. Ziel-Organ auswählen:</label>
+                <select id="energyOrganSelector" class="organ-select-dropdown">
+                  <option value="all">🌟 Gesamter Bauch- &amp; Schoßraum (Alle Organe)</option>
+                  <option value="uterus" selected>🌸 Gebärmutter (Uterus)</option>
+                  <option value="ovaries">✨ Eierstöcke &amp; Eileiter</option>
+                  <option value="douglas">🌊 Douglas-Raum &amp; Bauchfell (Gleitraum)</option>
+                  <option value="bladder">🕊️ Harnblase</option>
+                  <option value="intestines">🥑 Darmtrakt (Dünn- &amp; Dickdarm)</option>
+                  <option value="liver">🌿 Leber &amp; Gallenblase</option>
+                  <option value="stomach">🔥 Magen &amp; Bauchspeicheldrüse</option>
+                  <option value="kidneys">💧 Nieren &amp; Nebennieren</option>
+                  <option value="diaphragm">🌬️ Zwerchfell &amp; Beckenboden</option>
+                  <option value="fascia">🕸️ Fasziennetz &amp; Gleiträume</option>
+                </select>
+              </div>
+
+              <!-- Lichtfrequenz / Energie-Art -->
+              <div class="control-group">
+                <label class="control-label">2. Heilsame Lichtfrequenz wählen:</label>
+                <div class="light-frequency-buttons" role="radiogroup" aria-label="Lichtfrequenz auswählen">
+                  <button type="button" class="freq-btn active" data-freq="gold" role="radio" aria-checked="true">
+                    <span class="freq-color gold"></span>
+                    <span class="freq-title">Goldenes Sonnenlicht</span>
+                    <span class="freq-sub">Kraft, Wärme &amp; Vitalität</span>
+                  </button>
+                  <button type="button" class="freq-btn" data-freq="rose" role="radio" aria-checked="false">
+                    <span class="freq-color rose"></span>
+                    <span class="freq-title">Rosenquarz-Licht</span>
+                    <span class="freq-sub">Mitgefühl, Schmerzlösung &amp; Weichheit</span>
+                  </button>
+                  <button type="button" class="freq-btn" data-freq="emerald" role="radio" aria-checked="false">
+                    <span class="freq-color emerald"></span>
+                    <span class="freq-title">Smaragdgrünes Quelllicht</span>
+                    <span class="freq-sub">Kühlung, Entzündungshemmung &amp; Zellfluss</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Audio-Schalter & Start-Button -->
+              <div class="control-group energy-action-row">
+                <div class="sound-toggle-wrapper">
+                  <button type="button" class="btn btn-outline btn-sm" id="btnToggleEnergySound" aria-pressed="true">
+                    <span id="energySoundIcon">🔔</span>
+                    <span id="energySoundText">Klangschale: An</span>
+                  </button>
+                  <span class="sound-hint">Sanfter Gong (432 Hz / 528 Hz Heilschwingung)</span>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-large" id="btnStartEnergyRitual">
+                  <span class="btn-icon">✨</span>
+                  <span id="btnEnergyLabel">Heilsame Energie jetzt senden</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Die Visualisierungs-Bühne (Interaktiver Visualisierungs-Bereich) -->
+            <div class="energy-stage" id="energyStage">
+              <div class="energy-orb-container" id="energyOrbContainer">
+                <div class="energy-pulse-ring ring-1"></div>
+                <div class="energy-pulse-ring ring-2"></div>
+                <div class="energy-pulse-ring ring-3"></div>
+                <div class="energy-center-orb" id="energyCenterOrb">
+                  <span class="energy-orb-icon" id="energyOrbIcon">🌸</span>
+                </div>
+              </div>
+
+              <div class="energy-stage-content">
+                <span class="energy-status-tag" id="energyStatusTag">Bereit für dein Heilungs-Ritual</span>
+                <h3 class="energy-stage-title" id="energyStageTitle">Energie für meine Gebärmutter</h3>
+                <p class="energy-stage-guide" id="energyStageGuide">
+                  Klicke auf den Button oben. Schließe sanft die Augen, atme ruhig ein und spüre, wie wohltuendes, warmes Licht in dein Gewebe strömt.
+                </p>
+
+                <!-- Timer / Atem-Balken -->
+                <div class="energy-progress-wrapper" id="energyProgressWrapper" style="display: none;">
+                  <div class="energy-progress-bar">
+                    <div class="energy-progress-fill" id="energyProgressFill"></div>
+                  </div>
+                  <span class="energy-timer-text" id="energyTimerText">30 Sekunden Heilstrom</span>
+                </div>
+
+                <!-- Spezifische Affirmation -->
+                <div class="energy-stage-affirmation" id="energyStageAffirmation">
+                  „Mein Schoßraum ist voller Wärme, Vertrauen und Gesundheit.“
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================================
+           SEKTION 5: GEFÜHRTE REISE DURCH MEINEN BAUCHRAUM (MEDITATION)
+           ======================================================================== -->
+      <section class="section section-alt" id="organ-reise">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Schritt-für-Schritt Meditationsreise</span>
+            <h2>Geführte Reise durch meinen Bauchraum</h2>
+            <img src="assets/divider.svg" alt="Trenner" class="section-divider">
+            <p>
+              Wandere Schritt für Schritt von oben nach unten durch alle 10 Stationen deines Bauchraums. Lass jedes Organ für einen Moment in vollem Licht erstrahlen, spüre seine Funktion und schenke ihm liebevolle Wertschätzung.
+            </p>
+          </div>
+
+          <div class="journey-player-box">
+            <!-- Kopfzeile mit Stationszähler und Fortschritt -->
+            <div class="journey-header">
+              <div class="journey-station-indicator">
+                <span class="station-number" id="journeyStationNumber">Station 1 von 10</span>
+                <h3 class="station-name" id="journeyStationName">Zwerchfell &amp; Atemwiege</h3>
+              </div>
+              <div class="journey-progress-container">
+                <div class="journey-progress-track">
+                  <div class="journey-progress-indicator" id="journeyProgressIndicator" style="width: 10%;"></div>
+                </div>
+                <span class="journey-percent" id="journeyPercent">10%</span>
+              </div>
+            </div>
+
+            <!-- Hauptinhalt der Reise-Station -->
+            <div class="journey-body">
+              <div class="journey-visual-icon" id="journeyVisualIcon">
+                🌬️
+              </div>
+              <div class="journey-text-content">
+                <div class="journey-guidance" id="journeyGuidance">
+                  „Beginne ganz oben bei deinem Zwerchfell. Atme tief ein und spüre, wie sich die weite Kuppel sanft nach unten senkt. Wie eine schwingende Glocke gibt sie allen Organen darunter den heilsamen Takt vor. Mit jedem Ausatmen hebt sie sich leicht und schenkt deinem Brustkorb und deinem Herzen wohltuende Weite.“
+                </div>
+                <div class="journey-affirmation" id="journeyAffirmation">
+                  „Mein Atem verbindet mich mit unendlicher Ruhe. Mein Zwerchfell massiert meine Organe voller Sanftheit.“
+                </div>
+              </div>
+            </div>
+
+            <!-- Steuerungselemente -->
+            <div class="journey-controls">
+              <button type="button" class="btn btn-outline btn-sm" id="btnJourneyPrev">
+                ← Vorherige Station
+              </button>
+              
+              <div class="journey-play-wrapper">
+                <button type="button" class="btn btn-primary" id="btnJourneyPlayPause">
+                  <span id="journeyPlayIcon">▶</span> <span id="journeyPlayText">Automatische Reise starten</span>
+                </button>
+              </div>
+
+              <button type="button" class="btn btn-outline btn-sm" id="btnJourneyNext">
+                Nächste Station →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div> <!-- /#page-organ-visualisierung -->
+
+    <!-- ========================================================================
+         PAGE 5: ATEM-OASE
          ======================================================================== -->
     <div class="page-view" id="page-atem-oase" data-page="atem-oase">
 
@@ -1196,6 +2218,7 @@
             <li><a href="#startseite">Startseite</a></li>
             <li><a href="#saeulen">Die 6 Säulen</a></li>
             <li><a href="#alternative-ansaetze">Alternative Ansätze</a></li>
+            <li><a href="#organ-visualisierung">Organ-Visualisierung</a></li>
             <li><a href="#atem-oase">Atem-Oase</a></li>
             <li><a href="#sos-hilfe">SOS-Kompass</a></li>
             <li><a href="#ueber-mich">Mein Weg &amp; Mutmacher</a></li>

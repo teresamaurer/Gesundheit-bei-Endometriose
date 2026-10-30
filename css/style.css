@@ -2178,11 +2178,980 @@ textarea.form-control {
   }
 }
 
+/* ==========================================================================
+   PAGE: HEILSAME ORGAN- & BAUCHRAUM-VISUALISIERUNG
+   ========================================================================== */
+
+/* Quick Navigation Pills */
+.organ-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.quick-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-main);
+  font-size: 0.92rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.quick-nav-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--rose-primary);
+  color: var(--rose-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-nav-pill.highlight {
+  background: linear-gradient(135deg, rgba(212, 139, 123, 0.12), rgba(194, 155, 99, 0.18));
+  border-color: var(--gold-primary);
+  color: var(--text-main);
+}
+
+.quick-nav-pill.highlight:hover {
+  color: var(--gold-dark);
+}
+
+.pill-icon {
+  font-size: 1.15rem;
+}
+
+/* Filter Bar */
+.organ-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.organ-filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.organ-filter-btn:hover {
+  color: var(--rose-primary);
+  border-color: var(--border-focus);
+}
+
+.organ-filter-btn.active {
+  background: var(--rose-primary);
+  border-color: var(--rose-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(212, 139, 123, 0.35);
+}
+
+/* 2-Spalten-Layout: SVG-Karte + Live-Fokuskarte */
+.organ-map-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.organ-svg-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  text-align: center;
+}
+
+.svg-map-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--bg-primary);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  border: 1px solid var(--border-light);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold-primary);
+}
+
+.legend-dot.active {
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.organ-anatomy-svg {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Interaktive SVG-Organelemente */
+.organ-interactive-group {
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  outline: none;
+}
+
+.organ-path {
+  transition: filter 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+}
+
+.organ-interactive-group:hover .organ-path {
+  filter: drop-shadow(0 0 14px rgba(194, 155, 99, 0.85)) drop-shadow(0 0 6px rgba(212, 139, 123, 0.7));
+  stroke-width: 2.8px;
+  stroke: #C29B63;
+}
+
+.organ-interactive-group:hover,
+.organ-interactive-group:focus-visible {
+  transform: scale(1.02);
+}
+
+.organ-interactive-group.active .organ-path {
+  filter: drop-shadow(0 0 18px rgba(194, 155, 99, 0.95)) drop-shadow(0 0 8px rgba(212, 139, 123, 0.9));
+  stroke: #C29B63;
+  stroke-width: 3px;
+  animation: organSoftPulse 2.8s infinite ease-in-out;
+}
+
+@keyframes organSoftPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.organ-interactive-group.dimmed {
+  opacity: 0.25;
+  filter: grayscale(0.5);
+}
+
+.organ-label-svg {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--text-main);
+  letter-spacing: 0.03em;
+  pointer-events: none;
+}
+
+.organ-label-svg.on-dark {
+  fill: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(46, 34, 37, 0.7);
+}
+
+.organ-label-svg.special-douglas {
+  fill: #51694D;
+  font-weight: 700;
+}
+
+/* Live Organ-Fokusfenster (Rechte Spalte) */
+.organ-focus-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 100px;
+  transition: var(--transition-smooth);
+}
+
+.focus-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.focus-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  background: var(--rose-light);
+  color: var(--rose-dark);
+  border-radius: var(--radius-pill);
+}
+
+.focus-latin-name {
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--text-light);
+  font-size: 1.05rem;
+}
+
+.focus-title {
+  font-size: 1.85rem;
+  color: var(--text-main);
+  margin-bottom: 14px;
+}
+
+.focus-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-primary), transparent);
+  margin-bottom: 20px;
+}
+
+.focus-block {
+  margin-bottom: 18px;
+}
+
+.focus-block-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.focus-block p {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.focus-affirmation-box {
+  background: var(--bg-card-soft);
+  border-left: 3px solid var(--gold-primary);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 22px 0;
+}
+
+.focus-affirmation-quote {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+
+.focus-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Gleitraum & Übergangs-Sektion */
+.gleitraum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.gleitraum-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.gleitraum-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-focus);
+}
+
+.gleitraum-card.highlight-card {
+  border: 1.5px solid var(--gold-primary);
+  background: linear-gradient(180deg, #FFFFFF, #FDFBF7);
+  box-shadow: var(--shadow-md);
+}
+
+.gleitraum-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.gleitraum-icon-badge.gold {
+  background: var(--gold-light);
+}
+
+.gleitraum-icon-badge.rose {
+  background: var(--rose-light);
+}
+
+.gleitraum-icon-badge.sage {
+  background: var(--sage-light);
+}
+
+.gleitraum-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rose-primary);
+  margin-bottom: 6px;
+}
+
+.gleitraum-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.gleitraum-latin {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.gleitraum-visual-guide {
+  margin-top: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+.gleitraum-visual-guide strong {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-dark);
+  margin-bottom: 4px;
+}
+
+/* Organ-Galerie */
+.organ-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.organ-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.organ-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-focus);
+}
+
+.organ-card-media {
+  background: radial-gradient(circle at center, #FFFFFF 40%, #FAF7F2 100%);
+  border-bottom: 1px solid var(--border-light);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 180px;
+}
+
+.organ-detail-svg {
+  width: 160px;
+  height: 130px;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(74, 53, 58, 0.06));
+  transition: transform 0.4s ease;
+}
+
+.organ-card:hover .organ-detail-svg {
+  transform: scale(1.06);
+}
+
+.organ-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+
+.organ-card-badge.rose { background: var(--rose-light); color: var(--rose-dark); }
+.organ-card-badge.gold { background: var(--gold-light); color: var(--gold-dark); }
+.organ-card-badge.sage { background: var(--sage-light); color: var(--sage-dark); }
+
+.organ-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.organ-card-names {
+  margin-bottom: 14px;
+}
+
+.organ-card-names h3 {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.organ-card-names .latin-name {
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.organ-info-row {
+  margin-bottom: 14px;
+}
+
+.organ-info-row strong {
+  display: block;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.organ-info-row p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.organ-affirmation-snippet {
+  margin-top: auto;
+  margin-bottom: 18px;
+  background: var(--bg-card-soft);
+  border-left: 2px solid var(--rose-primary);
+  padding: 10px 14px;
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-main);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.btn-card-energy {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Interaktives Heilungs-Ritual */
+.energy-ritual-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+  margin-top: 32px;
+}
+
+.energy-controls-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.control-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.organ-select-dropdown {
+  width: 100%;
+  max-width: 520px;
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-main);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.organ-select-dropdown:focus {
+  border-color: var(--rose-primary);
+  box-shadow: 0 0 0 3px rgba(212, 139, 123, 0.2);
+}
+
+.light-frequency-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.freq-btn {
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: var(--transition-smooth);
+  font-family: var(--font-sans);
+}
+
+.freq-btn:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.freq-btn.active {
+  border-color: var(--gold-primary);
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(194, 155, 99, 0.2);
+}
+
+.freq-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+
+.freq-color.gold { background: #C29B63; box-shadow: 0 0 8px rgba(194, 155, 99, 0.8); }
+.freq-color.rose { background: #D48B7B; box-shadow: 0 0 8px rgba(212, 139, 123, 0.8); }
+.freq-color.emerald { background: #768D72; box-shadow: 0 0 8px rgba(118, 141, 114, 0.8); }
+
+.freq-title {
+  font-weight: 600;
+  font-size: 0.96rem;
+  color: var(--text-main);
+}
+
+.freq-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.energy-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.sound-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sound-hint {
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+/* Visualisierungs-Bühne */
+.energy-stage {
+  background: radial-gradient(circle at center, #FFFFFF 30%, #FAF7F2 100%);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 40px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.energy-stage.active-gold {
+  box-shadow: 0 0 40px rgba(194, 155, 99, 0.25);
+  border-color: rgba(194, 155, 99, 0.5);
+}
+
+.energy-stage.active-rose {
+  box-shadow: 0 0 40px rgba(212, 139, 123, 0.25);
+  border-color: rgba(212, 139, 123, 0.5);
+}
+
+.energy-stage.active-emerald {
+  box-shadow: 0 0 40px rgba(118, 141, 114, 0.25);
+  border-color: rgba(118, 141, 114, 0.5);
+}
+
+.energy-orb-container {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.energy-center-orb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF9F2, #F8EDE9);
+  border: 2px solid var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  z-index: 2;
+  box-shadow: 0 0 24px rgba(194, 155, 99, 0.35);
+  transition: transform 0.4s ease;
+}
+
+.energy-stage.active-running .energy-center-orb {
+  animation: orbPulsate 3s infinite ease-in-out;
+}
+
+@keyframes orbPulsate {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(194, 155, 99, 0.6)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 30px rgba(212, 139, 123, 0.9)); }
+}
+
+.energy-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.energy-stage.active-running .energy-pulse-ring.ring-1 {
+  width: 90px;
+  height: 90px;
+  border: 2px solid rgba(194, 155, 99, 0.6);
+  animation: ringExpand 2.8s infinite cubic-bezier(0.2, 0.8, 0.4, 1) 0s;
+}
+
+.energy-stage.active-running .energy-pulse-ring.ring-2 {
+  width: 120px;
+  height: 120px;
+  border: 1.5px solid rgba(212, 139, 123, 0.5);
+  animation: ringExpand 2.8s infinite cubic-bezier(0.2, 0.8, 0.4, 1) 0.8s;
+}
+
+.energy-stage.active-running .energy-pulse-ring.ring-3 {
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(118, 141, 114, 0.4);
+  animation: ringExpand 2.8s infinite cubic-bezier(0.2, 0.8, 0.4, 1) 1.6s;
+}
+
+@keyframes ringExpand {
+  0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+.energy-stage-content {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.energy-status-tag {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rose-primary);
+  margin-bottom: 8px;
+}
+
+.energy-stage-title {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.energy-stage-guide {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.energy-progress-wrapper {
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.energy-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.energy-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--rose-primary), var(--gold-primary));
+  border-radius: var(--radius-pill);
+  transition: width 0.3s linear;
+}
+
+.energy-timer-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gold-dark);
+}
+
+.energy-stage-affirmation {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 22px;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--text-main);
+  line-height: 1.5;
+  box-shadow: var(--shadow-sm);
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* Geführte Reise */
+.journey-player-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+  max-width: 860px;
+  margin: 32px auto 0;
+}
+
+.journey-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.station-number {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rose-primary);
+}
+
+.station-name {
+  font-size: 1.55rem;
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+
+.journey-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.journey-progress-track {
+  flex-grow: 1;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.journey-progress-indicator {
+  height: 100%;
+  background: var(--gold-primary);
+  border-radius: var(--radius-pill);
+  transition: width 0.4s ease;
+}
+
+.journey-percent {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.journey-body {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.journey-visual-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-pill);
+  background: radial-gradient(circle at center, #FFFFFF, #FAF7F2);
+  border: 1.5px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.journey-guidance {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.journey-affirmation {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--gold-dark);
+  line-height: 1.5;
+  padding-left: 14px;
+  border-left: 2px solid var(--gold-primary);
+}
+
+.journey-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Responsivität für Organ-Visualisierungs-Seite */
+@media (max-width: 992px) {
+  .organ-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .organ-focus-card {
+    position: static;
+  }
+
+  .journey-body {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .journey-affirmation {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border-light);
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .organ-quick-nav {
+    flex-direction: column;
+  }
+
+  .quick-nav-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .energy-ritual-box,
+  .journey-player-box,
+  .organ-focus-card,
+  .organ-svg-wrapper {
+    padding: 20px;
+  }
+
+  .journey-controls {
+    flex-direction: column;
+  }
+
+  .journey-controls button {
+    width: 100%;
+  }
+
+  .light-frequency-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Barrierefreiheit: Animationen anhalten bei prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   body::before,
   body::after,
-  .mandala-watermark img {
+  .mandala-watermark img,
+  .organ-interactive-group.active .organ-path,
+  .energy-stage.active-running .energy-center-orb,
+  .energy-pulse-ring {
     animation: none !important;
   }
 }
+
