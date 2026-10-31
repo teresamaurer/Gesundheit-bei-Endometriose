@@ -890,7 +890,10 @@
   // 4. MEDIKAMENTE
   function renderMedsCardContent(data) {
     const commonPainMeds = ['Ibuprofen', 'Buscopan', 'Paracetamol', 'Novaminsulfon', 'Naproxen'];
-    const commonSupplements = ['Magnesium', 'Omega-3', 'Kurkuma', 'Vitamin D3', 'Zink', 'CBD-Öl'];
+    const commonSupplements = [
+      'Magnesium', 'Omega-3', 'Kurkuma', 'Vitamin D3', 'Vitamin B-Komplex',
+      'Vitamin C', 'Vitamin E', 'Eisen', 'Zink', 'Probiotikum', 'CBD-Öl'
+    ];
 
     return `
       <div class="tracker-field-group">
@@ -1122,6 +1125,7 @@
 
   // 9. MEDITATION & ENTSPANNUNG
   function renderMeditationCardContent(data) {
+    const currentMins = Number(data.meditationMinutes) || 10;
     return `
       <div class="tracker-field-group">
         <label class="tracker-label"><span>Achtsamkeit geübt?</span></label>
@@ -1136,11 +1140,23 @@
       </div>
 
       <div class="tracker-field-group">
-        <label class="tracker-label"><span>Dauer der Einheit</span></label>
-        <div class="pill-options-group" data-field="meditationMinutes">
-          ${[5, 10, 15, 20, 30].map(mins => `
-            <button type="button" class="tracker-pill ${data.meditationMinutes === mins ? 'active' : ''}" data-val="${mins}">
-              ${mins} Minuten
+        <div class="tracker-label">
+          <span>Dauer der Einheit</span>
+          <span class="tracker-value-badge" id="badge-meditationMinutes">${formatMeditationDuration(currentMins)}</span>
+        </div>
+        <div class="pain-slider-container">
+          <input type="range" min="1" max="180" step="1" value="${currentMins}" class="scale-slider meditation-slider" id="slider-meditationMinutes" data-field="meditationMinutes">
+          <div class="scale-ticks">
+            <span>1 Min.</span>
+            <span>1 Std.</span>
+            <span>2 Std.</span>
+            <span>3 Std.</span>
+          </div>
+        </div>
+        <div class="meditation-quick-pills" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+          ${[5, 10, 15, 20, 30, 45, 60, 90, 120, 180].map(m => `
+            <button type="button" class="tracker-pill tracker-pill-sm meditation-quick-pill ${currentMins === m ? 'active' : ''}" data-val="${m}">
+              ${m >= 60 ? (m % 60 === 0 ? `${m / 60} Std.` : `${Math.floor(m / 60)}h ${m % 60}m`) : `${m} Min.`}
             </button>
           `).join('')}
         </div>
@@ -1197,8 +1213,8 @@
   function renderHelpersCardContent(data) {
     const helpers = [
       'Wärmflasche / Kirschkernkissen', 'TENS-Gerät', 'Basenbad / Fußbad',
-      'Sanftes Dehnen / Beckenboden', 'Spaziergang im Grünen', 'Akupressurmatte',
-      'Erlaubnis zur Bettruhe', 'Tee-Ritual (Frauenmantel/Schafgarbe)'
+      'Sanftes Dehnen / Beckenboden', 'Darmmassage', 'Spaziergang im Grünen',
+      'Akupressurmatte', 'Erlaubnis zur Bettruhe', 'Tee-Ritual (Frauenmantel/Schafgarbe)'
     ];
     return `
       <div class="tracker-field-group">
@@ -1388,6 +1404,8 @@
             badge.className = `tracker-value-badge ${getPainBadgeClass(val)}`;
           } else if (field === 'sleepHours') {
             badge.textContent = `${val} Stunden`;
+          } else if (field === 'meditationMinutes') {
+            badge.textContent = formatMeditationDuration(val);
           } else if (field === 'endoBellySeverity') {
             badge.textContent = getEndoBellyLabel(val);
             badge.className = `tracker-value-badge ${getEndoBellyBadgeClass(val)}`;
@@ -1397,6 +1415,33 @@
             badge.textContent = `${val}/10 – ${getBrainFogLabel(val)}`;
           }
         }
+
+        if (field === 'meditationMinutes') {
+          card.querySelectorAll('.meditation-quick-pill').forEach(pill => {
+            pill.classList.toggle('active', Number(pill.getAttribute('data-val')) === val);
+          });
+        }
+
+        saveTrackerData();
+      });
+    });
+
+    // 4b. Meditation Quick-Pills
+    card.querySelectorAll('.meditation-quick-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const val = Number(pill.getAttribute('data-val'));
+        dayData.meditationMinutes = val;
+
+        const slider = card.querySelector('#slider-meditationMinutes');
+        if (slider) slider.value = val;
+
+        const badge = card.querySelector('#badge-meditationMinutes');
+        if (badge) badge.textContent = formatMeditationDuration(val);
+
+        card.querySelectorAll('.meditation-quick-pill').forEach(p => {
+          p.classList.toggle('active', Number(p.getAttribute('data-val')) === val);
+        });
+
         saveTrackerData();
       });
     });
@@ -2506,6 +2551,19 @@
   /* ==========================================================================
      HILFSFUNKTIONEN (LABELS, FORMATIERUNG, BADGES)
      ========================================================================== */
+  function formatMeditationDuration(val) {
+    const mins = Math.max(1, Math.min(180, Number(val) || 10));
+    if (mins < 60) {
+      return `${mins} Minute${mins === 1 ? '' : 'n'}`;
+    }
+    const hours = Math.floor(mins / 60);
+    const remMins = mins % 60;
+    if (remMins === 0) {
+      return `${mins} Min. (${hours} Stunde${hours > 1 ? 'n' : ''})`;
+    }
+    return `${mins} Min. (${hours} Std. ${remMins} Min.)`;
+  }
+
   function renderPills(optionsList, activeList) {
     if (!Array.isArray(activeList)) activeList = [];
     return optionsList.map(opt => `

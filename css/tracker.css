@@ -636,6 +636,15 @@
   cursor: pointer;
 }
 
+.scale-slider.meditation-slider {
+  background: linear-gradient(to right, 
+    #768D72 0%, 
+    #8DA885 25%, 
+    #A3B899 50%, 
+    #C29B63 75%, 
+    #D48B7B 100%);
+}
+
 .scale-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -719,6 +728,11 @@
   background: var(--sage-primary);
   border-color: var(--sage-primary);
   color: #fff;
+}
+
+.tracker-pill-sm {
+  padding: 4px 10px;
+  font-size: 0.78rem;
 }
 
 /* --- Rating Stars (1-5 Sterne / Stufen) --- */
