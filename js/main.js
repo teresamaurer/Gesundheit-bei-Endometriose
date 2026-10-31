@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initPageRouter();
   initOrganVisualization();
+  initFootReflexology();
 });
 
 /* ==========================================================================
@@ -534,6 +535,10 @@ function initPageRouter() {
     'organ-galerie': { page: 'organ-visualisierung', anchor: 'organ-galerie' },
     'organ-energie': { page: 'organ-visualisierung', anchor: 'organ-energie' },
     'organ-reise': { page: 'organ-visualisierung', anchor: 'organ-reise' },
+    'fussreflexzonen': { page: 'fussreflexzonen', anchor: null },
+    'reflex-finder': { page: 'fussreflexzonen', anchor: 'reflex-finder' },
+    'reflex-sequenzen': { page: 'fussreflexzonen', anchor: 'reflex-sequenzen' },
+    'reflex-tipps': { page: 'fussreflexzonen', anchor: 'reflex-tipps' },
     'atem-oase': { page: 'atem-oase', anchor: null },
     'sos-hilfe': { page: 'sos-hilfe', anchor: null },
     'tracker': { page: 'tracker', anchor: null },
@@ -1403,4 +1408,707 @@ function initOrganVisualization() {
   // Initial ersten Zustand setzen
   updateOrganFocus('uterus');
 }
+
+/* ==========================================================================
+   8. INTERAKTIVE FUSSREFLEXZONENMASSAGE BEI ENDOMETRIOSE
+   ========================================================================== */
+function initFootReflexology() {
+  const reflexPage = document.getElementById('page-fussreflexzonen');
+  if (!reflexPage) return;
+
+  /* ------------------------------------------------------------------------
+     A. DATENMODELL ALLER FUSSREFLEXZONEN LAUT ORIGINAL-LEHRTAFEL
+     ------------------------------------------------------------------------ */
+  const reflexData = {
+    'uterus': {
+      id: 'uterus',
+      name: 'Gebärmutter',
+      latin: 'Uterus',
+      badge: 'Schoßraum & Becken',
+      icon: '🌸',
+      category: 'pelvis',
+      preferredView: 'medial',
+      viewLabel: 'Innenknöchel (Medial)',
+      location: 'Direkt <strong>unterhalb und leicht hinter dem Innenknöchel</strong> (Malleolus medialis). Ertaste die weiche Mulde zwischen Knöchelknochen und Fersensehne. Zudem verläuft eine ergänzende Zone an der medialen Fersenkante sowie am vorderen Sprunggelenk.',
+      effect: 'Entlastet krampfartige Kontraktionen des Myometriums (Gebärmuttermuskulatur), regt die heilsame Mikrozirkulation im kleinen Becken an, lindert Menstruationskrämpfe und sendet beruhigende Signale an das vegetative Beckennervengeflecht.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Setze die weiche Daumenkuppe an und kreise mit sanftem, gleichmäßigem Druck („Raupengang“).',
+        '<strong>Druckstärke:</strong> Sanft bis mittelfest. Es darf ein wohltuendes Lösen entstehen („Wohlweh“), niemals stechender Schmerz.',
+        '<strong>Dauer & Takt:</strong> 60 bis 90 Sekunden pro Fuß sanft kreisen. Atme dabei tief in dein Becken.'
+      ],
+      affirmation: '„Mein Schoßraum ist ein sicherer, warmer Ort. Meine Gebärmutter darf vollkommen weich, entspannt und heilsam durchblutet sein.“',
+      freq: 396,
+      freqLabel: 'Heilsame 396 Hz Klangschale anspielen (Entkrampfung)',
+      keywords: ['gebärmutter', 'uterus', 'unterleib', 'krampf', 'krämpfe', 'periodenschmerz', 'menstruation', 'blutung']
+    },
+    'ovaries': {
+      id: 'ovaries',
+      name: 'Eierstöcke & Eileiter',
+      latin: 'Ovarien & Tuben',
+      badge: 'Schoßraum & Becken',
+      icon: '✨',
+      category: 'pelvis',
+      preferredView: 'lateral',
+      viewLabel: 'Außenknöchel (Lateral) & Fersenmitte',
+      location: '<strong>Primärpunkt:</strong> Direkt unterhalb und leicht hinter dem <strong>Außenknöchel</strong> (Malleolus lateralis).<br><strong>Plantarpunkt:</strong> Laut Lehrtafel exakt im <strong>Mittelpunkt der Ferse</strong> beider Fußsohlen! Sowie als Band über den Fußrücken (Eileiter/Leistenkanal).',
+      effect: 'Lindert stechende Eisprungschmerzen (Mittelschmerz), harmonisiert die hormonelle Kommunikation zwischen Hypophyse und Eierstöcken (Progesteron/Östrogen) und entlastet das Gewebe bei Zysten oder Endometriomen.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Sanfter pumpender Daumendruck am Außenknöchel und behutsames kreisendes Ausstreichen der Fersenmitte.',
+        '<strong>Druckstärke:</strong> Behutsam und einfühlsam. Eierstockzonen können sensibel reagieren.',
+        '<strong>Dauer & Takt:</strong> 1 bis 2 Minuten pro Fuß. Kombiniere den Außenknöchel mit der Fersenmitte.'
+      ],
+      affirmation: '„Meine Eierstöcke schwingen im heilsamen Rhythmus der Natur. Entzündungshitze weicht kühlem, fließendem Frieden.“',
+      freq: 432,
+      freqLabel: 'Harmonisierende 432 Hz Klangschale anspielen',
+      keywords: ['eierstock', 'eierstöcke', 'ovarien', 'ovary', 'eileiter', 'zyste', 'endometriom', 'eisprung', 'hormone']
+    },
+    'pelvicfloor': {
+      id: 'pelvicfloor',
+      name: 'Beckenboden & Beckenraum',
+      latin: 'Diaphragma pelvis',
+      badge: 'Schoßraum & Becken',
+      icon: '🪷',
+      category: 'pelvis',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Plantar - Ferse)',
+      location: 'Über die gesamte <strong>Fersenbasis (Kalkaneus)</strong>, vor allem am Übergang der Ferse zur Fußwölbung sowie ringförmig um beide Knöchel.',
+      effect: 'Löst chronische Schutzspannungen (Hypertonus) im Beckenboden auf. Bei Endometriose zieht sich der Beckenboden unwillkürlich zusammen – dieser Punkt hilft ihm, wieder elastisch, warm und weit zu werden.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Umfasse die gesamte Ferse beidhändig wie eine Schale und streiche mit beiden Daumen flächig in weiten Achterkreisen aus.',
+        '<strong>Druckstärke:</strong> Flächig, warm und satt.',
+        '<strong>Dauer:</strong> 1 bis 2 Minuten pro Ferse, gerne mit wärmendem Sesam- oder Mandelöl.'
+      ],
+      affirmation: '„Mein Beckenboden darf alle Schutzpanzer fallenlassen. Er ist ein tragendes, weiches Nest vollkommener Sicherheit.“',
+      freq: 396,
+      freqLabel: 'Erdende 396 Hz Klangschale anspielen',
+      keywords: ['beckenboden', 'becken', 'hypertonus', 'spannung', 'beckenraum', 'kalkaneus', 'loslassen']
+    },
+    'sacrum': {
+      id: 'sacrum',
+      name: 'Kreuzbein & Steißbein',
+      latin: 'Os sacrum & Coccyx',
+      badge: 'Wirbelsäule & Rücken',
+      icon: '🦴',
+      category: 'spine',
+      preferredView: 'medial',
+      viewLabel: 'Innenknöchel (Mediale Fersenkante)',
+      location: 'Direkt an der <strong>inneren Fersenkante</strong>, vom hinteren Fersenpol entlang des Knochenrandes nach vorne zum Längsgewölbe.',
+      effect: 'Direkter Reflexbezug zu den Kreuzbein-Gebärmutter-Bändern (Ligamenta sacrouterina), wo sehr häufig Endometrioseherde sitzen. Lindert dumpfe Rückenschmerzen und Brennen im Kreuzbeinbereich.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Mit der flachen Daumenkante langsam und tief von der Ferse aufwärts in Richtung Lendenwirbelsäule streichen.',
+        '<strong>Druckstärke:</strong> Mittelfest, tiefgehend, gleichmäßig.',
+        '<strong>Dauer:</strong> 1 Minute pro Fuß, besonders wohltuend bei ziehenden Rückenschmerzen.'
+      ],
+      affirmation: '„Mein Kreuzbein wird weit, frei und schmerzlos. Meine Beckenbänder entspannen sich tief.“',
+      freq: 174,
+      freqLabel: 'Schmerzlindernde 174 Hz Solfeggio-Frequenz anspielen',
+      keywords: ['kreuzbein', 'steißbein', 'sacrum', 'coccyx', 'rücken', 'rückenschmerzen', 'bänder', 'sakral']
+    },
+    'lumbar': {
+      id: 'lumbar',
+      name: 'Lendenwirbelsäule (LWS)',
+      latin: 'Vertebrae lumbales',
+      badge: 'Wirbelsäule & Rücken',
+      icon: '🪵',
+      category: 'spine',
+      preferredView: 'medial',
+      viewLabel: 'Innenknöchel (Mediales Längsgewölbe)',
+      location: 'Entlang der <strong>medialen Fußinnenkante</strong>, genau im Bogen zwischen dem höchsten Punkt der Fußwölbung (Kahnbein) und der Ferse.',
+      effect: 'Endometriose-Schmerz führt zu unbewusster Schonkrümmung des Rumpfes und Krampfhaltung des Psoas-Muskels. Diese Zone befreit die LWS, löst lumbale Blockaden und entlastet austretende Spinalnerven.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Punktweiser Raupengang mit der Daumenkuppe entlang der knöchernen Kante.',
+        '<strong>Druckstärke:</strong> Mittelfest und rhythmisch Schritt für Schritt.',
+        '<strong>Dauer:</strong> 60 bis 90 Sekunden pro Seite.'
+      ],
+      affirmation: '„Mein unterer Rücken richtet sich gelöst und elastisch auf. Alle Schwere und Starre fließt nach unten ab.“',
+      freq: 528,
+      freqLabel: 'Erneuernde 528 Hz Klangschale anspielen',
+      keywords: ['lendenwirbelsäule', 'lws', 'wirbelsäule', 'rücken', 'rückenschmerzen', 'hexenschuss', 'lenden']
+    },
+    'sciatica': {
+      id: 'sciatica',
+      name: 'Ischiasnerv & Hüfte',
+      latin: 'Nervus ischiadicus & Coxa',
+      badge: 'Wirbelsäule & Rücken',
+      icon: '⚡',
+      category: 'spine',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Querband Ferse) & Knöchel',
+      location: 'Als <strong>horizontales Querband direkt über die Fersenmitte</strong> beider Fußsohlen sowie senkrecht hinter Innen- und Außenknöchel hochziehend.',
+      effect: 'Hilft bei ziehenden Schmerzen, die vom Becken über das Gesäß in die Beine ausstrahlen (Ischias-Endometriose oder piriformisbedingtes Nervenengpass-Syndrom).',
+      technique: [
+        '<strong>Grifftechnik:</strong> Querfriktionen mit festem Daumenstrich von innen nach außen über die Fersenmitte streichen.',
+        '<strong>Druckstärke:</strong> Fest und flächig.',
+        '<strong>Dauer:</strong> 1 Minute pro Ferse.'
+      ],
+      affirmation: '„Der Fluss meiner Nervenbahnen ist ruhig, kühl und vollkommen frei von Reizung.“',
+      freq: 174,
+      freqLabel: 'Beruhigende 174 Hz Nerven-Frequenz anspielen',
+      keywords: ['ischias', 'ischiasnerv', 'hüfte', 'hüftschmerz', 'beinschmerz', 'nerven', 'sciatica']
+    },
+    'headache': {
+      id: 'headache',
+      name: 'Kopfschmerzen & Schläfen',
+      latin: 'Cranium & Nervus trigeminus',
+      badge: 'Kopf & Nacken',
+      icon: '🧠',
+      category: 'head',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Großzehenkuppe)',
+      location: '<strong>Kuppe und Ballen der Großzehen beidseits</strong>. Die laterale Kante (zur zweiten Zehe hin) entspricht exakt Schläfe & Trigeminusnerv; die Zehenspitze dem Schädeldach; die Kuppen der Zehen 2–5 den Nebenhöhlen.',
+      effect: 'Lindert hormonell getriggerte Migräne (z. B. beim Östrogensturz kurz vor der Blutung), Spannungskopfschmerzen und senkt die zentrale Schmerzsensibilisierung im Gehirn.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Die Großzehenkuppe mit Daumen und Zeigefinger wie eine Zange umfassen und kreisend kneten.',
+        '<strong>Druckstärke:</strong> Sanft bis punktuell aktivierend.',
+        '<strong>Dauer:</strong> 1 bis 2 Minuten pro Großzehe. Auch die kleineren Zehenkuppen kurz sanft ausstreichen.'
+      ],
+      affirmation: '„Mein Kopf wird leicht, klar und kühl. Alle Gedanken und Spannungen ziehen wie sanfte Wolken vorbei.“',
+      freq: 528,
+      freqLabel: 'Klärende 528 Hz Klangschale anspielen',
+      keywords: ['kopfschmerz', 'kopfschmerzen', 'migräne', 'schläfe', 'schläfen', 'trigeminus', 'gehirn', 'stirn']
+    },
+    'neck': {
+      id: 'neck',
+      name: 'Nackenschmerzen & Halswirbelsäule',
+      latin: 'Cervix & Vertebrae cervicales',
+      badge: 'Kopf & Nacken',
+      icon: '💆‍♀️',
+      category: 'head',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Zehengrundgelenk) & Medial',
+      location: 'Unterhalb der Großzehe im Bereich des <strong>Zehenhalses und Zehengrundgelenks</strong>. Zieht an der Innenkante des Großzehen-Grundglieds entlang.',
+      effect: 'Bei Unterleibsschmerz zieht der Körper die Schultern hoch und atmet flach, wodurch Nacken und HWS chronisch verspannen. Die Massage stimuliert reflektorisch auch den Vagusnerv-Verlauf am Hals.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Den Großzehenhals mit zwei Fingern umfassen und sanft auswringen bzw. die Basis in kleinen Kreisen massieren.',
+        '<strong>Druckstärke:</strong> Wohltuend mittelfest.',
+        '<strong>Dauer:</strong> 60 Sekunden pro Fuß.'
+      ],
+      affirmation: '„Mein Nacken wird frei, weich und beweglich. Mein Kopf wird sanft und leicht getragen.“',
+      freq: 432,
+      freqLabel: 'Entspannende 432 Hz Nacken-Frequenz anspielen',
+      keywords: ['nacken', 'nackenschmerzen', 'hals', 'hws', 'schulter', 'halswirbelsäule', 'verspannung']
+    },
+    'pituitary': {
+      id: 'pituitary',
+      name: 'Hypophyse & Zirbeldrüse',
+      latin: 'Glandula pituitaria & Epiphyse',
+      badge: 'Kopf & Nacken',
+      icon: '💎',
+      category: 'head',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Zentrum Großzehenbeere)',
+      location: 'Exakt im <strong>Zentrum des Wirbelmusters der Großzehenbeere</strong>.',
+      effect: 'Zentrale Hormonsteuerdrüse unseres Körpers (reguliert FSH, LH, ACTH, Schilddrüsenhormone) sowie die Zirbeldrüse für Melatonin (Schlaf, Entzündungshemmung).',
+      technique: [
+        '<strong>Grifftechnik:</strong> Punktueller, ruhiger Daumendruck direkt im Zehenzentrum.',
+        '<strong>Druckstärke:</strong> Sanft, stetig verweilend (Akupressur-Prinzip).',
+        '<strong>Dauer:</strong> 30 bis 45 Sekunden ruhig halten.'
+      ],
+      affirmation: '„Mein Hormonsystem findet zurück in seine vollkommene, natürliche Harmonie und Weisheit.“',
+      freq: 528,
+      freqLabel: 'Ausgleichende 528 Hz Klangschale anspielen',
+      keywords: ['hypophyse', 'zirbeldrüse', 'hormone', 'hormonachse', 'fsh', 'lh', 'melatonin', 'hirnanhangsdrüse']
+    },
+    'intestines': {
+      id: 'intestines',
+      name: 'Darm & Endo-Belly',
+      latin: 'Intestinum & Colon',
+      badge: 'Bauchraum & Verdauung',
+      icon: '🥑',
+      category: 'digestion',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Hohlfuß & Dickdarmbogen)',
+      location: '<strong>Dünndarm im mittleren Hohlfuß</strong> beider Sohlen. <strong>Dickdarm:</strong> Aufsteigend am rechten Außenfuß, querverlaufend über beide Füße, absteigend am linken Außenfuß hinab zur Ferse.',
+      effect: '„Endo Belly“ (massiver Bläh- und Schwellbauch) ist eines der belastendsten Begleitsymptome. Die Massage regt die Peristaltik sanft an, löst Gase und lindert entzündliche Darmkrämpfe.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Den Weg der Nahrung im Uhrzeigersinn nachstreichen: Am rechten Fuß außen aufwärts, quer nach innen, am linken Fuß quer nach außen und nach unten zur Ferse ausstreichen.',
+        '<strong>Druckstärke:</strong> Sanft wellenförmig („Raupengang“).',
+        '<strong>Dauer:</strong> 2 Minuten.'
+      ],
+      affirmation: '„Mein Bauch ist weich, warm und friedlich. Alle Blähungen und Anspannungen dürfen sanft entweichen.“',
+      freq: 396,
+      freqLabel: 'Befreiende 396 Hz Klangschale anspielen',
+      keywords: ['darm', 'endo belly', 'bauch', 'blähbauch', 'darmkrämpfe', 'verdauung', 'dünndarm', 'dickdarm', 'colon']
+    },
+    'liver': {
+      id: 'liver',
+      name: 'Leber & Gallenblase',
+      latin: 'Hepar & Vesica biliaris',
+      badge: 'Bauchraum & Verdauung',
+      icon: '🌿',
+      category: 'digestion',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Nur auf dem RECHTEN Fuß!)',
+      location: '<strong>Ausschließlich auf der rechten Fußsohle!</strong> Im oberen äußeren Drittel des Mittelfußes direkt unterhalb des Lungenballens.',
+      effect: 'Die Leber ist die Hauptentsorgerin von verbrauchten Östrogenen (Phase 1 und 2 der Biotransformation). Eine vitale Leberfunktion verhindert Östrogendominanz und unterstützt den Histaminabbau.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Mit dem rechten Daumen in weichen, kreisenden Bewegungen im Uhrzeigersinn massieren.',
+        '<strong>Druckstärke:</strong> Mittelfest, flächig warm.',
+        '<strong>Dauer:</strong> 1 bis 2 Minuten nur am rechten Fuß.'
+      ],
+      affirmation: '„Meine Leber reinigt und erneuert mein Blut mit kraftvoller Leichtigkeit, Sanftheit und Klarheit.“',
+      freq: 528,
+      freqLabel: 'Regenerierende 528 Hz Klangschale anspielen',
+      keywords: ['leber', 'galle', 'östrogen', 'östrogendominanz', 'entgiftung', 'hepar', 'stoffwechsel']
+    },
+    'solarplexus': {
+      id: 'solarplexus',
+      name: 'Solarplexus (Sonnengeflecht)',
+      latin: 'Plexus solaris',
+      badge: 'Nervensystem & Stress',
+      icon: '☀️',
+      category: 'nervous',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Zentrum oberer Hohlfuß)',
+      location: 'Exakt im <strong>Zentrum des oberen Drittels der Fußsohle</strong> – direkt unterhalb der Ballenlinie, in der natürlichen Mulde bei gebeugten Zehen.',
+      effect: 'Das Tor zum Loslassen: Schaltet das vegetative Nervensystem sofort von Sympathikus (Schmerz- und Krampfbereitschaft) auf Parasympathikus (Heilung, Durchblutung und Entspannung) um.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Den Daumen in die Mulde setzen. Beim Ausatmen tief einsinken und 5–10 Sekunden halten. Beim Einatmen den Druck sanft lösen. 5-mal wiederholen.',
+        '<strong>Druckstärke:</strong> Tief, warm, nie schmerzhaft.',
+        '<strong>Dauer:</strong> 1 Minute pro Fuß – idealer Einstieg für jede Massage.'
+      ],
+      affirmation: '„Ich lasse alle Anspannung mit jedem Atemzug los. Mein Nervensystem darf sich tief entspannen und heilen.“',
+      freq: 528,
+      freqLabel: 'Heilsame 528 Hz Transformations-Klangschale anspielen',
+      keywords: ['solarplexus', 'vegetativum', 'nervensystem', 'loslassen', 'stress', 'parasympathikus', 'beruhigung']
+    },
+    'diaphragm': {
+      id: 'diaphragm',
+      name: 'Zwerchfell & Atemraum',
+      latin: 'Diaphragma abdominale',
+      badge: 'Nervensystem & Stress',
+      icon: '🍃',
+      category: 'nervous',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Querlinie unter Ballen)',
+      location: '<strong>Querlinie über die gesamte Fußsohlenbreite</strong> unmittelbar unterhalb der Ballenpolster beider Füße.',
+      effect: 'Zwerchfell und Beckenboden bewegen sich synchron wie Zwillinge. Werden bei Schmerzen der Atem und das Zwerchfell festgehalten, verspannt sich automatisch der Schoßraum. Dieser Punkt öffnet den Atemraum.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Mit beiden Daumen von der Fußinnenkante zur Außenkante entlang der Ballenfalte streichen.',
+        '<strong>Druckstärke:</strong> Sanft gleitend.',
+        '<strong>Dauer:</strong> 1 Minute pro Fuß.'
+      ],
+      affirmation: '„Mein Atem fließt tief, weit und mühelos bis tief in mein Becken hinab.“',
+      freq: 432,
+      freqLabel: 'Atem-beruhigende 432 Hz Klangschale anspielen',
+      keywords: ['zwerchfell', 'atem', 'atmung', 'atemraum', 'diaphragma', 'brustkorb', 'weichheit']
+    },
+    'kidneys': {
+      id: 'kidneys',
+      name: 'Nieren & Nebennieren',
+      latin: 'Renes & Glandulae suprarenales',
+      badge: 'Nervensystem & Stress',
+      icon: '🌱',
+      category: 'nervous',
+      preferredView: 'plantar',
+      viewLabel: 'Fußsohlen (Mitte Längsgewölbe)',
+      location: 'Im <strong>Zentrum des Fußgewölbes</strong> beider Sohlen. Die Nebennieren-Zone liegt wie eine kleine Kappe unmittelbar kranial (oberhalb) der Nierenzone.',
+      effect: 'Nebennieren schütten bei chronischen Schmerzen ständig Adrenalin und Cortisol aus, was zu Erschöpfung führt. Die Massage nährt die Lebensenergie und reguliert den Flüssigkeitshaushalt.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Ruhiges, zentrierendes Kreisen mit dem Daumenballen.',
+        '<strong>Druckstärke:</strong> Angenehm mittelfest.',
+        '<strong>Dauer:</strong> 60 Sekunden pro Fuß.'
+      ],
+      affirmation: '„Meine Lebenskraft erneuert sich. Meine Nebennieren dürfen zur Ruhe kommen und Kraft schöpfen.“',
+      freq: 432,
+      freqLabel: 'Stärkende 432 Hz Klangschale anspielen',
+      keywords: ['niere', 'nieren', 'nebenniere', 'nebennieren', 'cortisol', 'erschöpfung', 'stress', 'energie']
+    },
+    'douglas': {
+      id: 'douglas',
+      name: 'Douglas-Raum & Rektum',
+      latin: 'Excavatio rectouterina & Rectum',
+      badge: 'Schoßraum & Becken',
+      icon: '🌊',
+      category: 'pelvis',
+      preferredView: 'medial',
+      viewLabel: 'Innenknöchel (Oberhalb / Achillessehne)',
+      location: 'Senkrechter Streifen ca. <strong>2 bis 3 Querfinger oberhalb des Innenknöchels</strong> parallel zur Achillessehne.',
+      effect: 'Der Douglas-Raum ist die tiefste Tasche des Bauchfells zwischen Uterus und Mastdarm und der häufigste Ort tief infiltrierender Herde (TIE). Die Massage lindert Druckschmerzen und Dyschezie.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Sanftes, federleichtes Aufwärtsstreichen mit Daumen oder Zeigefinger parallel zur Achillessehne.',
+        '<strong>Druckstärke:</strong> Sehr sanft.',
+        '<strong>Dauer:</strong> 60 Sekunden pro Bein.'
+      ],
+      affirmation: '„Der Raum hinter meiner Gebärmutter ist frei, weit, seidig glatt und vollkommen entspannt.“',
+      freq: 528,
+      freqLabel: 'Harmonisierende 528 Hz Klangschale anspielen',
+      keywords: ['douglas', 'douglas-raum', 'rektum', 'enddarm', 'bauchfell', 'tie', 'stuhlgang']
+    },
+    'bladder': {
+      id: 'bladder',
+      name: 'Harnblase & Harnleiter',
+      latin: 'Vesica urinaria & Ureter',
+      badge: 'Schoßraum & Becken',
+      icon: '🕊️',
+      category: 'pelvis',
+      preferredView: 'medial',
+      viewLabel: 'Innenknöchel & Fußsohlenkante',
+      location: 'An der <strong>medialen Fußinnenkante</strong>, unmittelbar vor dem Fersenknochen unterhalb des Innenknöchels.',
+      effect: 'Entlastet Reizblasen-Symptome, Druckschmerzen im vorderen Becken und Schmerzen beim Wasserlassen (Dysurie) bei peritonealer oder Blasenendometriose.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Sanfte Ausstreichung von der Mitte der Sohle zur inneren Fersenkante und sanftes Kreisen.',
+        '<strong>Druckstärke:</strong> Sanft bis mittel.',
+        '<strong>Dauer:</strong> 1 Minute.'
+      ],
+      affirmation: '„Meine Blase ist entspannt, weit und weich. Ich darf Altes vertrauensvoll loslassen.“',
+      freq: 432,
+      freqLabel: 'Beruhigende 432 Hz Klangschale anspielen',
+      keywords: ['blase', 'harnblase', 'harnleiter', 'wasserlassen', 'reizblase', 'ureter']
+    },
+    'lymph': {
+      id: 'lymph',
+      name: 'Unteres Lymphsystem & Leiste',
+      latin: 'Systema lymphaticum pelvis',
+      badge: 'Schoßraum & Becken',
+      icon: '💧',
+      category: 'pelvis',
+      preferredView: 'dorsum',
+      viewLabel: 'Fußrücken (Sprunggelenksfalte)',
+      location: '<strong>Breites Querband über die Beugefalte des vorderen Sprunggelenks</strong> sowie als diagonaler Streifen über den Spann von Knöchel zu Knöchel.',
+      effect: 'Chronische Entzündungen bei Endometriose erzeugen Lymphstau im kleinen Becken und in den Beinen. Sanfte Lymphdrainage transportiert Zytokine und Gewebsflüssigkeit schonend ab.',
+      technique: [
+        '<strong>Grifftechnik:</strong> Federleichte, streichende Pumpgriffe mit den Fingerbeeren nach oben zum Körper hin (wie ein Pinselstrich). Niemals drücken!',
+        '<strong>Druckstärke:</strong> Hauchzart.',
+        '<strong>Dauer:</strong> 1 bis 2 Minuten pro Fuß.'
+      ],
+      affirmation: '„Alle gestaute Flüssigkeit fließt sanft und ungehindert ab. Mein Becken wird federleicht.“',
+      freq: 432,
+      freqLabel: 'Fließende 432 Hz Lymph-Klangschale anspielen',
+      keywords: ['lymphe', 'lymphsystem', 'leiste', 'leistenkanal', 'ödem', 'entstauung', 'schwellung']
+    }
+  };
+
+  /* ------------------------------------------------------------------------
+     B. DOM-ELEMENTE
+     ------------------------------------------------------------------------ */
+  const wordPills = reflexPage.querySelectorAll('.reflex-word-pill');
+  const catButtons = reflexPage.querySelectorAll('.reflex-cat-btn');
+  const searchInput = document.getElementById('reflexSearchInput');
+  const searchClearBtn = document.getElementById('reflexSearchClear');
+  const viewTabs = reflexPage.querySelectorAll('.reflex-view-tab');
+  const viewTitleEl = document.getElementById('reflexCurrentViewTitle');
+  const svgContainers = reflexPage.querySelectorAll('.reflex-svg-container');
+  const hotspotGroups = reflexPage.querySelectorAll('.reflex-hotspot-group');
+
+  // Detail-Karte Elemente
+  const pointBadge = document.getElementById('reflexPointBadge');
+  const pointIcon = document.getElementById('reflexPointIcon');
+  const pointName = document.getElementById('reflexPointName');
+  const pointLatin = document.getElementById('reflexPointLatin');
+  const pointLocation = document.getElementById('reflexPointLocation');
+  const optimalViewTag = document.getElementById('reflexOptimalViewTag');
+  const pointEffect = document.getElementById('reflexPointEffect');
+  const pointTechnique = document.getElementById('reflexPointTechnique');
+  const pointAffirmation = document.getElementById('reflexPointAffirmation');
+  const btnPlaySound = document.getElementById('btnPlayReflexFrequency');
+  const soundLabel = document.getElementById('reflexFrequencyLabel');
+
+  // Sequenz-Schritte
+  const seqStepItems = reflexPage.querySelectorAll('.seq-step-item');
+
+  // Modal Elemente
+  const posterModal = document.getElementById('reflexPosterModal');
+  const btnOpenPoster = document.getElementById('btnOpenReflexPosterModal');
+  const btnClosePoster = document.getElementById('btnReflexModalClose');
+  const modalOverlay = document.getElementById('reflexModalOverlay');
+
+  let currentPointId = 'uterus';
+  let currentViewId = 'medial';
+  let activeAudioCtx = null;
+
+  const viewTitles = {
+    'medial': 'Innenknöchel (Mediale Ansicht)',
+    'lateral': 'Außenknöchel (Laterale Ansicht)',
+    'plantar': 'Fußsohlen beider Füße (Plantare Ansicht)',
+    'dorsum': 'Fußrücken & Sprunggelenk (Dorsale Ansicht)'
+  };
+
+  /* ------------------------------------------------------------------------
+     C. ANSICHT UMSCHALTEN (SWITCH VIEW)
+     ------------------------------------------------------------------------ */
+  function switchView(viewId) {
+    if (!viewTitles[viewId]) return;
+    currentViewId = viewId;
+
+    viewTabs.forEach(tab => {
+      const isMatch = tab.getAttribute('data-view') === viewId;
+      tab.classList.toggle('active', isMatch);
+      tab.setAttribute('aria-selected', isMatch);
+    });
+
+    svgContainers.forEach(container => {
+      const isTarget = container.id === `svgContainer-${viewId}`;
+      container.classList.toggle('active', isTarget);
+    });
+
+    if (viewTitleEl) {
+      viewTitleEl.textContent = viewTitles[viewId];
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     D. PUNKT AUSWÄHLEN (SELECT POINT)
+     ------------------------------------------------------------------------ */
+  function selectPoint(pointId, shouldSwitchView = true) {
+    const data = reflexData[pointId];
+    if (!data) return;
+
+    currentPointId = pointId;
+
+    // 1. Wenn gewünscht, zur empfohlenen Ansicht wechseln
+    if (shouldSwitchView && data.preferredView !== currentViewId) {
+      switchView(data.preferredView);
+    }
+
+    // 2. Wort-Pill hervorheben
+    wordPills.forEach(pill => {
+      const isMatch = pill.getAttribute('data-point') === pointId;
+      pill.classList.toggle('active', isMatch);
+      if (isMatch) {
+        pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+
+    // 3. Hotspots in SVGs aktualisieren
+    hotspotGroups.forEach(group => {
+      const isTarget = group.getAttribute('data-point-target') === pointId;
+      group.classList.toggle('active', isTarget);
+    });
+
+    // 4. Detail-Karte mit sanfter Animation aktualisieren
+    if (pointBadge) pointBadge.textContent = data.badge;
+    if (pointIcon) pointIcon.textContent = data.icon;
+    if (pointName) pointName.textContent = data.name;
+    if (pointLatin) pointLatin.textContent = data.latin;
+    if (pointLocation) pointLocation.innerHTML = data.location;
+    if (optimalViewTag) optimalViewTag.innerHTML = `Empfohlene Ansicht: <strong>${data.viewLabel}</strong>`;
+    if (pointEffect) pointEffect.textContent = data.effect;
+
+    if (pointTechnique) {
+      pointTechnique.innerHTML = data.technique.map(step => `<li>${step}</li>`).join('');
+    }
+
+    if (pointAffirmation) pointAffirmation.textContent = data.affirmation;
+    if (soundLabel) soundLabel.textContent = data.freqLabel;
+  }
+
+  /* ------------------------------------------------------------------------
+     E. EVENT-LISTENER: KATEGORIE-FILTER & SUCHE
+     ------------------------------------------------------------------------ */
+  catButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const cat = btn.getAttribute('data-cat');
+      filterWordPills(cat, searchInput ? searchInput.value.trim().toLowerCase() : '');
+    });
+  });
+
+  function filterWordPills(cat, search) {
+    wordPills.forEach(pill => {
+      const pillPoint = pill.getAttribute('data-point');
+      const pillCat = pill.getAttribute('data-cat');
+      const pointObj = reflexData[pillPoint];
+
+      const matchesCat = cat === 'all' || pillCat === cat;
+      const matchesSearch = !search || (
+        pointObj && (
+          pointObj.name.toLowerCase().includes(search) ||
+          pointObj.latin.toLowerCase().includes(search) ||
+          pointObj.keywords.some(kw => kw.includes(search))
+        )
+      );
+
+      const isVisible = matchesCat && matchesSearch;
+      pill.classList.toggle('hidden-by-filter', !isVisible);
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      if (searchClearBtn) {
+        searchClearBtn.style.display = query ? 'block' : 'none';
+      }
+      const activeCatBtn = reflexPage.querySelector('.reflex-cat-btn.active');
+      const activeCat = activeCatBtn ? activeCatBtn.getAttribute('data-cat') : 'all';
+      filterWordPills(activeCat, query);
+    });
+  }
+
+  if (searchClearBtn && searchInput) {
+    searchClearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClearBtn.style.display = 'none';
+      const activeCatBtn = reflexPage.querySelector('.reflex-cat-btn.active');
+      const activeCat = activeCatBtn ? activeCatBtn.getAttribute('data-cat') : 'all';
+      filterWordPills(activeCat, '');
+      searchInput.focus();
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     F. EVENT-LISTENER: WORT-PILLS & VIEW-TABS
+     ------------------------------------------------------------------------ */
+  wordPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const pointId = pill.getAttribute('data-point');
+      selectPoint(pointId, true);
+    });
+  });
+
+  viewTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const viewId = tab.getAttribute('data-view');
+      switchView(viewId);
+    });
+  });
+
+  /* ------------------------------------------------------------------------
+     G. EVENT-LISTENER: SVG-HOTSPOTS
+     ------------------------------------------------------------------------ */
+  hotspotGroups.forEach(group => {
+    group.addEventListener('click', () => {
+      const pointId = group.getAttribute('data-point-target');
+      if (pointId && reflexData[pointId]) {
+        selectPoint(pointId, false);
+      }
+    });
+
+    group.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const pointId = group.getAttribute('data-point-target');
+        if (pointId && reflexData[pointId]) {
+          selectPoint(pointId, false);
+        }
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------------
+     H. SEQUENZ-SCHRITTE ZUM PUNKT-FINDER VERLINKEN
+     ------------------------------------------------------------------------ */
+  seqStepItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const targetPoint = item.getAttribute('data-target-point');
+      if (targetPoint && reflexData[targetPoint]) {
+        selectPoint(targetPoint, true);
+        const finderSection = document.getElementById('reflex-finder');
+        if (finderSection) {
+          finderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------------
+     I. AUDIO-KLANGSCHALE (SOLFEGGIO & HEILFREQUENZEN)
+     ------------------------------------------------------------------------ */
+  function playReflexFrequencySound(freq) {
+    try {
+      if (!activeAudioCtx) {
+        activeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (activeAudioCtx.state === 'suspended') {
+        activeAudioCtx.resume();
+      }
+
+      const now = activeAudioCtx.currentTime;
+      const osc1 = activeAudioCtx.createOscillator();
+      const osc2 = activeAudioCtx.createOscillator();
+      const gainNode = activeAudioCtx.createGain();
+
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(freq, now);
+
+      // Leichte Oberton-Schwingung
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq * 1.5, now);
+
+      gainNode.gain.setValueAtTime(0.001, now);
+      gainNode.gain.linearRampToValueAtTime(0.2, now + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 3.8);
+
+      osc1.connect(gainNode);
+      osc2.connect(gainNode);
+      gainNode.connect(activeAudioCtx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + 4.0);
+      osc2.stop(now + 4.0);
+
+      if (btnPlaySound) {
+        btnPlaySound.style.transform = 'scale(0.97)';
+        setTimeout(() => { btnPlaySound.style.transform = ''; }, 200);
+      }
+    } catch (err) {
+      console.log('Audio playback info:', err);
+    }
+  }
+
+  if (btnPlaySound) {
+    btnPlaySound.addEventListener('click', () => {
+      const data = reflexData[currentPointId];
+      if (data && data.freq) {
+        playReflexFrequencySound(data.freq);
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     J. LIGHTBOX MODAL FÜR ORIGINAL-LEHRTAFEL
+     ------------------------------------------------------------------------ */
+  function openPosterModal() {
+    if (posterModal) {
+      posterModal.classList.add('open');
+      posterModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closePosterModal() {
+    if (posterModal) {
+      posterModal.classList.remove('open');
+      posterModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (btnOpenPoster) {
+    btnOpenPoster.addEventListener('click', openPosterModal);
+  }
+
+  if (btnClosePoster) {
+    btnClosePoster.addEventListener('click', closePosterModal);
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', closePosterModal);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && posterModal && posterModal.classList.contains('open')) {
+      closePosterModal();
+    }
+  });
+
+  // Initial ersten Punkt (Gebärmutter) laden
+  selectPoint('uterus', false);
+}
+
 
