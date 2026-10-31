@@ -384,6 +384,24 @@
   text-overflow: ellipsis;
 }
 
+.strip-badge-energy {
+  background: #FAF3E6;
+  color: #8A6016;
+  border: 1px solid #EED8B3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.strip-badge-brainfog {
+  background: #EFF5F0;
+  color: #385E4F;
+  border: 1px solid #C4DCCE;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .strip-badge-belly {
   background: #FFF7ED;
   color: #9A3412;

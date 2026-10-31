@@ -72,6 +72,9 @@
 
   function saveTrackerData() {
     try {
+      if (trackerData[currentDate]) {
+        trackerData[currentDate].isRecorded = true;
+      }
       localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(trackerData));
       showSaveStatus();
       renderWeekStrip(); // Aktualisiere Indikatorpunkte
@@ -112,6 +115,7 @@
 
   function createEmptyDayData() {
     return {
+      isRecorded: false,
       cycleDay: '',
       cyclePhase: '',
       flow: 'none',
@@ -159,6 +163,7 @@
     // 1. Heute: Eisprung, milde Schmerzen, Meditation, Dankbar
     const today = formatDateKey(todayObj);
     trackerData[today] = {
+      isRecorded: true,
       cycleDay: 14,
       cyclePhase: 'ovulation',
       flow: 'none',
@@ -199,6 +204,7 @@
     yesterdayObj.setDate(todayObj.getDate() - 1);
     const yesterday = formatDateKey(yesterdayObj);
     trackerData[yesterday] = {
+      isRecorded: true,
       cycleDay: 13,
       cyclePhase: 'follicular',
       flow: 'none',
@@ -244,6 +250,7 @@
     dayBeforeObj.setDate(todayObj.getDate() - 2);
     const dayBefore = formatDateKey(dayBeforeObj);
     trackerData[dayBefore] = {
+      isRecorded: true,
       cycleDay: 12,
       cyclePhase: 'follicular',
       flow: 'none',
@@ -339,6 +346,7 @@
 
   function hasAnyDayData(data) {
     if (!data) return false;
+    if (data.isRecorded) return true;
     return !!(
       data.cycleDay ||
       (data.cyclePhase && data.cyclePhase !== '') ||
@@ -359,7 +367,9 @@
       Number(data.endoBellySeverity) > 0 ||
       data.meditationDone ||
       (data.moodTags && data.moodTags.length) ||
-      data.notesDaily
+      data.notesDaily ||
+      (data.energyLevel !== undefined && data.energyLevel !== null && Number(data.energyLevel) !== 5) ||
+      (data.brainFogLevel !== undefined && data.brainFogLevel !== null && Number(data.brainFogLevel) !== 5)
     );
   }
 
@@ -490,7 +500,27 @@
           `);
         }
 
-        // 3. Arzttermin / Physio
+        // 3. Energie & Vitalität
+        if (!trackerConfig.hiddenCategories.includes('energy') && data.energyLevel !== undefined && data.energyLevel !== null && Number(data.energyLevel) > 0) {
+          const energyVal = Number(data.energyLevel);
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-energy" title="Energie &amp; Vitalität: ${energyVal}/10 – ${escapeHtml(getEnergyLabel(energyVal))}">
+              🔋 Energie ${energyVal}/10
+            </span>
+          `);
+        }
+
+        // 4. Brain Fog & Fokus
+        if (!trackerConfig.hiddenCategories.includes('brainfog') && data.brainFogLevel !== undefined && data.brainFogLevel !== null && Number(data.brainFogLevel) > 0) {
+          const fogVal = Number(data.brainFogLevel);
+          badgesList.push(`
+            <span class="strip-badge-item strip-badge-brainfog" title="Brain Fog &amp; Fokus: ${fogVal}/10 – ${escapeHtml(getBrainFogLabel(fogVal))}">
+              🌫️ Brain Fog ${fogVal}/10
+            </span>
+          `);
+        }
+
+        // 5. Arzttermin / Physio
         const hasDoctor = data.hasDoctor || data.doctorType;
         const hasPhysio = data.hasPhysio || (data.physioTypes && data.physioTypes.length) || data.physioCustom;
         if (hasDoctor && hasPhysio) {
@@ -513,7 +543,7 @@
           `);
         }
 
-        // 4. Medikamente / Vitalstoffe
+        // 6. Medikamente / Vitalstoffe
         const hasMeds = (data.medsPain && data.medsPain.length) || (data.medsSupplements && data.medsSupplements.length) || data.medsCustom;
         if (hasMeds) {
           const medNames = [
@@ -528,7 +558,7 @@
           `);
         }
 
-        // 5. Meditation & Entspannung
+        // 7. Meditation & Entspannung
         if (data.meditationDone) {
           badgesList.push(`
             <span class="strip-badge-item strip-badge-meditation" title="Meditation: ${data.meditationMinutes || 10} Minuten praktiziert">
@@ -537,7 +567,7 @@
           `);
         }
 
-        // 6. Stimmung & Wohlbefinden / Energie
+        // 8. Stimmung & Wohlbefinden
         if (data.moodTags && data.moodTags.length) {
           const firstMood = escapeHtml(data.moodTags[0]);
           badgesList.push(`
@@ -545,15 +575,9 @@
               💖 ${firstMood}
             </span>
           `);
-        } else if (data.energyLevel) {
-          badgesList.push(`
-            <span class="strip-badge-item strip-badge-mood" title="Energie-Level: ${data.energyLevel}/10">
-              🔋 ${data.energyLevel}/10
-            </span>
-          `);
         }
 
-        // 7. Endo-Belly
+        // 9. Endo-Belly
         if (Number(data.endoBellySeverity) > 0) {
           badgesList.push(`
             <span class="strip-badge-item strip-badge-belly" title="Endo-Belly Stufe ${data.endoBellySeverity}">
@@ -2207,10 +2231,11 @@
       }
       const bellyCell = bellyParts.length ? bellyParts.join('<br>') : '—';
 
-      // Schlaf & Energie
+      // Schlaf & Energie / Fokus
       const sleepParts = [];
       if (data.sleepHours) sleepParts.push(`😴 ${data.sleepHours}h (${data.sleepQuality || 0}/5★)`);
       if (data.energyLevel) sleepParts.push(`🔋 Vitalität: ${data.energyLevel}/10`);
+      if (data.brainFogLevel) sleepParts.push(`🌫️ Fokus: ${data.brainFogLevel}/10`);
       const sleepCell = sleepParts.length ? sleepParts.join('<br>') : '—';
 
       // Stimmung / Befinden
@@ -2299,7 +2324,7 @@
               <th>🩸 Zyklus &amp; Phase</th>
               <th>⚡ Schmerzen (1–10)</th>
               <th>🎈 Belly &amp; Darm</th>
-              <th>😴 Schlaf &amp; Energie</th>
+              <th>😴 Schlaf, Energie &amp; Fokus</th>
               <th>💖 Befinden</th>
               <th>💊 Medikamente</th>
               <th>🩺 Termine</th>
