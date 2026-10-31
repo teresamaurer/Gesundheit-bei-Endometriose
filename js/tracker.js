@@ -510,12 +510,13 @@
           `);
         }
 
-        // 4. Brain Fog & Fokus
+        // 4. Mentale Klarheit
         if (!trackerConfig.hiddenCategories.includes('brainfog') && data.brainFogLevel !== undefined && data.brainFogLevel !== null && Number(data.brainFogLevel) > 0) {
           const fogVal = Number(data.brainFogLevel);
           badgesList.push(`
-            <span class="strip-badge-item strip-badge-brainfog" title="Brain Fog &amp; Fokus: ${fogVal}/10 – ${escapeHtml(getBrainFogLabel(fogVal))}">
-              🌫️ Brain Fog ${fogVal}/10
+            <span class="strip-badge-item strip-badge-brainfog" title="Mentale Klarheit: ${fogVal}/10 – ${escapeHtml(getBrainFogLabel(fogVal))}">
+              <span class="strip-badge-text">🧠 Mentale Klarheit</span>
+              <span class="strip-badge-score">${fogVal}/10</span>
             </span>
           `);
         }
@@ -2095,7 +2096,7 @@
 
         <!-- 6. Energie, Fokus & Achtsamkeit -->
         <div class="print-item-card">
-          <h4>🔋 Energie, 🌫️ Brain Fog & 🧘‍♀️ Meditation</h4>
+          <h4>🔋 Energie, 🧠 Mentale Klarheit & 🧘‍♀️ Meditation</h4>
           <p>
             • Vitalitäts-Level: <strong>${data.energyLevel || 0}/10</strong> (${getEnergyLabel(data.energyLevel)})<br>
             • Mentale Klarheit: <strong>${data.brainFogLevel || 0}/10</strong> (${getBrainFogLabel(data.brainFogLevel)})<br>
@@ -2235,7 +2236,7 @@
       const sleepParts = [];
       if (data.sleepHours) sleepParts.push(`😴 ${data.sleepHours}h (${data.sleepQuality || 0}/5★)`);
       if (data.energyLevel) sleepParts.push(`🔋 Vitalität: ${data.energyLevel}/10`);
-      if (data.brainFogLevel) sleepParts.push(`🌫️ Fokus: ${data.brainFogLevel}/10`);
+      if (data.brainFogLevel) sleepParts.push(`🧠 Klarheit: ${data.brainFogLevel}/10`);
       const sleepCell = sleepParts.length ? sleepParts.join('<br>') : '—';
 
       // Stimmung / Befinden
